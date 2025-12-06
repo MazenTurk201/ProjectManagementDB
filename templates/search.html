@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Global Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #1664f3;
+            --background-light: #f5f6f8;
+            --background-dark: #101622;
+            --text-light: #1f2937;
+            --text-dark: #f9fafb;
+            --card-light: #ffffff;
+            --card-dark: #101622;
+            --border-light: #e5e7eb;
+            --border-dark: #374151;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --blue-100: #dbeafe;
+            --blue-600: #2563eb;
+            --blue-900: #1e3a8a;
+            --green-100: #d1fae5;
+            --green-600: #059669;
+            --green-900: #064e3b;
+            --purple-100: #e9d5ff;
+            --purple-600: #9333ea;
+            --purple-900: #581c87;
+            --yellow-100: #fef3c7;
+            --yellow-200: #fde68a;
+            --yellow-800: #92400e;
+            --yellow-900: #78350f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: rgba(55, 65, 81, 0.5);
+            color: var(--text-light);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: rgba(55, 65, 81, 0.5);
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem;
+        }
+
+        .search-card {
+            width: 100%;
+            max-width: 48rem;
+            border-radius: 0.75rem;
+            background-color: var(--background-light);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .dark .search-card {
+            background-color: var(--background-dark);
+        }
+
+        /* Search Bar */
+        .search-bar-container {
+            padding: 0.5rem;
+        }
+
+        .search-bar-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            padding-left: 1rem;
+            color: var(--gray-400);
+        }
+
+        .dark .search-icon {
+            color: var(--gray-500);
+        }
+
+        .search-input {
+            width: 100%;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
+            background-color: rgba(229, 231, 235, 0.5);
+            padding: 0.875rem 3rem 0.875rem 3rem;
+            font-size: 1rem;
+            color: var(--gray-900);
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .dark .search-input {
+            background-color: rgba(31, 41, 55, 0.5);
+            color: white;
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-500);
+        }
+
+        .dark .search-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+
+        .clear-button {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            padding-right: 1rem;
+            color: var(--gray-500);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .clear-button:hover {
+            color: var(--gray-700);
+        }
+
+        .dark .clear-button:hover {
+            color: var(--gray-300);
+        }
+
+        /* Content Section */
+        .content-section {
+            padding: 1.5rem 1.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            padding: 0.5rem 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dark .section-header {
+            color: var(--gray-400);
+        }
+
+        /* List Items */
+        .items-list {
+            list-style: none;
+        }
+
+        .item-spacing {
+            margin-bottom: 0.25rem;
+        }
+
+        .item-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            padding: 0.625rem 0.5rem;
+            color: var(--gray-700);
+            transition: background-color 0.2s;
+        }
+
+        .item-link:hover {
+            background-color: rgba(229, 231, 235, 0.6);
+        }
+
+        .dark .item-link {
+            color: var(--gray-300);
+        }
+
+        .dark .item-link:hover {
+            background-color: rgba(31, 41, 55, 0.6);
+        }
+
+        /* Recent Searches Items */
+        .recent-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .recent-item-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .recent-icon {
+            color: var(--gray-400);
+        }
+
+        .dark .recent-icon {
+            color: var(--gray-500);
+        }
+
+        .recent-text {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .recent-arrow {
+            color: var(--gray-400);
+            font-size: 1.5rem;
+        }
+
+        .dark .recent-arrow {
+            color: var(--gray-500);
+        }
+
+        /* Project/Task/Member Items */
+        .content-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .item-icon-wrapper {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+        }
+
+        .icon-blue {
+            background-color: var(--blue-100);
+        }
+
+        .dark .icon-blue {
+            background-color: rgba(30, 58, 138, 0.5);
+        }
+
+        .icon-green {
+            background-color: var(--green-100);
+        }
+
+        .dark .icon-green {
+            background-color: rgba(6, 78, 59, 0.5);
+        }
+
+        .icon-purple {
+            background-color: var(--purple-100);
+        }
+
+        .dark .icon-purple {
+            background-color: rgba(88, 28, 135, 0.5);
+        }
+
+        .item-icon {
+            font-size: 1.5rem;
+        }
+
+        .icon-blue .item-icon {
+            color: var(--blue-600);
+        }
+
+        .dark .icon-blue .item-icon {
+            color: var(--blue-400);
+        }
+
+        .icon-green .item-icon {
+            color: var(--green-600);
+        }
+
+        .dark .icon-green .item-icon {
+            color: var(--green-400);
+        }
+
+        .icon-purple .item-icon {
+            color: var(--purple-600);
+        }
+
+        .dark .icon-purple .item-icon {
+            color: var(--purple-400);
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .dark .item-title {
+            color: white;
+        }
+
+        .item-subtitle {
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
+
+        .dark .item-subtitle {
+            color: var(--gray-400);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            border-radius: 9999px;
+            padding: 0.125rem 0.625rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-in-progress {
+            background-color: var(--yellow-200);
+            color: var(--yellow-800);
+        }
+
+        .dark .status-in-progress {
+            background-color: rgba(253, 230, 138, 0.2);
+            color: rgba(253, 230, 138, 0.9);
+        }
+
+        .status-to-do {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .dark .status-to-do {
+            background-color: var(--gray-700);
+            color: var(--gray-300);
+        }
+
+        /* Member Avatar */
+        .member-avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            object-fit: cover;
+        }
+
+        /* View All Footer */
+        .view-all-footer {
+            border-top: 1px solid var(--border-light);
+            padding: 0.75rem;
+            text-align: center;
+    }
+
+        .dark .view-all-footer {
+            border-color: var(--border-dark);
+        }
+
+        .view-all-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .view-all-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+
+        /* Utility Classes */
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-3 {
+            gap: 0.75rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .mt-6 {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-card">
+            <!-- Search Bar -->
+            <div class="search-bar-container">
+                <div class="search-bar-wrapper">
+                    <div class="search-icon">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input class="search-input" placeholder="Search projects, tasks, or people..." type="text"/>
+                    <button class="clear-button">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content-section">
+                <!-- Recent Searches Section -->
+                <div>
+                    <h3 class="section-header">Recent Searches</h3>
+                    <ul class="items-list">
+                        <li class="item-spacing">
+                            <a class="item-link recent-item" href="#">
+                                <div class="recent-item-content">
+                                    <span class="material-symbols-outlined recent-icon">history</span>
+                                    <p class="recent-text">Marketing Campaign Launch</p>
+                                </div>
+                                <span class="material-symbols-outlined recent-arrow">north_west</span>
+                            </a>
+                        </li>
+                        <li class="item-spacing">
+                            <a class="item-link recent-item" href="#">
+                                <div class="recent-item-content">
+                                    <span class="material-symbols-outlined recent-icon">history</span>
+                                    <p class="recent-text">Q3 Roadmap</p>
+                                </div>
+                                <span class="material-symbols-outlined recent-arrow">north_west</span>
+                            </a>
+                        </li>
+                        <li class="item-spacing">
+                            <a class="item-link recent-item" href="#">
+                                <div class="recent-item-content">
+                                    <span class="material-symbols-outlined recent-icon">history</span>
+                                    <p class="recent-text">Frontend Bugs</p>
+                                </div>
+                                <span class="material-symbols-outlined recent-arrow">north_west</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Projects Section -->
+                <div class="mt-6">
+                    <h3 class="section-header">Projects</h3>
+                    <ul class="items-list">
+                        <li class="item-spacing">
+                            <a class="item-link" href="#">
+                                <div class="content-item">
+                                    <div class="item-icon-wrapper icon-blue">
+                                        <span class="material-symbols-outlined item-icon">space_dashboard</span>
+                                    </div>
+                                    <div class="item-details">
+                                        <p class="item-title">Website Redesign</p>
+                                        <p class="item-subtitle">Marketing Team</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="item-spacing">
+                            <a class="item-link" href="#">
+                                <div class="content-item">
+                                    <div class="item-icon-wrapper icon-green">
+                                        <span class="material-symbols-outlined item-icon">api</span>
+                                    </div>
+                                    <div class="item-details">
+                                        <p class="item-title">API Integration</p>
+                                        <p class="item-subtitle">Engineering Team</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tasks Section -->
+                <div class="mt-6">
+                    <h3 class="section-header">Tasks</h3>
+                    <ul class="items-list">
+                        <li class="item-spacing">
+                            <a class="item-link recent-item" href="#">
+                                <div class="recent-item-content">
+                                    <div class="item-icon-wrapper icon-purple">
+                                        <span class="material-symbols-outlined item-icon">task_alt</span>
+                                    </div>
+                                    <div class="item-details">
+                                        <p class="item-title">Design new hero section</p>
+                                        <p class="item-subtitle">WEB-24 · Website Redesign</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-in-progress">In Progress</span>
+                            </a>
+                        </li>
+                        <li class="item-spacing">
+                            <a class="item-link recent-item" href="#">
+                                <div class="recent-item-content">
+                                    <div class="item-icon-wrapper icon-purple">
+                                        <span class="material-symbols-outlined item-icon">task_alt</span>
+                                    </div>
+                                    <div class="item-details">
+                                        <p class="item-title">Finalize marketing copy</p>
+                                        <p class="item-subtitle">WEB-28 · Website Redesign</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-to-do">To Do</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Members Section -->
+                <div class="mt-6">
+                    <h3 class="section-header">Members</h3>
+                    <ul class="items-list">
+                        <li class="item-spacing">
+                            <a class="item-link" href="#">
+                                <div class="content-item">
+                                    <img class="member-avatar" alt="Avatar of Alex Johnson" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_4Q9n-leh-ACnKvYg-H6exvcGK--9vjIQUnP-F5hjgmJzsmgzzDBjMHtRY3kSAvl2UU65QmyWp4CJvHWuGOk02BEjxyDu1pSxdNATETHo3EvK1Ex-FGuEMRhfnnVoUCpsy_6dgf7RlwwHbDYRyp8kpCQ2wKykClR2LRzIeU6zZCdQjKavoHtgmMinu7GGPeVuq4T-q2BBDnlCX1NHbRn1BrTZK9ZErX2VcHcuFj76F_qkhgkfdO1jX4ycXkX-Yw98WY2KLKod9J4"/>
+                                    <div class="item-details">
+                                        <p class="item-title">Alex Johnson</p>
+                                        <p class="item-subtitle">Product Manager</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="item-spacing">
+                            <a class="item-link" href="#">
+                                <div class="content-item">
+                                    <img class="member-avatar" alt="Avatar of Maria Garcia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV_6Bujm3wF2EI7-Z4DMO4meIOoh58bdXfgs1sIa8fba2ptNg5mwpXHLDJHORtTcSIfGL2WNEsqaHpxIBAmTybZvqFviSSub4tNVXU9Lthcjs2KuXG8hs6kUAcNnh-z48KEeg5y8x6taK1Fv8cEU5maBGO-Cgc3q18d0aTrE2bHJvFn1WXTmbBi_VFKDlLYESQqu4yeZ7WTeV0-DOHYOgO1e1Yma-4AZg3945J6PmbTMgwGrXooZT4aYo7J5pQTy9HBroTzfE6J-s"/>
+                                    <div class="item-details">
+                                        <p class="item-title">Maria Garcia</p>
+                                        <p class="item-subtitle">Frontend Developer</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- View All Footer -->
+            <div class="view-all-footer">
+                <a class="view-all-link" href="#">View all results</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add functionality for clear button
+        document.querySelector('.clear-button').addEventListener('click', function() {
+            const searchInput = document.querySelector('.search-input');
+            searchInput.value = '';
+            searchInput.focus();
+        });
+
+        // Add functionality for theme toggle (optional)
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+
+        // Add focus effect to search input
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}لوحة التحكم - ProjectFlow{% endblock %}
+
+{% block content %}
+<header class="top-navbar">
+  <div class="search-container">
+    <label class="search-label">
+      <span class="material-symbols-outlined search-icon">search</span>
+      <input class="search-input" placeholder="Search projects, tasks..." value="" />
+    </label>
+  </div>
+  <div class="nav-icons">
+    <button class="nav-icon-btn">
+      <span class="material-symbols-outlined">notifications</span>
+    </button>
+    <button class="nav-icon-btn">
+      <span class="material-symbols-outlined">help</span>
+    </button>
+    <div class="nav-avatar"
+      style='background-image: url("https://ui-avatars.com/api/?name={{ current_user.Full_Name }}&background=random");'>
+    </div>
+  </div>
+</header>
+
+<div class="content-wrapper">
+  <div class="page-heading">
+    <p class="page-title">Welcome, {{ current_user.Full_Name.split()[0] }}! 👋</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <p class="stat-label">Active Tasks</p>
+      <p class="stat-value">{{ pending_tasks }}</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Tasks Completed</p>
+      <p class="stat-value overdue">{{ completed_tasks }}</p>
+    </div>
+    <div class="stat-card">
+      <p class="stat-label">Upcoming Milestones</p>
+      <p class="stat-value">{{ total_milestones }}</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="projects-section">
+      <h2 class="section-title">My Projects</h2>
+      <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card" onclick="window.location.href='/project/{{ project.Project_ID }}/tasks'">
+          <div class="project-header">
+            <h3 class="project-title">{{ project.Name }}</h3>
+            {% if current_user.Role in ['Product Manager', 'Database Administrator', 'Admin'] %}
+            <div class="dropdown" style="position: relative;">
+              <span class="material-symbols-outlined project-more"
+                onclick="toggleProjectMenu('menu-{{ project.Project_ID }}', event)" style="cursor: pointer;">
+                more_horiz
+              </span>
+
+              <div id="menu-{{ project.Project_ID }}" class="dropdown-content">
+                <a href="#" class="dropdown-item">
+                  <span class="material-symbols-outlined icon">edit</span> Edit
+                </a>
+
+                <a href="{{ url_for('delete_project', id=project.Project_ID) }}" class="dropdown-item delete"
+                  onclick="return confirm('متأكد إنك عايز تحذف المشروع ده؟ كل التاسكات اللي جواه هتطير! ⚠️');">
+                  <span class="material-symbols-outlined icon">delete</span> Delete
+                </a>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          <div class="project-progress">
+            <div class="progress-header">
+              <span class="progress-label">Progress</span>
+              <span class="progress-percent">{{ project.progress }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: {{ project.progress }}%;"></div>
+            </div>
+          </div>
+          <div class="project-footer">
+            <div class="team-avatars">
+              <span class="material-symbols-outlined" style="color: gray;">group</span>
+            </div>
+            <div class="due-date">
+              <p class="due-label">Due Date</p>
+              <p class="due-value">{{ project.End_Date }}</p>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% if current_user.Role in ['Product Manager', 'Database Administrator', 'Admin'] %}
+    <div class="sidebar-right">
+      <div class="quick-create">
+        <h2 class="section-title">Quick Create</h2>
+        <div class="quick-create-card">
+          <button onclick="toggleModal('projectModal', true)" class="quick-btn primary">
+            <span class="material-symbols-outlined quick-icon">add_circle</span>
+            New Project
+          </button>
+          <button onclick="toggleModal('taskModal', true);" class="quick-btn secondary">
+            <span class="material-symbols-outlined quick-icon">add_task</span>
+            New Task
+          </button>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- <div class="recent-activity">
+        <h2 class="section-title">Recent Activity</h2>
+        <div class="activity-card">
+          <div class="activity-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <div>
+              <p class="activity-text"><span class="activity-user">Olivia Martin</span> completed task "Develop login
+                page".</p>
+              <p class="activity-time">2 hours ago</p>
+            </div>
+          </div>
+          <div class="activity-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <div>
+              <p class="activity-text"><span class="activity-user">Mazen Turk</span> Created New Repo.</p>
+              <p class="activity-time">5 mins ago</p>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+<script>
+  function toggleProjectMenu(menuId, event) {
+    event.stopPropagation(); // عشان ميعملش Click على الصفحة كلها ويقفل في نفس اللحظة
+
+    // 1. اقفل أي قائمة تانية مفتوحة الأول
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      if (dropdowns[i].id !== menuId) {
+        dropdowns[i].classList.remove('show');
+      }
+    }
+
+    // 2. افتح أو اقفل القائمة المطلوبة
+    document.getElementById(menuId).classList.toggle("show");
+  }
+
+  // 3. لو داس في أي حتة فاضية في الصفحة، اقفل القوائم
+  window.onclick = function (event) {
+    if (!event.target.matches('.project-more')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      for (var i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+</script>
+{% include 'components/add_task_modal.html' %}
+{% include 'components/add_project_modal.html' %}
+{% endblock %}

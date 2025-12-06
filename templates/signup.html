@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sign Up - ProjectFlow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: #0a60ff;
+            --background-light: #f5f6f8;
+            --background-dark: #0f1624;
+            --text-light: #1e293b;
+            --text-dark: #f8fafc;
+            --card-light: #ffffff;
+            --card-dark: #172236;
+            --border-light: #cbd5e1;
+            --border-dark: #334155;
+            --input-light: #f1f5f9;
+            --input-dark: #202f4b;
+            --placeholder-light: #94a3b8;
+            --placeholder-dark: #8da4ce;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #1e293b;
+        }
+
+        .dark .logo-container {
+            color: #ffffff;
+        }
+
+        .logo {
+            height: 2rem;
+            width: 2rem;
+        }
+
+        .logo-title {
+            font-size: 1.875rem;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0.75rem;
+            background-color: var(--card-light);
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .form-container {
+            background-color: var(--card-dark);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-heading {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .dark .page-title {
+            color: #ffffff;
+        }
+
+        .page-subtitle {
+            margin-top: 0.25rem;
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .dark .page-subtitle {
+            color: var(--placeholder-dark);
+        }
+
+        /* Avatar Uploader */
+        .avatar-section {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .avatar-container {
+            position: relative;
+        }
+
+        .avatar-placeholder {
+            aspect-ratio: 1 / 1;
+            height: 6rem;
+            width: 6rem;
+            border-radius: 9999px;
+            border: 2px dashed var(--border-light);
+            background-color: #f1f5f9;
+            background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1DsJd2UXFhv4ojfEx_pWgexnrg6VVzqFpXMgJPc5rj1WPvfjwNQEYjnzPwEWE0u4kafQpw0y90V5ze_075HQZaXgb9Fd6NeHt4guR3R_nYmoJKxfWpexi5zCUX4dXGDRv4wv3wY8e-vOsJoAmrqZF6UP5zzUGP4UIxtCl-Qco4yXE2oXtGttw5FzGPS86bDYedgSdxoB5G_Ah4LvQh93zRnvmtKXvsVIGW9SbuTO0RLxXRCZYcK0OqjI0pmnYO8RzsR1mlMZUtm8");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .dark .avatar-placeholder {
+            border-color: #475569;
+            background-color: #1e293b;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: -0.25rem;
+            right: -0.25rem;
+            height: 2rem;
+            width: 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 9999px;
+            border: 2px solid #ffffff;
+            background-color: #334155;
+            color: #ffffff;
+            transition: background-color 0.2s;
+        }
+
+        .dark .avatar-upload-btn {
+            border-color: #1e293b;
+            background-color: #475569;
+        }
+
+        .avatar-upload-btn:hover {
+            background-color: #0f172a;
+        }
+
+        .dark .avatar-upload-btn:hover {
+            background-color: #64748b;
+        }
+
+        .avatar-label {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .dark .avatar-label {
+            color: #94a3b8;
+        }
+
+        /* Form Elements */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #334155;
+            padding-bottom: 0.375rem;
+        }
+
+        .dark .form-label {
+            color: #cbd5e1;
+        }
+
+        .form-input {
+            width: 100%;
+            min-width: 0;
+            flex: 1;
+            resize: none;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            background-color: var(--input-light);
+            border: 1px solid transparent;
+            height: 3rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .dark .form-input {
+            background-color: var(--input-dark);
+            color: #ffffff;
+            border-color: #334155;
+        }
+
+        .form-input::placeholder {
+            color: var(--placeholder-light);
+        }
+
+        .dark .form-input::placeholder {
+            color: var(--placeholder-dark);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: transparent;
+            box-shadow: 0 0 0 2px rgba(10, 96, 255, 0.5);
+        }
+
+        .dark .form-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 0.75rem;
+            color: #64748b;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .password-toggle:hover {
+            color: #334155;
+        }
+
+        .dark .password-toggle {
+            color: #94a3b8;
+        }
+
+        .dark .password-toggle:hover {
+            color: #cbd5e1;
+        }
+
+        .input-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.375rem;
+        }
+
+        .dark .input-hint {
+            color: #94a3b8;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            padding-top: 0.5rem;
+        }
+
+        .form-checkbox {
+            margin-top: 0.125rem;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid var(--border-light);
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .dark .form-checkbox {
+            border-color: #475569;
+            background-color: #334155;
+        }
+
+        .checkbox-label {
+            margin-left: 0.5rem;
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .dark .checkbox-label {
+            color: #94a3b8;
+        }
+
+        .checkbox-link {
+            font-weight: 500;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .checkbox-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .submit-btn {
+            margin-top: 1rem;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            height: 3rem;
+            padding: 0 1rem;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.025em;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Divider */
+        .divider {
+            position: relative;
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .divider-line {
+            flex-grow: 1;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .dark .divider-line {
+            border-color: #334155;
+        }
+
+        .divider-text {
+            margin: 0 1rem;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .dark .divider-text {
+            color: #94a3b8;
+        }
+
+        /* Social Buttons */
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .social-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-light);
+            background-color: #ffffff;
+            padding: 0.625rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #334155;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dark .social-btn {
+            border-color: #475569;
+            background-color: #1e293b;
+            color: #cbd5e1;
+        }
+
+        .social-btn:hover {
+            background-color: #f8fafc;
+        }
+
+        .dark .social-btn:hover {
+            background-color: #334155;
+        }
+
+        .social-icon {
+            height: 1.25rem;
+            width: 1.25rem;
+        }
+
+        .dark .social-icon.github {
+            filter: invert(1);
+        }
+
+        /* Footer Link */
+        .footer-link {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: #475569;
+        }
+
+        .dark .footer-text {
+            color: #94a3b8;
+        }
+
+        .footer-link-anchor {
+            font-weight: 500;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer-link-anchor:hover {
+            text-decoration: underline;
+        }
+
+        /* Utility Classes */
+        .flex {
+            display: flex;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Responsive */
+        @media (min-width: 640px) {
+            .form-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark">
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                            d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z"
+                            fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <h1 class="logo-title">ProjectFlow</h1>
+            </div>
+        </header>
+
+        <div class="form-container">
+            <div class="page-heading">
+                <p class="page-title">Create your account</p>
+                <p class="page-subtitle">Start managing your projects more effectively.</p>
+            </div>
+
+            <div class="avatar-section">
+                <div class="avatar-container">
+                    <div class="avatar-placeholder"></div>
+                    <button class="avatar-upload-btn" type="button">
+                        <span class="material-symbols-outlined">photo_camera</span>
+                    </button>
+                </div>
+                <p class="avatar-label">Upload Avatar</p>
+            </div>
+
+            <form action="/signup" method="POST" class="form">
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <div class="alert">
+                    {{ messages[0] }}
+                </div>
+                {% endif %}
+                {% endwith %}
+
+                <div class="form-group">
+                    <label class="form-label" for="full-name">Full Name</label>
+                    <input class="form-input" id="full-name" name="full_name" placeholder="e.g., Ada Lovelace"
+                        type="text" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Work Email</label>
+                    <input class="form-input" id="email" name="email" placeholder="you@company.com" type="email"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-with-icon">
+                        <input class="form-input" id="password" name="password" placeholder="Enter your password"
+                            type="password" required />
+                        <button class="password-toggle" type="button">
+                            <span class="material-symbols-outlined">visibility_off</span>
+                        </button>
+                    </div>
+                    <p class="input-hint">8+ characters, including a number and a symbol.</p>
+                </div>
+
+                <div class="checkbox-group">
+                    <input class="form-checkbox" id="terms" type="checkbox" required />
+                    <label class="checkbox-label" for="terms">
+                        By creating an account, you agree to our
+                        <a class="checkbox-link" href="#">Terms of Service</a> and
+                        <a class="checkbox-link" href="#">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button class="submit-btn" type="submit">
+                    <span class="submit-btn-text">Create Account</span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">OR</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <div class="social-buttons">
+                <button class="social-btn">
+                    <img alt="Google logo" class="social-icon"
+                        src="https://www.svgrepo.com/show/475656/google-color.svg" />
+                    Continue with Google
+                </button>
+                <button class="social-btn">
+                    <img alt="GitHub logo" class="social-icon github"
+                        src="https://www.svgrepo.com/show/512317/github-142.svg" />
+                    Continue with GitHub
+                </button>
+            </div>
+        </div>
+
+        <div class="footer-link">
+            <p class="footer-text">
+                Already have an account?
+                <a class="footer-link-anchor" href="{{ url_for('login') }}">Sign In</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // كود تبديل الباسورد (إظهار/إخفاء)
+        document.querySelector('.password-toggle').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('.material-symbols-outlined');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = 'visibility';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = 'visibility_off';
+            }
+        });
+    </script>
+</body>
+
+</html>

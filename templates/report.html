@@ -1,0 +1,758 @@
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+    rel="stylesheet" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #1664f3;
+        --primary-light: rgba(22, 100, 243, 0.2);
+        --background-light: #f5f6f8;
+        --background-dark: #101622;
+        --sidebar-bg: #0c121c;
+        --card-bg: #0c121c;
+        --card-border: rgba(255, 255, 255, 0.1);
+        --table-header-bg: #101723;
+        --text-primary: white;
+        --text-secondary: #90a5cb;
+        --text-gray: #9ca3af;
+        --text-gray-light: #6b7280;
+        --border-color: rgba(255, 255, 255, 0.1);
+        --radius-sm: 0.25rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 0.75rem;
+        --radius-full: 9999px;
+
+        /* Status Colors */
+        --green: #0bda5e;
+        --green-light: rgba(11, 218, 94, 0.2);
+        --red: #fa6238;
+        --red-light: rgba(250, 98, 56, 0.2);
+        --blue: #3b82f6;
+        --blue-light: rgba(59, 130, 246, 0.2);
+        --gray: #6b7280;
+        --gray-light: rgba(107, 114, 128, 0.2);
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-dark);
+        color: white;
+        min-height: 100vh;
+    }
+
+    /* Main Layout */
+    .report-container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 256px;
+        flex-shrink: 0;
+        background-color: var(--sidebar-bg);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sidebar-top {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem;
+    }
+
+    .company-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        aspect-ratio: 1 / 1;
+    }
+
+    .company-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .company-name {
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .workspace-name {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: #9ca3af;
+        transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+        background-color: var(--primary-light);
+        color: white;
+    }
+
+    .nav-link.active {
+        background-color: var(--primary-light);
+        color: white;
+    }
+
+    .nav-icon {
+        font-size: 24px;
+    }
+
+    .nav-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .sidebar-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .new-task-btn {
+        display: flex;
+        min-width: 84px;
+        max-width: 480px;
+        height: 2.5rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.015em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .new-task-btn:hover {
+        background-color: rgba(22, 100, 243, 0.9);
+    }
+
+    .bottom-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+    }
+
+    .btn-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    .content-wrapper {
+        max-width: 80rem;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .breadcrumb-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-link:hover {
+        text-decoration: underline;
+    }
+
+    .breadcrumb-separator {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-secondary);
+    }
+
+    .breadcrumb-current {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: white;
+    }
+
+    /* Page Header */
+    .page-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .header-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .page-title {
+        color: white;
+        font-size: 1.875rem;
+        font-weight: 900;
+        line-height: 1.25;
+        letter-spacing: -0.03em;
+    }
+
+    .page-subtitle {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .export-btn {
+        display: flex;
+        min-width: 84px;
+        max-width: 480px;
+        height: 2.5rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: #223049;
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.015em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .export-btn:hover {
+        background-color: #314468;
+    }
+
+    .btn-icon {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+    }
+
+    /* Filters Container */
+    .filters-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background-color: var(--sidebar-bg);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--card-border);
+    }
+
+    .filter-btn {
+        display: flex;
+        height: 2.25rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-lg);
+        background-color: #223049;
+        padding-left: 1rem;
+        padding-right: 0.5rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .filter-btn:hover {
+        background-color: #314468;
+    }
+
+    .filter-text {
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .filter-icon {
+        font-size: 1.125rem;
+        color: white;
+    }
+
+    .apply-btn {
+        display: flex;
+        height: 2.25rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-left: auto;
+    }
+
+    .apply-btn:hover {
+        background-color: rgba(22, 100, 243, 0.9);
+    }
+
+    .apply-text {
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .stat-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-radius: var(--radius-xl);
+        padding: 1.5rem;
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+    }
+
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .stat-value {
+        color: white;
+        letter-spacing: -0.025em;
+        font-size: 1.875rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .stat-trend {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .stat-trend.positive {
+        color: var(--green);
+    }
+
+    .stat-trend.negative {
+        color: var(--red);
+    }
+
+    .trend-icon {
+        font-size: 1rem;
+    }
+
+    .trend-text {
+        font-size: 0.875rem;
+    }
+
+    /* Charts Section */
+    .charts-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+        .charts-grid {
+            grid-template-columns: 3fr 2fr;
+        }
+    }
+
+    .chart-card {
+        background-color: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--card-border);
+    }
+
+    .chart-card.large {
+        grid-column: span 1;
+    }
+
+    @media (min-width: 1024px) {
+        .chart-card.large {
+            grid-column: span 1;
+        }
+    }
+
+    .chart-title {
+        color: white;
+        font-weight: 700;
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+    }
+
+    .chart-placeholder {
+        width: 100%;
+        height: 256px;
+        background-color: rgba(75, 85, 99, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-lg);
+    }
+
+    .placeholder-text {
+        color: #9ca3af;
+    }
+
+    /* Data Table */
+    .data-table-container {
+        background-color: var(--card-bg);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--card-border);
+        overflow: hidden;
+    }
+
+    .table-header {
+        padding: 1.5rem;
+    }
+
+    .table-title {
+        color: white;
+        font-weight: 700;
+        font-size: 1.125rem;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .data-table {
+        width: 100%;
+        font-size: 0.875rem;
+        text-align: left;
+        color: var(--text-secondary);
+    }
+
+    .table-head {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        text-transform: uppercase;
+        background-color: var(--table-header-bg);
+    }
+
+    .table-header {
+        padding: 0.75rem 1.5rem;
+        font-weight: 500;
+    }
+
+    .table-body {
+        color: var(--text-secondary);
+    }
+
+    .table-row {
+        border-top: 1px solid var(--card-border);
+    }
+
+    .table-cell {
+        padding: 1rem 1.5rem;
+        white-space: nowrap;
+    }
+
+    .table-cell.task-name {
+        font-weight: 500;
+        color: white;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.125rem 0.625rem;
+        border-radius: var(--radius-full);
+    }
+
+    .status-badge.completed {
+        background-color: rgba(34, 197, 94, 0.2);
+        color: #4ade80;
+    }
+
+    .status-badge.in-progress {
+        background-color: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+    }
+
+    .status-badge.overdue {
+        background-color: rgba(239, 68, 68, 0.2);
+        color: #f87171;
+    }
+
+    .status-badge.todo {
+        background-color: rgba(107, 114, 128, 0.2);
+        color: #9ca3af;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .material-symbols-outlined.fill-1 {
+        font-variation-settings: 'FILL' 1;
+    }
+</style>
+{% extends "base.html" %}
+
+{% block title %}تفاصيل المشروع - {% endblock %}
+
+{% block content %}
+<div class="report-container">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a class="breadcrumb-link" href="#">Reports</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Team Performance</span>
+            </div>
+
+            <!-- Page Heading -->
+            <div class="page-header">
+                <div class="header-left">
+                    <h1 class="page-title">Team Performance Report</h1>
+                    <p class="page-subtitle">Analyze team workload, contributions, and efficiency.</p>
+                </div>
+                <button class="export-btn">
+                    <span class="material-symbols-outlined btn-icon">download</span>
+                    <span class="btn-text">Export Report</span>
+                </button>
+            </div>
+
+            <!-- Chips / Filters -->
+            <div class="filters-container">
+                <button class="filter-btn">
+                    <p class="filter-text">Team: All</p>
+                    <span class="material-symbols-outlined filter-icon">expand_more</span>
+                </button>
+                <button class="filter-btn">
+                    <p class="filter-text">Member: All</p>
+                    <span class="material-symbols-outlined filter-icon">expand_more</span>
+                </button>
+                <button class="filter-btn">
+                    <p class="filter-text">Date: Last 30 Days</p>
+                    <span class="material-symbols-outlined filter-icon">expand_more</span>
+                </button>
+                <button class="apply-btn">
+                    <p class="apply-text">Apply</p>
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p class="stat-label">Total Tasks Completed</p>
+                    <p class="stat-value">1,204</p>
+                    <p class="stat-trend positive">
+                        <span class="material-symbols-outlined trend-icon">trending_up</span>
+                        <span class="trend-text">+12.5%</span>
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Avg. Time to Completion</p>
+                    <p class="stat-value">3.2 Days</p>
+                    <p class="stat-trend negative">
+                        <span class="material-symbols-outlined trend-icon">trending_down</span>
+                        <span class="trend-text">-0.5%</span>
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <p class="stat-label">Overall Team Capacity</p>
+                    <p class="stat-value">85%</p>
+                    <p class="stat-trend positive">
+                        <span class="material-symbols-outlined trend-icon">trending_up</span>
+                        <span class="trend-text">+2.1%</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-card large">
+                    <h3 class="chart-title">Tasks Completed per Member</h3>
+                    <div class="chart-placeholder">
+                        <p class="placeholder-text">Bar Chart Placeholder</p>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="chart-title">Workload Distribution</h3>
+                    <div class="chart-placeholder">
+                        <p class="placeholder-text">Donut Chart Placeholder</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="data-table-container">
+                <div class="table-header">
+                    <h3 class="table-title">Detailed Task Breakdown</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead class="table-head">
+                            <tr>
+                                <th class="table-header" scope="col">Task Name</th>
+                                <th class="table-header" scope="col">Priority</th>
+                                <th class="table-header" scope="col">Status</th>
+                                <th class="table-header" scope="col">Due Date</th>
+                                <th class="table-header" scope="col">Time Spent</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            {% for task in tasks %}
+                            <tr class="table-row">
+                                <th class="table-cell task-name" scope="row">{{ task.Title }}</th>
+                                <td class="table-cell"><span
+                                        class="status-badge {{ 'Completed' if task.Priority == 'Low' else ('in-progress' if task.Priority == 'Medium' else 'overdue') }}">
+                                        {{ task.Priority }}
+                                    </span></td>
+                                <td class="table-cell">
+                                    <span
+                                        class="status-badge {{ 'Completed' if task.Status == 'Completed' else 'in-progress' }}">{{ task.Status }}</span>
+                                </td>
+                                <td class="table-cell">{{ task.End_Date }}</td>
+                                <td class="table-cell">{{ task.Actual_Hours }}</td>
+                            </tr>
+                            {% else %}
+                            <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
+                            {% endfor %}
+                            <!-- <tr class="table-row">
+                                <th class="table-cell task-name" scope="row">Develop API integration</th>
+                                <td class="table-cell">Maria Garcia</td>
+                                <td class="table-cell">
+                                    <span class="status-badge in-progress">In Progress</span>
+                                </td>
+                                <td class="table-cell">2023-11-05</td>
+                                <td class="table-cell">24h 15m</td>
+                            </tr>
+                            <tr class="table-row">
+                                <th class="table-cell task-name" scope="row">Test payment gateway</th>
+                                <td class="table-cell">David Chen</td>
+                                <td class="table-cell">
+                                    <span class="status-badge overdue">Overdue</span>
+                                </td>
+                                <td class="table-cell">2023-10-28</td>
+                                <td class="table-cell">8h 0m</td>
+                            </tr>
+                            <tr class="table-row">
+                                <th class="table-cell task-name" scope="row">Update user documentation</th>
+                                <td class="table-cell">Sophie Miller</td>
+                                <td class="table-cell">
+                                    <span class="status-badge todo">To Do</span>
+                                </td>
+                                <td class="table-cell">2023-11-10</td>
+                                <td class="table-cell">-</td>
+                            </tr>
+                            <tr class="table-row">
+                                <th class="table-cell task-name" scope="row">QA for mobile responsiveness</th>
+                                <td class="table-cell">Alex Johnson</td>
+                                <td class="table-cell">
+                                    <span class="status-badge completed">Completed</span>
+                                </td>
+                                <td class="table-cell">2023-10-29</td>
+                                <td class="table-cell">12h 45m</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

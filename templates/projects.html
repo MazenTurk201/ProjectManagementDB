@@ -1,0 +1,975 @@
+<style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #1664f3;
+        --background-light: #f5f6f8;
+        --background-dark: #101622;
+        --sidebar-bg: #192130;
+        --card-bg-light: #ffffff;
+        --card-bg-dark: #192130;
+        --border-light: #e5e7eb;
+        --border-dark: #374151;
+        --text-light: #111827;
+        --text-dark: #f9fafb;
+        --text-secondary-light: #6b7280;
+        --text-secondary-dark: #9ca3af;
+        --text-sidebar: #90a5cb;
+        --accent: #00C49A;
+        --accent-light: rgba(0, 196, 154, 0.2);
+        --primary-light: rgba(22, 100, 243, 0.2);
+        --hover-bg: rgba(255, 255, 255, 0.1);
+        --radius-sm: 0.25rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-full: 9999px;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-light);
+        min-height: 100vh;
+    }
+
+    body.dark {
+        background-color: var(--background-dark);
+        color: var(--text-dark);
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+        display: flex;
+        min-height: 100vh;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 256px;
+        background-color: var(--sidebar-bg);
+        color: white;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-top {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .user-avatar {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        aspect-ratio: 1 / 1;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user-name {
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .user-title {
+        color: var(--text-sidebar);
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 1rem;
+    }
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        transition: background-color 0.2s;
+        color: #9ca3af;
+    }
+
+    .nav-item:hover {
+        background-color: var(--hover-bg);
+    }
+
+    .nav-item.active {
+        background-color: rgba(22, 100, 243, 0.2);
+        color: white;
+    }
+
+    .nav-icon {
+        font-size: 24px;
+    }
+
+    .nav-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .sidebar-bottom {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .new-project-btn {
+        width: 100%;
+        height: 2.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.015em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .new-project-btn:hover {
+        background-color: rgba(22, 100, 243, 0.9);
+    }
+
+    .btn-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .bottom-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+    }
+
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        padding: 2rem;
+    }
+
+    .content-container {
+        max-width: 80rem;
+        margin: 0 auto;
+    }
+
+    /* Project Header */
+    .project-header {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: var(--card-bg-light);
+        padding: 1.5rem;
+    }
+
+    body.dark .project-header {
+        border-color: var(--border-dark);
+        background-color: var(--card-bg-dark);
+    }
+
+    .header-top {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .header-left {
+        display: flex;
+        min-width: 288px;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .title-section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem 1rem;
+    }
+
+    .project-title {
+        font-size: 1.875rem;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+        color: var(--text-light);
+    }
+
+    body.dark .project-title {
+        color: white;
+    }
+
+    .status-badge {
+        display: flex;
+        height: 1.75rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: var(--radius-full);
+        background-color: var(--accent-light);
+        padding: 0 0.75rem;
+    }
+
+    .status-icon {
+        font-size: 1rem;
+        color: var(--accent);
+    }
+
+    .status-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--accent);
+    }
+
+    .due-date {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: normal;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .due-date {
+        color: var(--text-secondary-dark);
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .avatar-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .avatar-wrapper {
+        width: 28px;
+        overflow: visible;
+    }
+
+    .avatar-item {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        border: 2px solid white;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    body.dark .avatar-item {
+        border-color: var(--sidebar-bg);
+    }
+
+    .avatar-count {
+        display: flex;
+        width: 2.25rem;
+        height: 2.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid white;
+        background-color: #e5e7eb;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #4b5563;
+    }
+
+    body.dark .avatar-count {
+        border-color: var(--sidebar-bg);
+        background-color: #374151;
+        color: #d1d5db;
+    }
+
+    .invite-btn {
+        display: flex;
+        min-width: 84px;
+        height: 2.5rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.015em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .invite-btn:hover {
+        background-color: rgba(22, 100, 243, 0.9);
+    }
+
+    .btn-icon {
+        font-size: 1.125rem;
+    }
+
+    /* Progress Section */
+    .progress-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 1.25rem;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .progress-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .progress-label {
+        color: var(--text-secondary-dark);
+    }
+
+    .progress-value {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light);
+    }
+
+    body.dark .progress-value {
+        color: var(--text-dark);
+    }
+
+    .progress-bar {
+        border-radius: var(--radius-full);
+        background-color: #e5e7eb;
+        height: 0.5rem;
+        overflow: hidden;
+    }
+
+    body.dark .progress-bar {
+        background-color: #374151;
+    }
+
+    .progress-fill {
+        height: 0.5rem;
+        border-radius: var(--radius-full);
+        background-color: var(--accent);
+    }
+
+    /* Tab Navigation */
+    .tab-navigation {
+        margin-top: 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    body.dark .tab-navigation {
+        border-bottom-color: var(--border-dark);
+    }
+
+    .tabs {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .tab {
+        white-space: nowrap;
+        border-bottom: 2px solid transparent;
+        padding: 0.75rem 0.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary-light);
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .tab:hover {
+        border-bottom-color: #d1d5db;
+        color: var(--text-light);
+    }
+
+    body.dark .tab:hover {
+        border-bottom-color: #4b5563;
+        color: #e5e7eb;
+    }
+
+    .tab.active {
+        border-bottom-color: var(--primary);
+        font-weight: 600;
+        color: var(--primary);
+    }
+
+    /* Overview Content */
+    .overview-content {
+        margin-top: 2rem;
+    }
+
+    .overview-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    @media (min-width: 1024px) {
+        .overview-grid {
+            grid-template-columns: 2fr 1fr;
+        }
+    }
+
+    .left-column {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .metrics-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .metric-card {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: var(--card-bg-light);
+        padding: 1.25rem;
+    }
+
+    body.dark .metric-card {
+        border-color: var(--border-dark);
+        background-color: var(--card-bg-dark);
+    }
+
+    .metric-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .metric-label {
+        color: var(--text-secondary-dark);
+    }
+
+    .metric-value {
+        margin-top: 0.5rem;
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: var(--text-light);
+    }
+
+    body.dark .metric-value {
+        color: white;
+    }
+
+    /* Milestones Section */
+    .milestones-section {
+        width: 100%;
+    }
+
+    .section-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+    }
+
+    body.dark .section-title {
+        color: white;
+    }
+
+    .milestones-list {
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: var(--card-bg-light);
+    }
+
+    body.dark .milestones-list {
+        border-color: var(--border-dark);
+        background-color: var(--card-bg-dark);
+    }
+
+    .milestones-ul {
+        list-style: none;
+        border-top: 1px solid var(--border-light);
+    }
+
+    body.dark .milestones-ul {
+        border-top-color: var(--border-dark);
+    }
+
+    .milestone-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    body.dark .milestone-item {
+        border-bottom-color: var(--border-dark);
+    }
+
+    .milestone-item:last-child {
+        border-bottom: none;
+    }
+
+    .milestone-content {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .milestone-icon {
+        display: flex;
+        height: 2.5rem;
+        width: 2.5rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        background-color: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .milestone-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .milestone-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-light);
+    }
+
+    body.dark .milestone-title {
+        color: var(--text-dark);
+    }
+
+    .milestone-desc {
+        font-size: 0.875rem;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .milestone-desc {
+        color: var(--text-secondary-dark);
+    }
+
+    .milestone-date {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .milestone-date {
+        color: var(--text-secondary-dark);
+    }
+
+    /* Right Column */
+    .right-column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Activity Timeline */
+    .activity-timeline {
+        margin-top: 1rem;
+    }
+
+    .timeline-ul {
+        list-style: none;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-bottom: 2rem;
+    }
+
+    .timeline-item:last-child {
+        padding-bottom: 0;
+    }
+
+    .timeline-connector {
+        position: absolute;
+        left: 1rem;
+        top: 1rem;
+        margin-left: -1px;
+        height: calc(100% - 0.5rem);
+        width: 2px;
+        background-color: var(--border-light);
+    }
+
+    body.dark .timeline-connector {
+        background-color: var(--border-dark);
+    }
+
+    .timeline-item:last-child .timeline-connector {
+        display: none;
+    }
+
+    .timeline-content {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .timeline-icon {
+        position: relative;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .timeline-icon::before {
+        content: '';
+        position: absolute;
+        left: 0.25rem;
+        top: 0.25rem;
+        right: 0.25rem;
+        bottom: 0.25rem;
+        border-radius: 50%;
+        background-color: white;
+        z-index: 0;
+    }
+
+    body.dark .timeline-icon::before {
+        background-color: var(--background-dark);
+    }
+
+    .timeline-icon .icon {
+        position: relative;
+        display: flex;
+        height: 2rem;
+        width: 2rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #f3f4f6;
+        color: var(--text-secondary-light);
+        z-index: 1;
+    }
+
+    body.dark .timeline-icon .icon {
+        background-color: #374151;
+        color: var(--text-secondary-dark);
+    }
+
+    .timeline-text {
+        min-width: 0;
+        flex: 1;
+        padding-top: 0.375rem;
+        padding-bottom: 0.375rem;
+    }
+
+    .activity-text {
+        font-size: 0.875rem;
+        color: var(--text-secondary-light);
+    }
+
+    body.dark .activity-text {
+        color: var(--text-secondary-dark);
+    }
+
+    .user-name {
+        font-weight: 500;
+        color: var(--text-light);
+    }
+
+    body.dark .user-name {
+        color: white;
+    }
+
+    .highlight {
+        font-weight: 500;
+        color: var(--text-light);
+    }
+
+    body.dark .highlight {
+        color: white;
+    }
+
+    .time {
+        white-space: nowrap;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+{% extends "base.html" %}
+
+{% block title %}لوحة التحكم - ProjectFlow{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-container">
+            <!-- Project Header -->
+            <div class="project-header">
+                <!-- Top section: Title, status, date -->
+                <div class="header-top">
+                    <div class="header-left">
+                        <div class="title-section">
+                            <p class="project-title">Last Project: {{ last_project.Name }}</p>
+                            <div class="status-badge">
+                                <span class="material-symbols-outlined status-icon">progress_activity</span>
+                                <p class="status-text">{{ last_project.Status }}</p>
+                            </div>
+                        </div>
+                        <p class="due-date">Due Date: {{ last_project.End_Date }}</p>
+                    </div>
+                    <div class="header-right">
+                        <!-- AvatarGroup -->
+                        <div class="avatar-group">
+                            <div class="avatar-wrapper">
+                                <div class="avatar-item"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFr8cgogkndxjxt7Ls4fzPBe-KouEXTD4veOlzvyssd8Nps78x4_lbOWQG927NlsNgVgsLEIUaXIgIwlvjWGrDMvh3O8Y0v7UxLhc-FZHH4o1hWBeUmf0lNQypkLBMglFV_sXAS4-4vXv3fSEuGMwsfG0MNpNDiYwDm6tzoCMTgyfzmHEuELWF2q0Cv2iIuqf7jZkF9r8a_mHZgzw_Gb75t3l8wjt89_8GSmYFzcbcmp89XiaMdae9XfHsxZD5mKW-RrJNykTaN1o");'>
+                                </div>
+                            </div>
+                            <div class="avatar-wrapper">
+                                <div class="avatar-item"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYLNaDInj26WJzw5JsvUnItu2FzoTyLC4vS-bEcgLAhHbZI26TWgROZtgf6wBnZiwWzDd13LkBktqlQzO1DDJzoPA3Ekmi_dGcEA8UwsW1Jq90CDAAkNg00LblvKgDLL-XSGBkJmUqcB3mUU91C2Pw0Rtrk7TsutV0A3CczGOwM8EtAPtqVwZeCIddeiA5WDpMOqPtn6wU1iXOZNcB66mUomVs-PSAv81nuiv-0D8zatiippgO7s1GO6NSwg_I61YHrOgK5wGE7tM");'>
+                                </div>
+                            </div>
+                            <div class="avatar-wrapper">
+                                <div class="avatar-item"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAU-mH1sIPdkhBabip-oQIue8_87dG9zSRbmZH9KqpTNOyTLxk-ag-_IhPe0OfU17V3JK-y7mX-AV0kgJ5YQfwFdHqGPSVMfbPl_eD2P8GDXapfYVUdna6LYCt9kPZVOISUUfAiWmNHAHAwEcEb0PDACbj7xlNlHz17lghnlNbP3wKM7Ulx8ebjQQnRzuDhgb-giaYxFLg1QpafLUWKtXqXDXU8ldSxkBaAuKivzkbc-vQwOCBma87GiKIBudvuE5jDX1-uTUXqrmA");'>
+                                </div>
+                            </div>
+                            <div class="avatar-wrapper">
+                                <div class="avatar-count">+2</div>
+                            </div>
+                        </div>
+                        <button class="invite-btn">
+                            <span class="material-symbols-outlined btn-icon">add</span>
+                            <span class="btn-text">Invite</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- ProgressBar -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <p class="progress-label">Project Progress</p>
+                        <p class="progress-value">: {{ project_progress }}%</p>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: {{ project_progress }}%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <nav class="tabs" aria-label="Tabs">
+                    <a class="tab active" href="#">Overview</a>
+                    <a class="tab" href="#">Tasks</a>
+                    <a class="tab" href="#">Milestones</a>
+                    <a class="tab" href="#">Files</a>
+                    <a class="tab" href="#">Activity</a>
+                    <a class="tab" href="#">Settings</a>
+                </nav>
+            </div>
+
+            <!-- Overview Tab Content -->
+            <div class="overview-content">
+                <div class="overview-grid">
+                    <!-- Left Column: Key Metrics & Upcoming Milestones -->
+                    <div class="left-column">
+                        <!-- Key Metrics Cards -->
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <p class="metric-label">Tasks Due This Week</p>
+                                <p class="metric-value">12</p>
+                            </div>
+                            <div class="metric-card">
+                                <p class="metric-label">Open Issues</p>
+                                <p class="metric-value">5</p>
+                            </div>
+                            <div class="metric-card">
+                                <p class="metric-label">Files Uploaded</p>
+                                <p class="metric-value">34</p>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Milestones -->
+                        <div class="milestones-section">
+                            <h2 class="section-title">Upcoming Milestones</h2>
+                            <div class="milestones-list">
+                                <ul class="milestones-ul" role="list">
+                                    {% for mail in mailstone %}
+                                    <li class="milestone-item">
+                                        <div class="milestone-content">
+                                            <div class="milestone-icon">
+                                                <span class="material-symbols-outlined">flag</span>
+                                            </div>
+                                            <div class="milestone-details">
+                                                <p class="milestone-title">{{ mail.Name }}</p>
+                                                <p class="milestone-desc">{{ mail.Description }}</p>
+                                            </div>
+                                        </div>
+                                        <p class="milestone-date">{{ mail.Due_Date }}</p>
+                                    </li>
+                                    {% else %}
+                                    <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
+                                    {% endfor %}
+                                    <!-- <li class="milestone-item">
+                                        <div class="milestone-content">
+                                            <div class="milestone-icon">
+                                                <span class="material-symbols-outlined">flag</span>
+                                            </div>
+                                            <div class="milestone-details">
+                                                <p class="milestone-title">Phase 2: Frontend Development</p>
+                                                <p class="milestone-desc">React component library setup</p>
+                                            </div>
+                                        </div>
+                                        <p class="milestone-date">Nov 20, 2024</p>
+                                    </li>
+                                    <li class="milestone-item">
+                                        <div class="milestone-content">
+                                            <div class="milestone-icon">
+                                                <span class="material-symbols-outlined">flag</span>
+                                            </div>
+                                            <div class="milestone-details">
+                                                <p class="milestone-title">Phase 3: Backend Integration</p>
+                                                <p class="milestone-desc">API endpoints and database schema</p>
+                                            </div>
+                                        </div>
+                                        <p class="milestone-date">Dec 05, 2024</p>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Recent Activity -->
+                    <div class="right-column">
+                        <h2 class="section-title">Recent Activity</h2>
+                        <div class="activity-timeline">
+                            <ul class="timeline-ul" role="list">
+                                <li class="timeline-item">
+                                    <div class="timeline-connector"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <span class="material-symbols-outlined icon">check_circle</span>
+                                        </div>
+                                        <div class="timeline-text">
+                                            <p class="activity-text">
+                                                <span class="user-name">Chris Evans</span>
+                                                completed task <span class="highlight">"Setup Tailwind CSS"</span>.
+                                                <span class="time">2h ago</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <div class="timeline-connector"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <span class="material-symbols-outlined icon">chat_bubble</span>
+                                        </div>
+                                        <div class="timeline-text">
+                                            <p class="activity-text">
+                                                <span class="user-name">Sarah Lee</span>
+                                                commented on <span class="highlight">"Design checkout flow"</span>.
+                                                <span class="time">5h ago</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <div class="timeline-connector"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <span class="material-symbols-outlined icon">attach_file</span>
+                                        </div>
+                                        <div class="timeline-text">
+                                            <p class="activity-text">
+                                                <span class="user-name">Mike Ross</span>
+                                                uploaded a file <span class="highlight">"Final-logo.svg"</span>.
+                                                <span class="time">Yesterday</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-item">
+                                    <div class="timeline-content">
+                                        <div class="timeline-icon">
+                                            <span class="material-symbols-outlined icon">person_add</span>
+                                        </div>
+                                        <div class="timeline-text">
+                                            <p class="activity-text">
+                                                <span class="user-name">Alicia Keys</span>
+                                                added <span class="highlight">David Chen</span> to the project.
+                                                <span class="time">2d ago</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

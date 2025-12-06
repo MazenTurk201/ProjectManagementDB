@@ -1,0 +1,603 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #0A2540;
+        --primary-light: rgba(10, 37, 64, 0.1);
+        --primary-dark: rgba(10, 37, 64, 0.2);
+        --accent: #00C49A;
+        --error: #D73A49;
+        --success: #28A745;
+        --background-light: #F6F8FA;
+        --background-dark: #101622;
+        --modal-bg-light: #FFFFFF;
+        --modal-bg-dark: #1E293B;
+        --text-light-heading: #1A202C;
+        --text-dark-heading: #F1F5F9;
+        --text-light-body: #6A737D;
+        --text-dark-body: #94A3B8;
+        --border-light: #E1E4E8;
+        --border-dark: #334155;
+        --hover-light: rgba(0, 0, 0, 0.05);
+        --hover-dark: rgba(255, 255, 255, 0.05);
+        --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --radius-sm: 0.25rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-full: 9999px;
+        --blue-light: #3b82f6;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-light-heading);
+        min-height: 100vh;
+    }
+
+    body.dark {
+        background-color: var(--background-dark);
+        color: var(--text-dark-heading);
+    }
+
+    /* Milestone Modal Container */
+    .milestone-modal-container {
+        /* position: relative;
+    display: flex; */
+        position: absolute;
+        top: 0;
+        display: none;
+        z-index: 100;
+        min-height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background-color: rgba(107, 114, 128, 0.3);
+    }
+
+    /* Modal Container */
+    .modal-container {
+        width: 100%;
+        max-width: 42rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--modal-bg-light);
+        box-shadow: var(--shadow);
+    }
+
+    body.dark .modal-container {
+        background-color: var(--modal-bg-dark);
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header */
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    body.dark .modal-header {
+        border-bottom-color: var(--border-dark);
+    }
+
+    .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-light-heading);
+    }
+
+    body.dark .modal-title {
+        color: var(--text-dark-heading);
+    }
+
+    .close-btn {
+        display: flex;
+        height: 2rem;
+        width: 2rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-full);
+        color: var(--text-light-body);
+        background: none;
+        border: none;
+        transition: background-color 0.2s;
+    }
+
+    .close-btn:hover {
+        background-color: rgba(229, 231, 235, 0.5);
+    }
+
+    body.dark .close-btn {
+        color: var(--text-dark-body);
+    }
+
+    body.dark .close-btn:hover {
+        background-color: rgba(55, 65, 81, 0.5);
+    }
+
+    .close-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Form Container */
+    .form-container {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* Form Groups */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-label {
+        padding-bottom: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-light-body);
+    }
+
+    body.dark .form-label {
+        color: var(--text-dark-body);
+    }
+
+    /* Form Inputs */
+    .form-input {
+        width: 100%;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: transparent;
+        padding: 0.75rem;
+        color: var(--text-light-heading);
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.2s;
+    }
+
+    .form-input::placeholder {
+        color: var(--text-light-body);
+    }
+
+    .form-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    body.dark .form-input {
+        border-color: var(--border-dark);
+        color: var(--text-dark-heading);
+    }
+
+    body.dark .form-input::placeholder {
+        color: var(--text-dark-body);
+    }
+
+    body.dark .form-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    /* Error Message */
+    .error-message {
+        padding-top: 0.25rem;
+        font-size: 0.75rem;
+        color: var(--error);
+    }
+
+    /* Form Textarea */
+    .form-textarea {
+        width: 100%;
+        min-height: 120px;
+        resize: vertical;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: transparent;
+        padding: 0.75rem;
+        color: var(--text-light-heading);
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.2s;
+    }
+
+    .form-textarea::placeholder {
+        color: var(--text-light-body);
+    }
+
+    .form-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    body.dark .form-textarea {
+        border-color: var(--border-dark);
+        color: var(--text-dark-heading);
+    }
+
+    body.dark .form-textarea::placeholder {
+        color: var(--text-dark-body);
+    }
+
+    body.dark .form-textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    /* Helper Text */
+    .helper-text {
+        padding-top: 0.25rem;
+        font-size: 0.75rem;
+        color: var(--text-light-body);
+    }
+
+    body.dark .helper-text {
+        color: var(--text-dark-body);
+    }
+
+    /* Date Input Wrapper */
+    .date-input-wrapper {
+        position: relative;
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .date-input {
+        width: 100%;
+        border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+        border: 1px solid var(--border-light);
+        border-right: none;
+        background-color: transparent;
+        padding: 0.75rem;
+        color: var(--text-light-heading);
+        font-size: 1rem;
+        outline: none;
+        z-index: 1;
+        transition: all 0.2s;
+    }
+
+    .date-input::placeholder {
+        color: var(--text-light-body);
+    }
+
+    .date-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    body.dark .date-input {
+        border-color: var(--border-dark);
+        color: var(--text-dark-heading);
+    }
+
+    body.dark .date-input::placeholder {
+        color: var(--text-dark-body);
+    }
+
+    body.dark .date-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    .date-icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        border: 1px solid var(--border-light);
+        border-left: none;
+        background-color: transparent;
+        padding: 0 0.75rem;
+        color: var(--text-light-body);
+    }
+
+    body.dark .date-icon-wrapper {
+        border-color: var(--border-dark);
+        color: var(--text-dark-body);
+    }
+
+    .date-icon {
+        font-size: 1.25rem;
+    }
+
+    /* Tasks Container */
+    .tasks-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        padding: 0.75rem;
+        transition: all 0.2s;
+    }
+
+    .tasks-container:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    body.dark .tasks-container {
+        border-color: var(--border-dark);
+    }
+
+    body.dark .tasks-container:focus-within {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.3);
+    }
+
+    /* Task Tags */
+    .task-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .task-tag {
+        display: flex;
+        align-items: center;
+        gap: 0.375rem;
+        border-radius: var(--radius-full);
+        background-color: var(--primary-light);
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        color: var(--primary);
+    }
+
+    body.dark .task-tag {
+        background-color: var(--primary-dark);
+        color: var(--blue-light);
+    }
+
+    .task-code {
+        font-size: 0.875rem;
+    }
+
+    .remove-task-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .remove-icon {
+        font-size: 1rem;
+    }
+
+    /* Tasks Input */
+    .tasks-input {
+        width: 100%;
+        flex: 1;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+        color: var(--text-light-heading);
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .tasks-input::placeholder {
+        color: var(--text-light-body);
+    }
+
+    .tasks-input:focus {
+        box-shadow: none;
+        outline: none;
+    }
+
+    body.dark .tasks-input {
+        color: var(--text-dark-heading);
+    }
+
+    body.dark .tasks-input::placeholder {
+        color: var(--text-dark-body);
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        padding: 1.5rem;
+        border-top: 1px solid var(--border-light);
+    }
+
+    body.dark .modal-footer {
+        border-top-color: var(--border-dark);
+    }
+
+    /* Buttons */
+    .cancel-btn {
+        display: flex;
+        height: 2.5rem;
+        min-width: 84px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        padding: 0 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light-heading);
+        background: none;
+        transition: background-color 0.2s;
+    }
+
+    .cancel-btn:hover {
+        background-color: rgba(229, 231, 235, 0.5);
+    }
+
+    body.dark .cancel-btn {
+        border-color: var(--border-dark);
+        color: var(--text-dark-heading);
+    }
+
+    body.dark .cancel-btn:hover {
+        background-color: rgba(55, 65, 81, 0.5);
+    }
+
+    .create-btn {
+        display: flex;
+        height: 2.5rem;
+        min-width: 84px;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: white;
+        border: none;
+        transition: background-color 0.2s;
+    }
+
+    .create-btn:hover {
+        background-color: rgba(10, 37, 64, 0.9);
+    }
+
+    .create-btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    /* Spinner Animation (commented out in HTML) */
+    .spinner {
+        height: 1.25rem;
+        width: 1.25rem;
+        animation: spin 1s linear infinite;
+        border-radius: var(--radius-full);
+        border: 2px solid white;
+        border-top-color: transparent;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        font-size: 24px;
+    }
+</style>
+<div class="milestone-modal-container" id="milestoneModal" style="display: none;">
+    <form action="/add_milstone" method="post">
+        <!-- Modal Container -->
+        <div class="modal-container">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title">Create Milestone</h1>
+                    <button class="close-btn" onclick="toggleModal('milestoneModal', false)">
+                        <span class="material-symbols-outlined close-icon">close</span>
+                    </button>
+                </div>
+
+                <!-- Form -->
+                <div class="form-container">
+                    <!-- Milestone Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="milestone-name">Milestone Name</label>
+                        <input class="form-input" id="milestone-name" placeholder="e.g., Q4 Product Launch"
+                            type="text" />
+                        <p class="error-message">Name cannot be empty.</p>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label class="form-label" for="description">Description (optional)</label>
+                        <textarea class="form-textarea" id="description"
+                            placeholder="Add a more detailed description..."></textarea>
+                        <p class="helper-text">The description supports Markdown formatting.</p>
+                    </div>
+
+                    <!-- Due Date -->
+                    <div class="form-group">
+                        <label class="form-label" for="due-date">Due Date</label>
+                        <div class="date-input-wrapper">
+                            <input class="date-input" id="due-date" placeholder="Select a date" type="date" />
+                            <div class="date-icon-wrapper">
+                                <span class="material-symbols-outlined date-icon">calendar_today</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Link Tasks -->
+                    <div class="form-group">
+                        <label class="form-label" for="link-tasks">Link Tasks</label>
+                        <div class="tasks-container">
+                            <div class="task-tags">
+                                <div class="task-tag">
+                                    <span class="task-code"></span>
+                                    <button class="remove-task-btn" onclick="removetaskbtnFun('task-tag')">
+                                        <span class="material-symbols-outlined remove-icon">close</span>
+                                    </button>
+                                </div>
+                                <!-- <div class="task-tag">
+                                <span class="task-code">FEAT-45</span>
+                                <button class="remove-task-btn">
+                                    <span class="material-symbols-outlined remove-icon">close</span>
+                                </button>
+                            </div>
+                            <div class="task-tag">
+                                <span class="task-code">BUG-987</span>
+                                <button class="remove-task-btn">
+                                    <span class="material-symbols-outlined remove-icon">close</span>
+                                </button>
+                            </div> -->
+                            </div>
+                            <input class="tasks-input" id="link-tasks"
+                                placeholder="Search for projects or tasks to link..." type="text" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer / Actions -->
+                <div class="modal-footer">
+                    <button class="cancel-btn" onclick="toggleModal('milestoneModal', false)">Cancel</button>
+                    <button class="create-btn">
+                        <span>Create Milestone</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script>
+            function removetaskbtnFun(modalClassName) {
+                const modal = document.getElementsByClassName(modalClassName);
+                if (modal) { modal.style.display = 'none'; }
+            }
+        </script>
+    </form>
+</div>

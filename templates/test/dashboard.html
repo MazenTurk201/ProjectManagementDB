@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <title>لوحة التحكم</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+        .header { display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 8px; }
+        .task-card { background: white; padding: 15px; margin-top: 10px; border-radius: 8px; border-right: 5px solid #007bff; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .Completed { border-right-color: #28a745; text-decoration: line-through; color: #888; }
+        .btn { padding: 5px 10px; text-decoration: none; color: white; border-radius: 4px; font-size: 0.9em; margin-left: 5px; }
+        .btn-del { background: #dc3545; }
+        .btn-done { background: #28a745; }
+        form { margin-top: 20px; background: white; padding: 20px; border-radius: 8px; }
+        input, textarea { width: 100%; padding: 8px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>أهلاً يا هندسة، {{ name }} 👋</h3>
+        <a href="/logout" style="color: red;" target="_blank">تسجيل خروج</a>
+    </div>
+
+    
+
+    <h3>📌 المهام الحالية:</h3>
+    {% for task in tasks %}
+    <div class="task-card {{ task.Status }}">
+        <div>
+            <strong>{{ task.Title }}</strong>
+            <p style="margin: 5px 0; font-size: 0.9em;">{{ task.Description }}</p>
+        </div>
+        <div>
+            <a href="/update_task/{{ task.Task_ID }}" class="btn btn-done">✔</a>
+            <a href="/delete_task/{{ task.Task_ID }}" class="btn btn-del">🗑</a>
+        </div>
+    </div>
+    {% else %}
+        <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
+    {% endfor %}
+</body>
+</html>

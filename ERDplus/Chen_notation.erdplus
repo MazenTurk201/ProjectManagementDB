@@ -1,0 +1,1085 @@
+{
+  "diagramType": 1,
+  "data": {
+    "nodes": [
+      {
+        "id": "project_entity",
+        "type": "Entity",
+        "position": {
+          "x": 200,
+          "y": 100
+        },
+        "data": {
+          "label": "Project",
+          "type": "Regular",
+          "isConnectable": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "milestone_entity",
+        "type": "Entity",
+        "position": {
+          "x": 500,
+          "y": 100
+        },
+        "data": {
+          "label": "Milestone",
+          "type": "Regular",
+          "isConnectable": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_entity",
+        "type": "Entity",
+        "position": {
+          "x": 350,
+          "y": 300
+        },
+        "data": {
+          "label": "Task",
+          "type": "Regular",
+          "isConnectable": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "team_member_entity",
+        "type": "Entity",
+        "position": {
+          "x": 100,
+          "y": 300
+        },
+        "data": {
+          "label": "Team_Member",
+          "type": "Regular",
+          "isConnectable": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "comment_entity",
+        "type": "Entity",
+        "position": {
+          "x": 600,
+          "y": 300
+        },
+        "data": {
+          "label": "Comment",
+          "type": "Regular",
+          "isConnectable": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "project_milestone_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 350,
+          "y": 100
+        },
+        "data": {
+          "label": "Has",
+          "sourceEntityDetails": {
+            "id": "project_entity",
+            "minCardinality": "Mandatory",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "milestone_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "project_task_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 275,
+          "y": 200
+        },
+        "data": {
+          "label": "Contains",
+          "sourceEntityDetails": {
+            "id": "project_entity",
+            "minCardinality": "Mandatory",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "task_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "milestone_task_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 425,
+          "y": 200
+        },
+        "data": {
+          "label": "Includes",
+          "sourceEntityDetails": {
+            "id": "milestone_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "task_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "member_task_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 225,
+          "y": 300
+        },
+        "data": {
+          "label": "Assigned_To",
+          "sourceEntityDetails": {
+            "id": "team_member_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "task_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "task_comment_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 475,
+          "y": 300
+        },
+        "data": {
+          "label": "Has",
+          "sourceEntityDetails": {
+            "id": "task_entity",
+            "minCardinality": "Mandatory",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "comment_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "member_comment_rel",
+        "type": "Relationship",
+        "position": {
+          "x": 350,
+          "y": 400
+        },
+        "data": {
+          "label": "Writes",
+          "sourceEntityDetails": {
+            "id": "team_member_entity",
+            "minCardinality": "Mandatory",
+            "maxCardinality": "One"
+          },
+          "targetEntityDetails": {
+            "id": "comment_entity",
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "isSelected": false,
+          "isConnectable": true
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false
+      },
+      {
+        "id": "project_id_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 50,
+          "y": 50
+        },
+        "data": {
+          "label": "Project_ID",
+          "types": {
+            "Unique": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "project_name_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 200,
+          "y": 50
+        },
+        "data": {
+          "label": "Name",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "project_desc_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 200,
+          "y": 150
+        },
+        "data": {
+          "label": "Description",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "start_date_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 50,
+          "y": 150
+        },
+        "data": {
+          "label": "Start_Date",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "end_date_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 350,
+          "y": 50
+        },
+        "data": {
+          "label": "End_Date",
+          "types": {
+            "Optional": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "status_attr",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 350,
+          "y": 150
+        },
+        "data": {
+          "label": "Status",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "milestone_id_attr",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 450,
+          "y": 50
+        },
+        "data": {
+          "label": "Milestone_ID",
+          "types": {
+            "Unique": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "milestone_name_attr",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 600,
+          "y": 50
+        },
+        "data": {
+          "label": "Name",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "due_date_attr",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 450,
+          "y": 150
+        },
+        "data": {
+          "label": "Due_Date",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "milestone_desc_attr",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 600,
+          "y": 150
+        },
+        "data": {
+          "label": "Description",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_id_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 300,
+          "y": 250
+        },
+        "data": {
+          "label": "Task_ID",
+          "types": {
+            "Unique": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "title_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 450,
+          "y": 250
+        },
+        "data": {
+          "label": "Title",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_desc_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 450,
+          "y": 350
+        },
+        "data": {
+          "label": "Description",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_start_date_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 300,
+          "y": 350
+        },
+        "data": {
+          "label": "Start_Date",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_end_date_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 150,
+          "y": 250
+        },
+        "data": {
+          "label": "End_Date",
+          "types": {
+            "Optional": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "priority_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 150,
+          "y": 350
+        },
+        "data": {
+          "label": "Priority",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_status_attr",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 600,
+          "y": 250
+        },
+        "data": {
+          "label": "Status",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "member_id_attr",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 0,
+          "y": 250
+        },
+        "data": {
+          "label": "Member_ID",
+          "types": {
+            "Unique": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "full_name_attr",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 150,
+          "y": 250
+        },
+        "data": {
+          "label": "Full_Name",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "email_attr",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 0,
+          "y": 350
+        },
+        "data": {
+          "label": "Email",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "role_attr",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 150,
+          "y": 350
+        },
+        "data": {
+          "label": "Role",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "comment_id_attr",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 550,
+          "y": 250
+        },
+        "data": {
+          "label": "Comment_ID",
+          "types": {
+            "Unique": true
+          },
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "content_attr",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 700,
+          "y": 250
+        },
+        "data": {
+          "label": "Content",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "timestamp_attr",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 550,
+          "y": 350
+        },
+        "data": {
+          "label": "Timestamp",
+          "types": {},
+          "isSelected": false,
+          "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      }
+    ],
+    "edges": [
+      {
+        "id": "project_milestone_rel->project_entity",
+        "type": "Relationship",
+        "source": "project_milestone_rel",
+        "target": "project_entity",
+        "data": {
+          "id": "project_milestone_rel->project_entity",
+          "minCardinality": "Mandatory",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "project_milestone_rel->milestone_entity",
+        "type": "Relationship",
+        "source": "project_milestone_rel",
+        "target": "milestone_entity",
+        "data": {
+          "id": "project_milestone_rel->milestone_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "project_task_rel->project_entity",
+        "type": "Relationship",
+        "source": "project_task_rel",
+        "target": "project_entity",
+        "data": {
+          "id": "project_task_rel->project_entity",
+          "minCardinality": "Mandatory",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "project_task_rel->task_entity",
+        "type": "Relationship",
+        "source": "project_task_rel",
+        "target": "task_entity",
+        "data": {
+          "id": "project_task_rel->task_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "milestone_task_rel->milestone_entity",
+        "type": "Relationship",
+        "source": "milestone_task_rel",
+        "target": "milestone_entity",
+        "data": {
+          "id": "milestone_task_rel->milestone_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "milestone_task_rel->task_entity",
+        "type": "Relationship",
+        "source": "milestone_task_rel",
+        "target": "task_entity",
+        "data": {
+          "id": "milestone_task_rel->task_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "member_task_rel->team_member_entity",
+        "type": "Relationship",
+        "source": "member_task_rel",
+        "target": "team_member_entity",
+        "data": {
+          "id": "member_task_rel->team_member_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "member_task_rel->task_entity",
+        "type": "Relationship",
+        "source": "member_task_rel",
+        "target": "task_entity",
+        "data": {
+          "id": "member_task_rel->task_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "task_comment_rel->task_entity",
+        "type": "Relationship",
+        "source": "task_comment_rel",
+        "target": "task_entity",
+        "data": {
+          "id": "task_comment_rel->task_entity",
+          "minCardinality": "Mandatory",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "task_comment_rel->comment_entity",
+        "type": "Relationship",
+        "source": "task_comment_rel",
+        "target": "comment_entity",
+        "data": {
+          "id": "task_comment_rel->comment_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "member_comment_rel->team_member_entity",
+        "type": "Relationship",
+        "source": "member_comment_rel",
+        "target": "team_member_entity",
+        "data": {
+          "id": "member_comment_rel->team_member_entity",
+          "minCardinality": "Mandatory",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "member_comment_rel->comment_entity",
+        "type": "Relationship",
+        "source": "member_comment_rel",
+        "target": "comment_entity",
+        "data": {
+          "id": "member_comment_rel->comment_entity",
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "project_to_id_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "project_id_attr"
+      },
+      {
+        "id": "project_to_name_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "project_name_attr"
+      },
+      {
+        "id": "project_to_desc_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "project_desc_attr"
+      },
+      {
+        "id": "project_to_start_date_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "start_date_attr"
+      },
+      {
+        "id": "project_to_end_date_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "end_date_attr"
+      },
+      {
+        "id": "project_to_status_edge",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "status_attr"
+      },
+      {
+        "id": "milestone_to_id_edge",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "milestone_id_attr"
+      },
+      {
+        "id": "milestone_to_name_edge",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "milestone_name_attr"
+      },
+      {
+        "id": "milestone_to_due_date_edge",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "due_date_attr"
+      },
+      {
+        "id": "milestone_to_desc_edge",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "milestone_desc_attr"
+      },
+      {
+        "id": "task_to_id_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "task_id_attr"
+      },
+      {
+        "id": "task_to_title_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "title_attr"
+      },
+      {
+        "id": "task_to_desc_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "task_desc_attr"
+      },
+      {
+        "id": "task_to_start_date_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "task_start_date_attr"
+      },
+      {
+        "id": "task_to_end_date_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "task_end_date_attr"
+      },
+      {
+        "id": "task_to_priority_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "priority_attr"
+      },
+      {
+        "id": "task_to_status_edge",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "task_status_attr"
+      },
+      {
+        "id": "member_to_id_edge",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "member_id_attr"
+      },
+      {
+        "id": "member_to_name_edge",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "full_name_attr"
+      },
+      {
+        "id": "member_to_email_edge",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "email_attr"
+      },
+      {
+        "id": "member_to_role_edge",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "role_attr"
+      },
+      {
+        "id": "comment_to_id_edge",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "comment_id_attr"
+      },
+      {
+        "id": "comment_to_content_edge",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "content_attr"
+      },
+      {
+        "id": "comment_to_timestamp_edge",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "timestamp_attr"
+      }
+    ],
+    "viewport": {
+      "x": 0,
+      "y": 0,
+      "zoom": 1
+    }
+  },
+  "name": "Project Management ERD (Chen)",
+  "folder": {
+    "name": "Diagrams",
+    "folderType": 1,
+    "depth": 0,
+    "id": 1
+  },
+  "id": 1001,
+  "updatedAtTimestamp": 1763652217
+}

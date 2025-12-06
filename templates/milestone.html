@@ -1,0 +1,1050 @@
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+<link rel="stylesheet" href="styles.css">
+<style>
+    /* Reset and Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --primary: #0A2540;
+        --background-light: #F6F8FA;
+        --background-dark: #101622;
+        --accent: #00C49A;
+        --border-light: #E1E4E8;
+        --border-dark: #2a3441;
+        --text-light-body: #24292E;
+        --text-dark-body: #e1e4e8;
+        --text-light-secondary: #586069;
+        --text-dark-secondary: #90a5cb;
+        --primary-light: rgba(10, 37, 64, 0.1);
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-full: 9999px;
+
+        /* Milestone Colors */
+        --blue: #3b82f6;
+        --orange: #f97316;
+        --green: #10b981;
+        --orange-light: #ffedd5;
+        --orange-dark: #92400e;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--background-light);
+        color: var(--text-light-body);
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    body.dark {
+        background-color: var(--background-dark);
+        color: var(--text-dark-body);
+    }
+
+    /* Main Layout */
+    .timeline-container {
+        display: flex;
+        height: 100vh;
+        width: 100%;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 256px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid var(--border-light);
+        background-color: var(--background-light);
+        padding: 1rem;
+    }
+
+    body.dark .sidebar {
+        border-right-color: var(--border-dark);
+        background-color: var(--background-dark);
+    }
+
+    .sidebar-top {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .project-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .project-logo {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        aspect-ratio: 1 / 1;
+    }
+
+    .project-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-name {
+        color: var(--text-light-body);
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: normal;
+    }
+
+    body.dark .project-name {
+        color: var(--text-dark-body);
+    }
+
+    .project-description {
+        color: var(--text-light-secondary);
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    body.dark .project-description {
+        color: var(--text-dark-secondary);
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--radius-lg);
+        text-decoration: none;
+        color: var(--text-light-secondary);
+        transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+        background-color: var(--primary-light);
+    }
+
+    .nav-link.active {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    body.dark .nav-link {
+        color: var(--text-dark-secondary);
+    }
+
+    body.dark .nav-link:hover {
+        background-color: var(--primary-light);
+    }
+
+    body.dark .nav-link.active {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .nav-icon {
+        font-size: 1.125rem;
+    }
+
+    .nav-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .sidebar-bottom {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .invite-team-btn {
+        display: flex;
+        min-width: 84px;
+        width: 100%;
+        height: 2.5rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.015em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .invite-team-btn:hover {
+        background-color: rgba(10, 37, 64, 0.9);
+    }
+
+    .bottom-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .btn-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Main Content */
+    .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* Header Bar */
+    .main-header {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border-light);
+        padding: 0.75rem 1.5rem;
+    }
+
+    body.dark .main-header {
+        border-bottom-color: var(--border-dark);
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .breadcrumbs {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .breadcrumb-link {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-link:hover {
+        text-decoration: underline;
+    }
+
+    body.dark .breadcrumb-link {
+        color: var(--text-dark-secondary);
+    }
+
+    .breadcrumb-separator {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light-secondary);
+    }
+
+    body.dark .breadcrumb-separator {
+        color: var(--text-dark-secondary);
+    }
+
+    .breadcrumb-current {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light-body);
+    }
+
+    body.dark .breadcrumb-current {
+        color: var(--text-dark-body);
+    }
+
+    .view-switcher {
+        display: flex;
+        height: 2.25rem;
+        width: 192px;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-lg);
+        background-color: #e5e7eb;
+        padding: 0.125rem;
+    }
+
+    body.dark .view-switcher {
+        background-color: var(--background-dark);
+    }
+
+    .view-option {
+        display: flex;
+        height: 100%;
+        flex: 1;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        padding: 0 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+        color: var(--text-light-secondary);
+        transition: all 0.2s;
+    }
+
+    body.dark .view-option {
+        color: var(--text-dark-secondary);
+    }
+
+    .view-option:has(.option-input:checked) {
+        background-color: var(--background-light);
+        color: var(--text-light-body);
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .view-option:has(.option-input:checked) {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .option-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .option-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .toolbar-buttons {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .toolbar-btn {
+        padding: 0.5rem;
+        border-radius: var(--radius-lg);
+        color: var(--text-light-secondary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toolbar-btn:hover {
+        background-color: var(--primary-light);
+    }
+
+    body.dark .toolbar-btn {
+        color: var(--text-dark-secondary);
+    }
+
+    .new-milestone-btn {
+        display: flex;
+        height: 2.25rem;
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        background-color: var(--primary);
+        padding: 0 1rem;
+        border: none;
+        font-size: 0.875rem;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 0.025em;
+        color: white;
+        transition: background-color 0.2s;
+    }
+
+    .new-milestone-btn:hover {
+        background-color: rgba(10, 37, 64, 0.9);
+    }
+
+    .btn-icon {
+        font-size: 1.125rem;
+    }
+
+    /* Timeline Canvas */
+    .timeline-canvas {
+        flex: 1;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 1.5rem;
+    }
+
+    .timeline-container-inner {
+        position: relative;
+        min-width: 1200px;
+    }
+
+    /* Time Axis Header */
+    .time-axis {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        border-bottom: 1px solid var(--border-light);
+        padding-bottom: 0.75rem;
+    }
+
+    body.dark .time-axis {
+        border-bottom-color: var(--border-dark);
+    }
+
+    .month-label {
+        text-align: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-light-secondary);
+    }
+
+    body.dark .month-label {
+        color: var(--text-dark-secondary);
+    }
+
+    /* Timeline Grid */
+    .timeline-grid {
+        position: absolute;
+        inset: 0;
+        top: 2.75rem;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+    }
+
+    .grid-column {
+        border-right: 1px solid rgba(225, 228, 232, 0.5);
+        height: 100%;
+    }
+
+    body.dark .grid-column {
+        border-right-color: rgba(42, 52, 65, 0.5);
+    }
+
+    .grid-column.last {
+        border-right: none;
+    }
+
+    /* Today Marker */
+    .today-marker {
+        position: absolute;
+        height: 100%;
+        width: 1px;
+        background-color: var(--accent);
+        left: 45%;
+    }
+
+    .today-label {
+        position: absolute;
+        top: -1.75rem;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: var(--radius-full);
+        background-color: var(--accent);
+        padding: 0.125rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: white;
+    }
+
+    /* Milestones Container */
+    .milestones-container {
+        position: relative;
+        gap: 1rem;
+        padding-top: 2rem;
+    }
+
+    /* Milestone Styles */
+    .milestone {
+        position: absolute;
+        width: 160px;
+        cursor: pointer;
+    }
+
+    .milestone-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .milestone-dot {
+        display: flex;
+        width: 1rem;
+        height: 1rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 4px solid var(--background-light);
+    }
+
+    body.dark .milestone-dot {
+        border-color: var(--background-dark);
+    }
+
+    .milestone-dot.blue {
+        background-color: var(--blue);
+    }
+
+    .milestone-dot.orange {
+        background-color: var(--orange);
+        transform: rotate(45deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .milestone-dot.green {
+        background-color: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .milestone-dot-inner {
+        width: 0.75rem;
+        height: 0.75rem;
+        background-color: var(--background-light);
+    }
+
+    body.dark .milestone-dot-inner {
+        background-color: var(--background-dark);
+    }
+
+    .milestone-icon {
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        color: white;
+        font-variation-settings: 'FILL' 1 !important;
+    }
+
+    .milestone-line {
+        height: 1rem;
+        width: 1px;
+        background-color: var(--border-light);
+    }
+
+    body.dark .milestone-line {
+        background-color: var(--border-dark);
+    }
+
+    .milestone-card {
+        margin-top: 0.25rem;
+        border-radius: var(--radius-md);
+        background-color: var(--background-light);
+        padding: 0.25rem 0.5rem;
+        text-align: center;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        border: 1px solid var(--border-light);
+    }
+
+    body.dark .milestone-card {
+        background-color: var(--background-dark);
+        border-color: var(--border-dark);
+    }
+
+    .milestone-card.active {
+        background-color: var(--primary);
+        border: 2px solid var(--primary);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    body.dark .milestone-card.active {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .milestone-title {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-light-body);
+    }
+
+    body.dark .milestone-title {
+        color: var(--text-dark-body);
+    }
+
+    .milestone-card.active .milestone-title {
+        color: white;
+    }
+
+    .milestone-date {
+        font-size: 0.75rem;
+        color: var(--text-light-secondary);
+    }
+
+    body.dark .milestone-date {
+        color: var(--text-dark-secondary);
+    }
+
+    .milestone-card.active .milestone-date {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Milestone Popover */
+    .milestone-popover {
+        position: absolute;
+        width: 320px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-light);
+        background-color: var(--background-light);
+        padding: 1.25rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        z-index: 10;
+    }
+
+    body.dark .milestone-popover {
+        border-color: var(--border-dark);
+        background-color: #374151;
+    }
+
+    .popover-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+    }
+
+    .popover-title {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--text-light-body);
+        margin-bottom: 0.5rem;
+    }
+
+    body.dark .popover-title {
+        color: var(--text-dark-body);
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: var(--radius-full);
+        background-color: var(--orange-light);
+        padding: 0.125rem 0.625rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--orange-dark);
+    }
+
+    body.dark .status-badge {
+        background-color: rgba(249, 115, 22, 0.5);
+        color: #fdba74;
+    }
+
+    .popover-close {
+        padding: 0.25rem;
+        color: var(--text-light-secondary);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .popover-close:hover {
+        color: var(--text-light-body);
+    }
+
+    body.dark .popover-close {
+        color: var(--text-dark-secondary);
+    }
+
+    body.dark .popover-close:hover {
+        color: var(--text-dark-body);
+    }
+
+    .popover-description {
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: var(--text-light-secondary);
+        line-height: 1.5;
+    }
+
+    body.dark .popover-description {
+        color: var(--text-dark-secondary);
+    }
+
+    .popover-details {
+        margin-top: 1rem;
+        border-top: 1px solid var(--border-light);
+        padding-top: 1rem;
+    }
+
+    body.dark .popover-details {
+        border-top-color: var(--border-dark);
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.875rem;
+    }
+
+    .detail-label {
+        font-weight: 500;
+        color: var(--text-light-secondary);
+    }
+
+    body.dark .detail-label {
+        color: var(--text-dark-secondary);
+    }
+
+    .detail-value {
+        font-weight: 600;
+        color: var(--text-light-body);
+    }
+
+    body.dark .detail-value {
+        color: var(--text-dark-body);
+    }
+
+    .progress-section {
+        margin-top: 0.75rem;
+    }
+
+    .progress-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .progress-label {
+        font-weight: 500;
+        color: var(--text-light-secondary);
+    }
+
+    body.dark .progress-label {
+        color: var(--text-dark-secondary);
+    }
+
+    .progress-value {
+        font-weight: 600;
+        color: var(--text-light-body);
+    }
+
+    body.dark .progress-value {
+        color: var(--text-dark-body);
+    }
+
+    .progress-bar {
+        width: 100%;
+        border-radius: var(--radius-full);
+        background-color: #e5e7eb;
+        height: 0.5rem;
+        overflow: hidden;
+    }
+
+    body.dark .progress-bar {
+        background-color: #4b5563;
+    }
+
+    .progress-fill {
+        height: 0.5rem;
+        border-radius: var(--radius-full);
+        background-color: var(--accent);
+    }
+
+    .popover-team {
+        margin-top: 1rem;
+        border-top: 1px solid var(--border-light);
+        padding-top: 1rem;
+    }
+
+    body.dark .popover-team {
+        border-top-color: var(--border-dark);
+    }
+
+    .team-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-light-body);
+        margin-bottom: 0.5rem;
+    }
+
+    body.dark .team-title {
+        color: var(--text-dark-body);
+    }
+
+    .team-members {
+        display: flex;
+        margin-top: 0.5rem;
+    }
+
+    .team-member {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    body.dark .team-member {
+        border-color: #374151;
+    }
+
+    .team-member:not(:first-child) {
+        margin-left: -0.5rem;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .material-symbols-outlined.fill-1 {
+        font-variation-settings: 'FILL' 1;
+    }
+</style>
+{% extends "base.html" %}
+
+{% block title %}تفاصيل المشروع - {% endblock %}
+
+{% block content %}
+<div class="timeline-container">
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header Bar -->
+        <header class="main-header">
+            <!-- Breadcrumbs & SegmentedButtons -->
+            <div class="header-left">
+                <div class="breadcrumbs">
+                    <a class="breadcrumb-link" href="#">All Projects</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <a class="breadcrumb-link" href="#">Project Alpha</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span class="breadcrumb-current">Milestones</span>
+                </div>
+                <div class="view-switcher">
+                    <label class="view-option">
+                        <span class="option-text">Timeline</span>
+                        <input checked="" class="option-input" name="view-switcher" type="radio" value="Timeline" />
+                    </label>
+                    <label class="view-option">
+                        <span class="option-text">List</span>
+                        <input class="option-input" name="view-switcher" type="radio" value="List" />
+                    </label>
+                </div>
+            </div>
+            <!-- ToolBar & New Milestone Button -->
+            <div class="header-right">
+                <div class="toolbar-buttons">
+                    <button class="toolbar-btn">
+                        <span class="material-symbols-outlined">zoom_in</span>
+                    </button>
+                    <button class="toolbar-btn">
+                        <span class="material-symbols-outlined">zoom_out</span>
+                    </button>
+                    <button class="toolbar-btn">
+                        <span class="material-symbols-outlined">filter_list</span>
+                    </button>
+                </div>
+                <button class="new-milestone-btn" onclick="openTaskModal('hi', 'idd')">
+                    <span class="material-symbols-outlined btn-icon">add</span>
+                    <span class="btn-text">New Milestone</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Timeline Canvas -->
+        <div class="timeline-canvas">
+            <div class="timeline-container-inner">
+                <!-- Time Axis Header -->
+                <div class="time-axis">
+                    <div class="month-label">Jan '24</div>
+                    <div class="month-label">Feb '24</div>
+                    <div class="month-label">Mar '24</div>
+                    <div class="month-label">Apr '24</div>
+                    <div class="month-label">May '24</div>
+                    <div class="month-label">Jun '24</div>
+                    <div class="month-label">Jul '24</div>
+                    <div class="month-label">Aug '24</div>
+                    <div class="month-label">Sep '24</div>
+                    <div class="month-label">Oct '24</div>
+                    <div class="month-label">Nov '24</div>
+                    <div class="month-label">Dec '24</div>
+                </div>
+
+                <!-- Timeline Grid & "Today" Marker -->
+                <div class="timeline-grid">
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column"></div>
+                    <div class="grid-column last"></div>
+
+                    <!-- Today Marker -->
+                    <div class="today-marker">
+                        <div class="today-label">TODAY</div>
+                    </div>
+                </div>
+
+                <!-- Milestone Rows -->
+                <div class="milestones-container">
+                    <!-- Milestone: Phase 1 Kickoff -->
+                    <div class="milestone" style="left: 20%;">
+                        <div class="milestone-content">
+                            <div class="milestone-dot blue"></div>
+                            <div class="milestone-line"></div>
+                            <div class="milestone-card">
+                                <p class="milestone-title">Phase 1 Kickoff</p>
+                                <p class="milestone-date">Mar 15</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone: Design Finalized -->
+                    <div class="milestone" style="left: 30%; top: 8rem;">
+                        <div class="milestone-content">
+                            <div class="milestone-dot blue"></div>
+                            <div class="milestone-line"></div>
+                            <div class="milestone-card">
+                                <p class="milestone-title">Design Finalized</p>
+                                <p class="milestone-date">Apr 22</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone: Beta Launch (Active/Selected) -->
+                    <div class="milestone active" style="left: 40%;">
+                        <div class="milestone-content">
+                            <div class="milestone-dot orange">
+                                <div class="milestone-dot-inner"></div>
+                            </div>
+                            <div class="milestone-line"></div>
+                            <div class="milestone-card active">
+                                <p class="milestone-title">Beta Launch</p>
+                                <p class="milestone-date">May 30</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone Detail Popover -->
+                    <div class="milestone-popover" style="left: calc(40% + 5rem); top: -2rem;" id="milestone-popover"
+                        onclick="toggleModal('milestone-popover', false)">
+                        <div class="popover-header">
+                            <div>
+                                <h3 class="popover-title">Beta Launch</h3>
+                                <span class="status-badge">
+                                    On Track
+                                </span>
+                            </div>
+                            <button class="popover-close">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        <p class="popover-description">
+                            Initial release of the product to a limited audience for testing and feedback.
+                        </p>
+                        <div class="popover-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Due Date</span>
+                                <span class="detail-value">May 30, 2024</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="progress-header">
+                                    <span class="progress-label">Progress</span>
+                                    <span class="progress-value">5/8 tasks</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 62.5%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popover-team">
+                            <h4 class="team-title">Team</h4>
+                            <div class="team-members">
+                                <img class="team-member" data-alt="Avatar of Sarah Day"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD6FPtnEb7hrkV4PuKY412KDCCYlUOCNk8IUixvVdtSQfaUooD-C_DY7ukfdletRGDNvbN8JEb76cGVRnb35cSx6Jc_QepPtNJ50nirgB7axj2EnDjM1cRJ5Hf3_meNKwUnDOPHf4Mul3QkY41ujldHm8mLneU7DTWAU3H6JCKGpE3ZlefdgDXyZL2OFhLTmfvqN_jATVcEWWVmgEYOkgr1Q02W46U2NfcSgneKBzbxUQvjJ4sIyPxp3S8h1NRLWMu9RE1sRxQpTk" />
+                                <img class="team-member" data-alt="Avatar of Alex Johnson"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm4zNwEyKm6EQMNiMElQNGFsJYCCqYpcj_sv6fxCg5gqxokGK0AmXd53kA_QvlD1EFUuEVRVI5OySWXC2e_F0yrb8rU6Vsz5kROpBPnGgQuhPzTVQ_LB1-MSu30i-psgsd76j2I-X6kA-Z4UCwCXSWSjUOSIc_MFPmtPjQx0Am3cmHkKSpg9S-FlhDkjSVmKzfd8QMBukenTmO6hFYgDlOfRq_WThFBP8WF7ICmllx86mnwzKvAStagFBfL-5sHpWhFG9873oTJT4" />
+                                <img class="team-member" data-alt="Avatar of Maria Garcia"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFq_dE58Z-Qze6rJjvZUkt7Vt6Eo1co27XAu4eWDUCk-AwgmK72pakWAqv6iCQi615RvfzigP9TWbbpAZnXWNblEt5J0fMmeSeIqC6fAtpRwbek-VgDMlEsbos4UcfZQbDqMJNeSVQV2vkaCutbEMrjijZO42szIglC5izgsCzEfeOIW5SZGv_eGAuw6epUnyxhAi3KwJ5bQCbTzbKqUQhYIPRyiiuj_jv6z2E9bbqtLAWzZpqVzhXgKZqXuM6RZsbFe1P-mFTmsU" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone: Project Completion -->
+                    <div class="milestone" style="left: 50%; top: 4rem;">
+                        <div class="milestone-content">
+                            <div class="milestone-dot green">
+                                <span class="material-symbols-outlined milestone-icon">check</span>
+                            </div>
+                            <div class="milestone-line"></div>
+                            <div class="milestone-card">
+                                <p class="milestone-title">Project Completion</p>
+                                <p class="milestone-date">Jun 15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function openTaskModal(title, id) {
+            // 1. نمسك العناصر اللي جوه المودال
+            document.querySelector('.task-code').innerText = title;
+            document.querySelector('.task-code').innerText += " " + id;
+            toggleModal('milestoneModal', true);
+        }
+    </script>
+</div>
+{% include 'components/create_milestone.html' %}
+{% endblock %}

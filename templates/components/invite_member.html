@@ -1,0 +1,630 @@
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+<style>
+    :root {
+        --primary-color: #1664f3;
+        --accent-teal: #00A79D;
+        --background-light: #f5f6f8;
+        --background-dark: #101622;
+        --modal-bg: #182234;
+        --border-color: #314468;
+        --chip-bg: #223049;
+        --text-white: #ffffff;
+        --text-gray-light: #f5f6f8;
+        --text-gray-medium: #90a5cb;
+        --text-gray-dark: #314468;
+        --hover-bg: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: rgba(16, 22, 34, 0.8);
+        color: var(--text-gray-light);
+        min-height: 100vh;
+    }
+
+    .container {
+        position: absolute;
+        top: 0;
+        display: none;
+        z-index: 100;
+        min-height: 100vh;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    /* Modal Container */
+    .modal-container {
+        display: flex;
+        width: 100%;
+        max-width: 42rem;
+        flex-direction: column;
+        border-radius: 0.75rem;
+        background-color: var(--modal-bg);
+        color: white;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Modal Header */
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding: 1rem 1.5rem;
+    }
+
+    .modal-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: var(--text-white);
+    }
+
+    .close-button {
+        display: flex;
+        height: 2rem;
+        width: 2rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        color: var(--text-gray-medium);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .close-button:hover {
+        background-color: var(--hover-bg);
+        color: var(--text-white);
+    }
+
+    .close-icon {
+        font-size: 1.5rem;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    /* Form Groups */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-gray-light);
+    }
+
+    /* Email Input Field */
+    .email-input-container {
+        display: flex;
+        min-height: 3rem;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-dark);
+        padding: 0.5rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .email-input-container:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(22, 100, 243, 0.3);
+    }
+
+    .email-chip {
+        display: flex;
+        height: 2rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.375rem;
+        background-color: var(--chip-bg);
+        padding-left: 0.75rem;
+        padding-right: 0.5rem;
+    }
+
+    .email-chip-text {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: var(--text-white);
+    }
+
+    .chip-remove-button {
+        display: flex;
+        height: 1.25rem;
+        width: 1.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        color: var(--text-gray-medium);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .chip-remove-button:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--text-white);
+    }
+
+    .chip-remove-icon {
+        font-size: 1rem;
+    }
+
+    .email-input {
+        flex: 1;
+        background-color: transparent;
+        padding: 0.25rem;
+        color: var(--text-white);
+        border: none;
+        outline: none;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    .email-input::placeholder {
+        color: var(--text-gray-medium);
+    }
+
+    /* Role Selection Dropdown */
+    .role-select {
+        width: 100%;
+        min-width: 0;
+        flex: 1;
+        resize: none;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-dark);
+        color: var(--text-white);
+        padding: 0.75rem 2.5rem 0.75rem 1rem;
+        font-size: 1rem;
+        font-family: inherit;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2390a5cb'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.25rem 1.25rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .role-select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(22, 100, 243, 0.3);
+    }
+
+    /* Permission/Project Access List */
+    .projects-list {
+        display: flex;
+        flex-direction: column;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-dark);
+        padding: 0.25rem;
+    }
+
+    .project-checkbox-label {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        gap: 0.75rem;
+        border-radius: 0.375rem;
+        padding: 0.625rem 0.75rem;
+        transition: background-color 0.2s;
+    }
+
+    .project-checkbox-label:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .project-checkbox {
+        height: 1.25rem;
+        width: 1.25rem;
+        border-radius: 0.25rem;
+        border: 2px solid var(--border-color);
+        background-color: transparent;
+        appearance: none;
+        cursor: pointer;
+        position: relative;
+        transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .project-checkbox:checked {
+        border-color: var(--primary-color);
+        background-color: var(--primary-color);
+    }
+
+    .project-checkbox:checked::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0.75rem;
+        height: 0.75rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M12.207 4.793a1 1 0 0 1 0 1.414l-5 5a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L6.5 9.086l4.293-4.293a1 1 0 0 1 1.414 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .project-checkbox:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(22, 100, 243, 0.3);
+    }
+
+    .project-name {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: var(--text-white);
+    }
+
+    /* Optional Message Text Area */
+    .message-textarea {
+        width: 100%;
+        resize: none;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-dark);
+        color: var(--text-white);
+        padding: 0.75rem;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .message-textarea::placeholder {
+        color: var(--text-gray-medium);
+    }
+
+    .message-textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(22, 100, 243, 0.3);
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-top: 1px solid var(--border-color);
+        padding: 1rem 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .modal-footer {
+            flex-direction: row-reverse;
+        }
+    }
+
+    .footer-left {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+        .footer-left {
+            width: auto;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    .invite-count {
+        font-size: 0.875rem;
+        color: var(--text-gray-medium);
+    }
+
+    .send-button {
+        width: 100%;
+        border-radius: 0.5rem;
+        background-color: var(--primary-color);
+        padding: 0.625rem 1.25rem;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-white);
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+    @media (min-width: 640px) {
+        .send-button {
+            width: auto;
+        }
+    }
+
+    .send-button:hover {
+        opacity: 0.9;
+    }
+
+    .send-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(22, 100, 243, 0.3);
+    }
+
+    .link-button {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        align-self: flex-start;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--accent-teal);
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    @media (min-width: 640px) {
+        .link-button {
+            align-self: center;
+        }
+    }
+
+    .link-button:hover span:last-child {
+        text-decoration: underline;
+    }
+
+    .link-icon {
+        font-size: 1rem;
+    }
+
+    /* Material Icons */
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+</style>
+<div class="container" id="inviteMemberModal">
+    <!-- Modal Container -->
+        <div class="modal-container">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h2 class="modal-title">Invite members to QuantumLeap</h2>
+                <button class="close-button" onclick="toggleModal('inviteMemberModal', false)">
+                    <span class="material-symbols-outlined close-icon">close</span>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="modal-content">
+                <!-- Email Input Field -->
+                <div class="form-group">
+                    <label class="form-label" for="email-input">Email addresses</label>
+                    <div class="email-input-container">
+                        <div class="email-chip">
+                            <span class="email-chip-text">pm@example.com</span>
+                            <button class="chip-remove-button">
+                                <span class="material-symbols-outlined chip-remove-icon">close</span>
+                            </button>
+                        </div>
+                        <div class="email-chip">
+                            <span class="email-chip-text">lead@example.com</span>
+                            <button class="chip-remove-button">
+                                <span class="material-symbols-outlined chip-remove-icon">close</span>
+                            </button>
+                        </div>
+                        <input class="email-input" id="email-input" placeholder="Enter one or more emails"
+                            type="email" />
+                    </div>
+                </div>
+
+                <!-- Role Selection Dropdown -->
+                <label class="form-group">
+                    <span class="form-label">Role</span>
+                    <select class="role-select">
+                        <option value="editor">Editor</option>
+                        <option value="admin">Admin</option>
+                        <option value="viewer">Viewer</option>
+                    </select>
+                </label>
+
+                <!-- Permission/Project Access List -->
+                <div class="form-group">
+                    <span class="form-label">Add to projects (optional)</span>
+                    <div class="projects-list">
+                        <label class="project-checkbox-label">
+                            <input class="project-checkbox" type="checkbox" checked />
+                            <span class="project-name">Project Alpha</span>
+                        </label>
+                        <label class="project-checkbox-label">
+                            <input class="project-checkbox" type="checkbox" />
+                            <span class="project-name">Project Beta</span>
+                        </label>
+                        <label class="project-checkbox-label">
+                            <input class="project-checkbox" type="checkbox" />
+                            <span class="project-name">Project Gamma</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Optional Message Text Area -->
+                <label class="form-group">
+                    <span class="form-label">Add a personal message (optional)</span>
+                    <textarea class="message-textarea" placeholder="Your message..." rows="3"></textarea>
+                </label>
+            </div>
+
+            <!-- Modal Footer / Actions -->
+            <div class="modal-footer">
+                <div class="footer-left">
+                    <p class="invite-count">You're sending 2 invites</p>
+                    <button class="send-button">Send Invites</button>
+                </div>
+                <button class="link-button">
+                    <span class="material-symbols-outlined link-icon">link</span>
+                    <span>Or, copy a shareable invite link</span>
+                </button>
+            </div>
+        </div>
+</div>
+
+<script>
+    // Email chip functionality
+    const emailInput = document.getElementById('email-input');
+    const chipRemoveButtons = document.querySelectorAll('.chip-remove-button');
+
+    // Add email chip
+    function addEmailChip(email) {
+        if (!email || !isValidEmail(email)) return;
+
+        const chipContainer = document.querySelector('.email-input-container');
+        const chip = document.createElement('div');
+        chip.className = 'email-chip';
+        chip.innerHTML = `
+                <span class="email-chip-text">${email}</span>
+                <button class="chip-remove-button">
+                    <span class="material-symbols-outlined chip-remove-icon">close</span>
+                </button>
+            `;
+
+        // Insert before the input field
+        chipContainer.insertBefore(chip, emailInput);
+
+        // Add remove functionality
+        chip.querySelector('.chip-remove-button').addEventListener('click', function () {
+            chip.remove();
+            updateInviteCount();
+        });
+
+        // Clear input
+        emailInput.value = '';
+
+        // Update invite count
+        updateInviteCount();
+    }
+
+    // Remove email chip
+    chipRemoveButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('.email-chip').remove();
+            updateInviteCount();
+        });
+    });
+
+    // Email input handling
+    emailInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addEmailChip(this.value.trim());
+        }
+    });
+
+    emailInput.addEventListener('blur', function () {
+        if (this.value.trim()) {
+            addEmailChip(this.value.trim());
+        }
+    });
+
+    // Email validation
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Update invite count
+    function updateInviteCount() {
+        const chipCount = document.querySelectorAll('.email-chip').length;
+        const countElement = document.querySelector('.invite-count');
+        countElement.textContent = `You're sending ${chipCount} invite${chipCount !== 1 ? 's' : ''}`;
+    }
+
+    // Close modal functionality
+    // document.querySelector('.close-button').addEventListener('click', function () {
+    //     if (confirm('Are you sure you want to close? Any unsaved changes will be lost.')) {
+    //         document.querySelector('.modal-container').style.transform = 'scale(0.95)';
+    //         document.querySelector('.modal-container').style.opacity = '0';
+    //         setTimeout(() => {
+    //             alert('Modal closed. In a real app, this would close the modal.');
+    //         }, 200);
+    //     }
+    // });
+
+    // Send invites functionality
+    document.querySelector('.send-button').addEventListener('click', function () {
+        const chips = document.querySelectorAll('.email-chip');
+        const role = document.querySelector('.role-select').value;
+        const checkedProjects = Array.from(document.querySelectorAll('.project-checkbox:checked'))
+            .map(cb => cb.closest('label').querySelector('.project-name').textContent);
+        const message = document.querySelector('.message-textarea').value;
+
+        if (chips.length === 0) {
+            alert('Please add at least one email address.');
+            emailInput.focus();
+            return;
+        }
+
+        const emails = Array.from(chips).map(chip =>
+            chip.querySelector('.email-chip-text').textContent
+        );
+
+        // Show success message
+        const messageText = message ? ` with message: "${message}"` : '';
+        alert(`Invites sent to: ${emails.join(', ')}\nRole: ${role}\nProjects: ${checkedProjects.join(', ') || 'None'}${messageText}`);
+
+        // Reset form
+        chips.forEach(chip => chip.remove());
+        document.querySelector('.role-select').value = 'editor';
+        document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = false);
+        document.querySelector('.project-checkbox').checked = true; // Keep first checked
+        document.querySelector('.message-textarea').value = '';
+        updateInviteCount();
+    });
+
+    // Copy link functionality
+    document.querySelector('.link-button').addEventListener('click', function () {
+        const inviteLink = 'https://quantumleap.app/invite/abc123-def456';
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(inviteLink).then(() => {
+            const originalText = this.querySelector('span:last-child').textContent;
+            this.querySelector('span:last-child').textContent = 'Link copied!';
+
+            setTimeout(() => {
+                this.querySelector('span:last-child').textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            alert('Failed to copy link: ' + err);
+        });
+    });
+
+    // Initialize invite count
+    updateInviteCount();
+</script>

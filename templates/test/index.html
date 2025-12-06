@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>إدارة المشاريع</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: white;
+        }
+
+        .Active {
+            background-color: #28a745;
+        }
+
+        .Planning {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .Completed {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📋 قائمة المشاريع الحالية</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>اسم المشروع</th>
+                <th>الوصف</th>
+                <th>الميزانية</th>
+                <th>تاريخ البداية</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.Name }}</td>
+                <td>{{ project.Description }}</td>
+                <td>${{ project.Budget }}</td>
+                <td>{{ project.Start_Date }}</td>
+                <td>
+                    <span class="status {{ project.Status }}">
+                        {{ project.Status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

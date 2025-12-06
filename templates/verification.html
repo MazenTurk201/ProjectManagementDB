@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verify Your Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,0..200" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0a60ff",
+              "background-light": "#f5f6f8",
+              "background-dark": "#0f1623",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col items-center justify-center p-4">
+<div class="layout-container flex h-full w-full max-w-md grow flex-col items-center justify-center">
+<div class="w-full rounded-xl border border-slate-200/50 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900/50 sm:p-8">
+<div class="flex flex-col items-center justify-center text-center">
+<div class="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-4xl">mark_email_unread</span>
+</div>
+<h1 class="text-slate-800 dark:text-white mt-6 text-2xl font-bold tracking-tight sm:text-3xl">Verify Your Account</h1>
+<p class="text-slate-600 dark:text-slate-400 mt-3 max-w-sm text-base leading-relaxed">
+                        We've sent a verification link to <strong class="font-medium text-slate-700 dark:text-slate-300">your.email@company.com</strong>. Please check your inbox and click the link to activate your account.
+                    </p>
+<div class="mt-8 w-full">
+<button class="flex min-w-[84px] w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+<span class="truncate">Open Email App</span>
+</button>
+</div>
+<p class="text-slate-500 dark:text-slate-400 mt-8 text-sm">
+                        Didn't receive an email? 
+                        <a class="font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50" href="#">Resend</a>
+</p>
+<a class="text-slate-500 dark:text-slate-400 mt-4 text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50" href="#">Back to Login</a>
+</div>
+</div>
+</div>
+</div>
+</body></html>

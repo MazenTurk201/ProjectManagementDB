@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Notifications Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        :root {
+            --primary-color: #0A2540;
+            --accent-color: #00C49A;
+            --background-light: #F6F9FC;
+            --background-dark: #101622;
+            --sidebar-dark: #07192D;
+            --text-primary-light: #333333;
+            --text-primary-dark: #E6E6E6;
+            --text-secondary-light: #66758A;
+            --text-secondary-dark: #90a5cb;
+            --border-light: #E6E6E6;
+            --border-dark: #223049;
+            --card-dark: #223049;
+            --blue-100: #dbeafe;
+            --blue-600: #2563eb;
+            --blue-800: #1e40af;
+            --green-100: #d1fae5;
+            --green-600: #059669;
+            --green-900: #064e3b;
+            --red-100: #fee2e2;
+            --red-600: #dc2626;
+            --red-900: #7f1d1d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary-light);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark {
+            background-color: var(--background-dark);
+            color: var(--text-primary-dark);
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 16rem;
+            flex-shrink: 0;
+            background-color: var(--sidebar-dark);
+            padding: 1rem;
+            border-right: 1px solid transparent;
+        }
+
+        .dark .sidebar {
+            background-color: var(--background-dark);
+            border-color: var(--border-dark);
+        }
+
+        .sidebar-content {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        /* Company Info */
+        .company-info {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            padding: 0 0.5rem;
+        }
+
+        .company-logo {
+            background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB5Yji1ACKYFpEM7aEYpjCQpcmKd3gGgjZD5YdmNGY2SlMwosPyaHxL0mrG8nIDg0lR7hndXw99j2J1j4dZxqIcJIPhHF3BdfVKXmvJ30tRGdzMGBN47Rqnv9nysBEPuB3j394kzASeipYA43Qd8_7zZEcKlnmTB8krZivL08cRi8EobcqO3hS7f6dMJCeRH7Fjsz8YDoWEjv4xNSoCiG80cE8jTavMHQZgT_5ChbXI0pxuhyp2Sl8E1EfjGUCqFp79vbhDo9i3P1M");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            aspect-ratio: 1 / 1;
+            border-radius: 9999px;
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .company-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-name {
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .company-subtitle {
+            color: var(--text-secondary-dark);
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--border-dark);
+            color: white;
+        }
+
+        .nav-link.active {
+            background-color: rgba(10, 37, 64, 0.3);
+            color: white;
+        }
+
+        .dark .nav-link.active {
+            background-color: rgba(10, 37, 64, 0.5);
+        }
+
+        .nav-icon {
+            font-size: 1.25rem;
+        }
+
+        .nav-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                padding: 2.5rem;
+            }
+        }
+
+        .content-wrapper {
+            max-width: 64rem;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-title {
+            color: var(--primary-color);
+            font-size: 2.25rem;
+            font-weight: 900;
+            line-height: 1.25;
+            letter-spacing: -0.033em;
+        }
+
+        .dark .page-title {
+            color: white;
+        }
+
+        /* Buttons */
+        .primary-button {
+            display: flex;
+            min-width: 84px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            height: 2.5rem;
+            padding: 0 1rem;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: 0.015em;
+            border: none;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+
+        .primary-button:hover {
+            opacity: 0.9;
+        }
+
+        .button-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-label {
+            display: flex;
+            flex-direction: column;
+            min-width: 10rem;
+            height: 3rem;
+            width: 100%;
+        }
+
+        .search-wrapper {
+            display: flex;
+            width: 100%;
+            flex: 1;
+            align-items: stretch;
+            border-radius: 0.5rem;
+            height: 100%;
+            background-color: white;
+            border: 1px solid var(--border-light);
+        }
+
+        .dark .search-wrapper {
+            background-color: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+
+        .search-wrapper:focus-within {
+            box-shadow: 0 0 0 2px var(--accent-color);
+        }
+
+        .search-icon {
+            color: var(--text-secondary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1rem;
+        }
+
+        .dark .search-icon {
+            color: var(--text-secondary-dark);
+        }
+
+        .search-input {
+            display: flex;
+            width: 100%;
+            min-width: 0;
+            flex: 1;
+            resize: none;
+            overflow: hidden;
+            color: var(--text-primary-light);
+            border: none;
+            background-color: transparent;
+            height: 100%;
+            padding: 0 0.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            font-family: inherit;
+        }
+
+        .dark .search-input {
+            color: white;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary-light);
+        }
+
+        .dark .search-input::placeholder {
+            color: var(--text-secondary-dark);
+        }
+
+        /* Filters/Chips */
+        .filters-container {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.25rem;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        .filter-chip {
+            display: flex;
+            height: 2rem;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: 0.5rem;
+            padding: 0 1rem;
+            border: 1px solid var(--border-light);
+            background-color: white;
+            color: var(--text-secondary-light);
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.5;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .dark .filter-chip {
+            background-color: var(--card-dark);
+            border-color: var(--border-dark);
+            color: var(--text-secondary-dark);
+        }
+
+        .filter-chip:hover {
+            background-color: #f3f4f6;
+            color: var(--primary-color);
+        }
+
+        .dark .filter-chip:hover {
+            background-color: rgba(10, 37, 64, 0.3);
+            color: white;
+        }
+
+        .filter-chip.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Notification List */
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            color: var(--primary-color);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.015em;
+            padding: 0.5rem;
+            padding-top: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .dark .section-header {
+            color: white;
+        }
+
+        .section-unread {
+            padding-top: 0;
+        }
+
+        .section-previous {
+            padding-top: 2rem;
+        }
+
+        /* Notification Items */
+        .notification-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .notification-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .notification-item.unread {
+            background-color: rgba(10, 37, 64, 0.05);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .dark .notification-item.unread {
+            background-color: rgba(10, 37, 64, 0.2);
+        }
+
+        .notification-item.read {
+            background-color: transparent;
+        }
+
+        .notification-item.read:hover {
+            background-color: #f3f4f6;
+        }
+
+        .dark .notification-item.read:hover {
+            background-color: rgba(10, 37, 64, 0.1);
+        }
+
+        /* Notification Icon/Avatar */
+        .notification-icon {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .icon-blue {
+            background-color: var(--blue-100);
+            color: var(--blue-600);
+        }
+
+        .dark .icon-blue {
+            background-color: var(--blue-800);
+            color: #93c5fd;
+        }
+
+        .icon-green {
+            background-color: var(--green-100);
+            color: var(--green-600);
+        }
+
+        .dark .icon-green {
+            background-color: var(--green-900);
+            color: #a7f3d0;
+        }
+
+        .icon-red {
+            background-color: var(--red-100);
+            color: var(--red-600);
+        }
+
+        .dark .icon-red {
+            background-color: var(--red-900);
+            color: #fca5a5;
+        }
+
+        .user-avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            object-fit: cover;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        /* Notification Content */
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-text {
+            color: var(--text-primary-light);
+            line-height: 1.5;
+            margin-bottom: 0.25rem;
+        }
+
+        .dark .notification-text {
+            color: var(--text-primary-dark);
+        }
+
+        .notification-text strong {
+            font-weight: 600;
+        }
+
+        .notification-link {
+            font-weight: 600;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .notification-link:hover {
+            text-decoration: underline;
+        }
+
+        .notification-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary-light);
+        }
+
+        .dark .notification-meta {
+            color: var(--text-secondary-dark);
+        }
+
+        /* Notification Actions */
+        .notification-actions {
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .notification-item:hover .notification-actions {
+            opacity: 1;
+        }
+
+        .action-button {
+            padding: 0.25rem;
+            border-radius: 9999px;
+            color: var(--text-secondary-light);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .dark .action-button {
+            color: var(--text-secondary-dark);
+        }
+
+        .action-button:hover {
+            background-color: #e5e7eb;
+        }
+
+        .dark .action-button:hover {
+            background-color: var(--card-dark);
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Utility Classes */
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-4 {
+            gap: 1rem;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #2d3748;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4a5568;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SideNavBar -->
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-top">
+                    <div class="company-info">
+                        <div class="company-logo"></div>
+                        <div class="company-text">
+                            <h1 class="company-name">Phoenix Corp.</h1>
+                            <p class="company-subtitle">Workspace</p>
+                        </div>
+                    </div>
+                    
+                    <nav class="sidebar-nav">
+                        <a class="nav-link" href="#">
+                            <span class="material-symbols-outlined nav-icon">home</span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                        <a class="nav-link" href="#">
+                            <span class="material-symbols-outlined nav-icon">task_alt</span>
+                            <span class="nav-text">Tasks</span>
+                        </a>
+                        <a class="nav-link" href="#">
+                            <span class="material-symbols-outlined nav-icon">folder</span>
+                            <span class="nav-text">Projects</span>
+                        </a>
+                        <a class="nav-link" href="#">
+                            <span class="material-symbols-outlined nav-icon">calendar_today</span>
+                            <span class="nav-text">Calendar</span>
+                        </a>
+                        <a class="nav-link" href="#">
+                            <span class="material-symbols-outlined nav-icon">group</span>
+                            <span class="nav-text">Teams</span>
+                        </a>
+                    </nav>
+                </div>
+                
+                <div class="sidebar-bottom">
+                    <a class="nav-link active" href="#">
+                        <span class="material-symbols-outlined nav-icon">notifications</span>
+                        <span class="nav-text">Notifications</span>
+                    </a>
+                    <a class="nav-link" href="#">
+                        <span class="material-symbols-outlined nav-icon">settings</span>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-wrapper">
+                <!-- PageHeading -->
+                <header class="page-header">
+                    <h1 class="page-title">Notifications</h1>
+                    <button class="primary-button">
+                        <span class="button-text">Mark all as read</span>
+                    </button>
+                </header>
+
+                <!-- SearchBar -->
+                <div class="search-container">
+                    <label class="search-label">
+                        <div class="search-wrapper">
+                            <div class="search-icon">
+                                <span class="material-symbols-outlined">search</span>
+                            </div>
+                            <input class="search-input" placeholder="Search notifications by keyword, project, or user..." value=""/>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Chips/Filters -->
+                <div class="filters-container">
+                    <button class="filter-chip active">All</button>
+                    <button class="filter-chip">Unread</button>
+                    <button class="filter-chip">@Mentions</button>
+                    <button class="filter-chip">Assignments</button>
+                    <button class="filter-chip">Comments</button>
+                </div>
+
+                <!-- Notification List -->
+                <div class="notifications-list">
+                    <!-- SectionHeader: Unread -->
+                    <div>
+                        <h3 class="section-header section-unread">Unread</h3>
+                        <div class="notification-items">
+                            <!-- Unread Notification Item -->
+                            <div class="notification-item unread">
+                                <div class="notification-icon icon-blue">
+                                    <span class="material-symbols-outlined">assignment_ind</span>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">
+                                        <strong>Alex</strong> assigned you to <a class="notification-link" href="#">'Fix login bug'</a>.
+                                    </p>
+                                    <p class="notification-meta">In 'Phoenix Project' • 5m ago</p>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">done</span>
+                                    </button>
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Unread Notification Item -->
+                            <div class="notification-item unread">
+                                <img class="user-avatar" alt="User avatar for Sarah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdGYrGQaWpR3q_k9hmc_gBNpko7aFV2Sn59ieyitNjLOP1F0_UiCN07EQq_Xm9bbxCPrjuE2sEaOWMWgeIs2xeHXNSzgKdRneVCX2_v831w6yd9FTr_Nm60sc_Uwvdu30LTkob_O8aIfpCIPxrsucbjFCkpT6QTevtVNRx69C3Y9QbxOCc7vTYKt-bZa7d9PpMcK494Gr7K3ZL62pQ1EyKEbk1aKHo0NPsV7yndGD4QyIQstmJ0ICrkAtqD9AKRaxd21L8X7VRfe8"/>
+                                <div class="notification-content">
+                                    <p class="notification-text">
+                                        <strong>Sarah</strong> mentioned you in a comment on <a class="notification-link" href="#">'Redesign homepage'</a>.
+                                    </p>
+                                    <p class="notification-meta">In 'Marketing Campaign' • 2h ago</p>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">done</span>
+                                    </button>
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SectionHeader: Previous -->
+                    <div>
+                        <h3 class="section-header section-previous">Previous</h3>
+                        <div class="notification-items">
+                            <!-- Read Notification Item -->
+                            <div class="notification-item read">
+                                <div class="notification-icon icon-green">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">
+                                        Task <a class="notification-link" href="#">'Deploy to Staging'</a> was completed.
+                                    </p>
+                                    <p class="notification-meta">In 'Phoenix Project' • 1d ago</p>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Read Notification Item -->
+                            <div class="notification-item read">
+                                <div class="notification-icon icon-red">
+                                    <span class="material-symbols-outlined">event_upcoming</span>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">
+                                        Task <a class="notification-link" href="#">'Finalize Q3 budget'</a> is due tomorrow.
+                                    </p>
+                                    <p class="notification-meta">In 'Finance Planning' • 2d ago</p>
+                                </div>
+                                <div class="notification-actions">
+                                    <button class="action-button">
+                                        <span class="material-symbols-outlined action-icon">arrow_forward</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add functionality to mark notifications as read
+        document.querySelector('.primary-button').addEventListener('click', function() {
+            const unreadItems = document.querySelectorAll('.notification-item.unread');
+            
+            unreadItems.forEach(item => {
+                item.classList.remove('unread');
+                item.classList.add('read');
+                item.style.borderLeft = 'none';
+                
+                // Remove the mark as read button from unread items
+                const actions = item.querySelector('.notification-actions');
+                if (actions) {
+                    const markAsReadBtn = actions.querySelector('button:first-child');
+                    if (markAsReadBtn && markAsReadBtn.querySelector('.material-symbols-outlined').textContent === 'done') {
+                        markAsReadBtn.remove();
+                    }
+                }
+            });
+            
+            // Update button text
+            this.querySelector('.button-text').textContent = 'All marked as read';
+            this.disabled = true;
+            this.style.opacity = '0.7';
+            
+            // Show notification
+            showNotification('All notifications marked as read');
+        });
+        
+        // Add functionality to filter chips
+        const filterChips = document.querySelectorAll('.filter-chip');
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', function() {
+                // Remove active class from all chips
+                filterChips.forEach(c => c.classList.remove('active'));
+                // Add active class to clicked chip
+                this.classList.add('active');
+                
+                // In a real application, you would filter notifications here
+                const filterType = this.textContent.trim();
+                showNotification(`Filtering by: ${filterType}`);
+            });
+        });
+        
+        // Add functionality to action buttons
+        document.querySelectorAll('.action-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                const notificationItem = this.closest('.notification-item');
+                const notificationText = notificationItem.querySelector('.notification-text').textContent;
+                
+                if (icon.textContent === 'done') {
+                    // Mark as read
+                    notificationItem.classList.remove('unread');
+                    notificationItem.classList.add('read');
+                    notificationItem.style.borderLeft = 'none';
+                    this.remove();
+                    showNotification('Notification marked as read');
+                } else if (icon.textContent === 'arrow_forward') {
+                    // Go to notification
+                    showNotification('Navigating to notification...');
+                    // In a real app, you would navigate to the relevant page
+                }
+            });
+        });
+        
+        // Add search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            // In a real application, you would filter notifications based on search term
+            if (searchTerm.length > 2) {
+                console.log('Searching for:', searchTerm);
+            }
+        });
+        
+        // Helper function to show notifications
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'var(--accent-color)';
+            notification.style.color = 'white';
+            notification.style.padding = '12px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            notification.style.zIndex = '1000';
+            notification.style.fontWeight = '500';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.transition = 'opacity 0.3s';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+    </script>
+</body>
+</html>

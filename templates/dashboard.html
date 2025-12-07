@@ -49,6 +49,7 @@
       <div class="projects-grid">
         {% for project in projects %}
         <div class="project-card" onclick="window.location.href='/project/{{ project.Project_ID }}/tasks'">
+        <!-- <div class="project-card"> -->
           <div class="project-header">
             <h3 class="project-title">{{ project.Name }}</h3>
             {% if current_user.Role in ['Product Manager', 'Database Administrator', 'Admin'] %}
@@ -59,7 +60,8 @@
               </span>
 
               <div id="menu-{{ project.Project_ID }}" class="dropdown-content">
-                <a href="#" class="dropdown-item">
+                <a href="#" class="dropdown-item"
+                  onclick="openEditModal('{{ project.Project_ID }}', '{{ project.Name }}', '{{ project.Description }}')">
                   <span class="material-symbols-outlined icon">edit</span> Edit
                 </a>
 
@@ -71,6 +73,7 @@
             </div>
             {% endif %}
           </div>
+          <h3 class="project-discription">{{ project.Status }}</h3>
           <div class="project-progress">
             <div class="progress-header">
               <span class="progress-label">Progress</span>
@@ -137,6 +140,20 @@
   </div>
 </div>
 <script>
+  // دالة فتح مودال التعديل
+  function openEditModal(id, name, desc) {
+    // 1. املأ الخانات بالبيانات القديمة
+    document.getElementById('edit_name').value = name;
+    document.getElementById('edit_desc').value = desc;
+
+    // 2. غير رابط الفورم عشان يروح للـ ID الصح
+    // (هيحول الرابط لـ /update_project/5 مثلاً)
+    document.getElementById('editProjectForm').action = "/update_project/" + id;
+
+    // 3. افتح المودال
+    toggleModal('editProjectModal', true);
+  }
+
   function toggleProjectMenu(menuId, event) {
     event.stopPropagation(); // عشان ميعملش Click على الصفحة كلها ويقفل في نفس اللحظة
 
@@ -167,4 +184,5 @@
 </script>
 {% include 'components/add_task_modal.html' %}
 {% include 'components/add_project_modal.html' %}
+{% include 'components/edit_project.html' %}
 {% endblock %}

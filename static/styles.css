@@ -40,6 +40,12 @@ body.dark {
     color: var(--text-dark);
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
 /* Dashboard Layout */
 .dashboard-container {
     display: flex;
@@ -520,6 +526,16 @@ body.dark .project-card:hover {
 
 body.dark .project-title {
     color: white;
+}
+
+.project-discription {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1f2636;
+}
+
+body.dark .project-discription {
+    color: gray;
 }
 
 .project-more {

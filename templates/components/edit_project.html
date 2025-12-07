@@ -1,0 +1,35 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+<div class="modal-overlay" id="editProjectModal" style="display: none;">
+    <div class="modal-container">
+        <form id="editProjectForm" method="POST">
+            <header class="modal-header">
+                <div class="header-left">
+                    <h1 class="modal-title">تعديل المشروع</h1>
+                </div>
+                <button type="button" class="close-btn" onclick="toggleModal('editProjectModal', false)">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </header>
+
+            <main class="modal-content">
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input class="form-input" id="edit_name" name="name" type="text" required />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="editor-textarea" id="edit_desc" name="description" rows="4"></textarea>
+                </div>
+            </main>
+
+            <footer class="modal-footer">
+                <button type="button" class="cancel-btn"
+                    onclick="toggleModal('editProjectModal', false)">Cancel</button>
+                <button type="submit" class="create-btn">Save Changes</button>
+            </footer>
+        </form>
+    </div>
+</div>

@@ -790,25 +790,104 @@
     .material-symbols-outlined.fill {
         font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
+
+    .tab {
+        cursor: pointer;
+        /* يخلي الماوس يقلب إيد */
+        user-select: none;
+        /* يمنع تحديد النص */
+    }
 </style>
 {% extends "base.html" %}
 
 {% block title %}تفاصيل المشروع - {% endblock %}
 
 {% block content %}
-<div class="dashboard-container">
-    <main class="main-content">
+<div class="dashboard-container" style="width: 100%;">
+    <main style="width: 100%;">
         <div class="content-container">
+            
+            <div class="tab-navigation">
+                <nav class="tabs">
+                    <a class="tab active" onclick="openTab(event, 'overview')">Overview</a>
+                    <a class="tab" onclick="openTab(event, 'tasks')">Tasks</a>
+                    <a class="tab" onclick="openTab(event, 'milestones')">Milestones</a>
+                    <a class="tab" onclick="openTab(event, 'budget')">Budget</a>
+                </nav>
+            </div>
+
+            <div id="overview" class="tab-content" style="display: block;">
+                <div class="overview-content">
+                    <h2 class="section-title">Tasks Overview</h2>
+
+                    {% set percent = (completed_tasks / total_tasks * 100)|int if total_tasks > 0 else 0 %}
+
+                    <div class="progress-section"
+                        style="align-items: center; justify-content: space-between; margin: 5px;">
+                        <div class="progress-header"
+                            style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <p class="progress-label">Task Completion</p>
+                            <div style="width: 5px;"></div>
+                            <p class="progress-value" style="font-weight: bold; color: var(--primary);">
+                                {{ completed_tasks }}/{{ total_tasks }} ({{ percent }}%)
+                            </p>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill {{ 'is-complete' if percent == 100 else '' }}"
+                                style="width: {{ percent }}%;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tasks" class="tab-content" style="display: none;">
+                <h2 class="section-title">Total Tasks</h2>
+                <div class="metric-card">
+                    <p class="metric-value">{{ total_tasks }}</p>
+                </div>
+            </div>
+
+            <div id="milestones" class="tab-content" style="display: none;">
+                <h2 class="section-title">Milestones</h2>
+                <div class="milestones-list">
+                    <ul class="milestones-ul">
+                        {% for milestone in milestones %}
+                        <li class="milestone-item">
+                            <div class="milestone-content">
+                                <div class="milestone-icon">
+                                    <span class="material-symbols-outlined"
+                                        style="color: {{ 'green' if milestone.Is_Completed else 'gray' }}">flag</span>
+                                </div>
+                                <div class="milestone-details">
+                                    <p class="milestone-title">Name: {{ milestone.Name }}</p>
+                                    <p class="milestone-desc">Description: {{ milestone.Description }}</p>
+                                    <p class="milestone-desc">Project: {{ milestone.Project_ID | get_project_name }}</p>
+                                </div>
+                            </div>
+                            <p class="milestone-date">Due Date: {{ milestone.Due_Date }}</p>
+                        </li>
+                        {% else %}
+                        <p style="color: gray; padding: 10px;">No milestones yet.</p>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
+            <div id="budget" class="tab-content" style="display: none;">
+                <h2 class="section-title">Budget</h2>
+                <div class="metric-card">
+                    <p class="metric-value">{{ total_project_budget }}$</p>
+                </div>
+            </div>
             <br>
             <h3>📌 Current Tasks:</h3>
             <br>
             {% for task in tasks %}
-            <div class="task-card {{ task.Status }}">
-                <div>
-                    <strong>{{ task.Title }}</strong>
-                    <p style="margin: 5px 0; font-size: 0.9em;">{{ task.Description }}</p>
-                </div>
-                <div>
+            <div class="task-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <a href="/update_task/{{ task.Task_ID }}" class="btn btn-done">✔</a>
                     <a href="/delete_task/{{ task.Task_ID }}" class="btn btn-del">🗑</a>
                     <button class="toolbar-btn"
@@ -816,119 +895,38 @@
                         <span class="material-symbols-outlined btn-icon">more_horiz</span>
                     </button>
                 </div>
+                <div>
+                    <strong>{{ task.Title }}</strong>
+                    <p style="margin: 5px 0; font-size: 0.9em;">{{ task.Description }}</p>
+                    <small>{{ task.Status }}</small>
+                </div>
             </div>
             {% else %}
             <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
             {% endfor %}
-
-            <div class="project-header">
-                <div class="header-top">
-                    <div class="header-left">
-                        <div class="title-section">
-                        </div>
-                    </div>
-
-                    <div class="header-right">
-                        <div class="avatar-group">
-                            <div class="avatar-wrapper">
-                                <div class="avatar-item"
-                                    style='background-image: url("https://ui-avatars.com/api/?name={{ current_user.Full_Name }}&background=random");'>
-                                </div>
-                            </div>
-                            <div class="avatar-wrapper">
-                                <div class="avatar-count">+3</div>
-                            </div>
-                        </div>
-                        <button class="invite-btn" onclick="toggleModal('taskModal', true)">
-                            <span class="material-symbols-outlined btn-icon">add</span>
-                            <span class="btn-text">Add Task</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <p class="progress-label">Project Progress</p>
-                    </div>
-                    <div class="progress-bar">
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-navigation">
-                <nav class="tabs">
-                    <a class="tab active" href="#">Overview</a>
-                    <a class="tab" href="#">Milestones</a>
-                    <a class="tab" href="#">Settings</a>
-                </nav>
-            </div>
-
-            <div class="overview-content">
-                <div class="overview-grid">
-
-                    <div class="left-column">
-                        <div class="metrics-grid">
-                            <div class="metric-card">
-                                <p class="metric-label">Total Tasks</p>
-                                <p class="metric-value">{{ total_tasks }}</p>
-                            </div>
-                            <div class="metric-card">
-                                <p class="metric-label">Budget</p>
-                                <p class="metric-value">{{ total_project_budget }}$</p>
-                            </div>
-                        </div>
-
-                        <div class="milestones-section">
-                            <h2 class="section-title">Milestones</h2>
-                            <div class="milestones-list">
-                                <ul class="milestones-ul">
-                                    {% for milestone in milestones %}
-                                    <li class="milestone-item">
-                                        <div class="milestone-content">
-                                            <div class="milestone-icon">
-                                                <span class="material-symbols-outlined"
-                                                    style="color: {{ 'green' if milestone.Is_Completed else 'gray' }}">flag</span>
-                                            </div>
-                                            <div class="milestone-details">
-                                                <p class="milestone-title">{{ milestone.Name }}</p>
-                                                <p class="milestone-desc">{{ milestone.Description }}</p>
-                                            </div>
-                                        </div>
-                                        <p class="milestone-date">{{ milestone.Due_Date }}</p>
-                                    </li>
-                                    {% else %}
-                                    <p style="color: gray; padding: 10px;">No milestones yet.</p>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="right-column">
-                        <h2 class="section-title">Recent Activity</h2>
-                        <div class="activity-timeline">
-                            <ul class="timeline-ul">
-                                <li class="timeline-item">
-                                    <div class="timeline-connector"></div>
-                                    <div class="timeline-content">
-                                        <div class="timeline-icon"><span
-                                                class="material-symbols-outlined icon">check_circle</span></div>
-                                        <div class="timeline-text">
-                                            <p class="activity-text"><span class="user-name">System</span> Project
-                                                Created.</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
     </main>
 </div>
 <script>
+    function openTab(evt, tabName) {
+        // 1. اخفي كل المحتوى الأول
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // 2. شيل كلاس active من كل الزراير
+        tablinks = document.getElementsByClassName("tab");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // 3. اظهر القسم المطلوب ونور الزرار بتاعه
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
     function openTaskModal(title, priority, id, descrip) {
         // 1. نمسك العناصر اللي جوه المودال
         document.querySelector('.task-title').innerText = title;

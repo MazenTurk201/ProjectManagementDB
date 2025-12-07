@@ -511,11 +511,48 @@
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         font-size: 24px;
     }
+
+    .form-select {
+        width: 100%;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--neutral-medium);
+        background-color: var(--white);
+        padding: 0.5rem 0.75rem;
+        color: var(--neutral-dark);
+        font-size: 0.875rem;
+        outline: none;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%234B5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+        transition: all 0.2s;
+    }
+
+    .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(10, 37, 64, 0.2);
+    }
+
+    body.dark .form-select {
+        border-color: rgba(255, 255, 255, 0.2);
+        background-color: var(--background-dark);
+        color: var(--white);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    }
+
+    body.dark .form-select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px rgba(0, 196, 154, 0.2);
+    }
 </style>
 <div class="milestone-modal-container" id="milestoneModal" style="display: none;">
-    <form action="/add_milstone" method="post">
-        <!-- Modal Container -->
-        <div class="modal-container">
+    <!-- Modal Container -->
+    <div class="modal-container">
+        <form action="/add_milstone" method="POST">
             <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-header">
@@ -530,15 +567,15 @@
                     <!-- Milestone Name -->
                     <div class="form-group">
                         <label class="form-label" for="milestone-name">Milestone Name</label>
-                        <input class="form-input" id="milestone-name" placeholder="e.g., Q4 Product Launch"
-                            type="text" />
+                        <input class="form-input" name="milestone-name" id="milestone-name"
+                            placeholder="e.g., Q4 Product Launch" type="text" />
                         <p class="error-message">Name cannot be empty.</p>
                     </div>
 
                     <!-- Description -->
                     <div class="form-group">
                         <label class="form-label" for="description">Description (optional)</label>
-                        <textarea class="form-textarea" id="description"
+                        <textarea class="form-textarea" id="description" name="description"
                             placeholder="Add a more detailed description..."></textarea>
                         <p class="helper-text">The description supports Markdown formatting.</p>
                     </div>
@@ -547,11 +584,25 @@
                     <div class="form-group">
                         <label class="form-label" for="due-date">Due Date</label>
                         <div class="date-input-wrapper">
-                            <input class="date-input" id="due-date" placeholder="Select a date" type="date" />
+                            <input class="date-input" id="due-date" name="due-date" placeholder="Select a date"
+                                type="date" />
                             <div class="date-icon-wrapper">
                                 <span class="material-symbols-outlined date-icon">calendar_today</span>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Id</label>
+                        <select class="form-select" name="project-id" id="project-id">
+                            <!-- <option value="" id="ProjectsID"></option> -->
+                            <option value="" disabled selected>Select a project...</option>
+                            {% for projectt in projects_list %}
+                            <option value="{{ projectt.Project_ID }}">{{ projectt.Name }}</option>
+                            {% else %}
+                            <option value="" disabled>No projects found (Create one first)</option>
+                            {% endfor %}
+                        </select>
                     </div>
 
                     <!-- Link Tasks -->
@@ -578,7 +629,7 @@
                                 </button>
                             </div> -->
                             </div>
-                            <input class="tasks-input" id="link-tasks"
+                            <input class="tasks-input" id="link-tasks" name="link-tasks"
                                 placeholder="Search for projects or tasks to link..." type="text" />
                         </div>
                     </div>
@@ -592,12 +643,12 @@
                     </button>
                 </div>
             </div>
-        </div>
-        <script>
-            function removetaskbtnFun(modalClassName) {
-                const modal = document.getElementsByClassName(modalClassName);
-                if (modal) { modal.style.display = 'none'; }
-            }
-        </script>
-    </form>
+        </form>
+    </div>
+    <script>
+        function removetaskbtnFun(modalClassName) {
+            const modal = document.getElementsByClassName(modalClassName);
+            if (modal) { modal.style.display = 'none'; }
+        }
+    </script>
 </div>

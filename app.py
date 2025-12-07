@@ -186,22 +186,29 @@ def add_task():
 @app.route('/add_milstone', methods=['POST'])
 @login_required
 def add_milstone():
-    title = request.form['milestone-name']
+    name = request.form['milestone-name']
     desc = request.form['description']
-    due_date = request.form['due_date']
+    due_date = request.form['due-date']
+    project_id = request.form['project-id']
     linktasks = request.form['link-tasks']
     # بنحط قيم افتراضية للتاريخ والمشروع للتسهيل
-    new_milstone = Milestone(Title=title, Description=desc, linktasks=linktasks, End_Date=due_date)
+    # new_milstone = Milestone(Name=name, Description=desc, linktasks=linktasks, End_Date=due_date)
+    new_milstone = Milestone(Project_ID=project_id, Name=name, Description=desc, Due_Date=due_date)
     db.session.add(new_milstone)
     db.session.commit()
-    return redirect(url_for('milstone'))
+    return redirect(url_for('milestones'))
 
 @app.route('/delete_task/<int:id>')
 @login_required
 def delete_task(id):
     task = Task.query.get_or_404(id)
-    db.session.delete(task)
-    db.session.commit()
+    try:
+        db.session.delete(task)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        flash('حدث خطأ أثناء الحذف.')
+        print(e)
     return redirect(url_for('dashboard'))
 
 @app.route('/delete_project/<int:id>')
@@ -230,6 +237,30 @@ def update_task(id):
         task.Status = 'Pending'
     db.session.commit()
     return redirect(url_for('dashboard'))
+
+# app.py
+
+@app.route('/update_project/<int:id>', methods=['POST'])
+@login_required
+def update_project(id):
+    # 1. هات المشروع من الداتا بيز
+    project = Project.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        # 2. خد البيانات الجديدة من الفورم
+        project.Name = request.form['name']
+        project.Description = request.form['description']
+        # (ممكن تزود Status أو Date لو حاططهم في الفورم)
+        
+        try:
+            # 3. احفظ التغييرات
+            db.session.commit()
+            flash('تم تعديل بيانات المشروع بنجاح! ✨')
+        except:
+            db.session.rollback()
+            flash('حصلت مشكلة أثناء التعديل ❌')
+            
+        return redirect(url_for('dashboard'))
 
 # app.py
 
@@ -309,11 +340,23 @@ def task():
     total_tasks = Task.query.count()
     total_project_budget = Task.query.with_entities(func.sum(Project.Budget)).scalar() or 0
     milestone = Milestone.query.all()
-    completed_tasks = Task.query.filter_by(Project_ID=id, Status='Completed').count()
+    completed_tasks = Task.query.filter_by(Status='Completed').count()
     project_progress = 0
     if total_tasks > 0:
         project_progress = int((completed_tasks / total_tasks) * 100)
-    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_project_budget=total_project_budget, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects)
+    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_project_budget=total_project_budget, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects, completed_tasks=completed_tasks)
+
+# فلتر سحري بيجيب اسم المشروع بمعلومية الـ ID بتاعه
+@app.template_filter('get_project_name')
+def get_project_name_filter(project_id):
+    if not project_id:
+        return "غير محدد"
+    
+    # دور على المشروع في الداتا بيز
+    project = Project.query.get(project_id)
+    
+    # لو لقاه رجع اسمه، لو ملقاهوش رجع "غير معروف"
+    return project.Name if project else "مشروع محذوف"
 
 @app.route('/team_members')
 @login_required

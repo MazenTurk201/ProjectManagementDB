@@ -609,8 +609,86 @@
         background-size: 1.5em 1.5em;
     }
 </style>
+<style>
+    /* Email Input Field */
+    .members-input-container {
+        display: flex;
+        min-height: 3rem;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        background-color: var(--background-dark);
+        padding: 0.5rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .members-input-container:focus-within {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(22, 100, 243, 0.3);
+    }
+
+    .email-chip {
+        display: flex;
+        height: 2rem;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        border-radius: 0.375rem;
+        background-color: var(--chip-bg);
+        padding-left: 0.75rem;
+        padding-right: 0.5rem;
+    }
+
+    .member-tag {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: var(--text-white);
+    }
+
+    .remove-member-btn {
+        display: flex;
+        height: 1.25rem;
+        width: 1.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        color: var(--text-gray-medium);
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .remove-member-btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: var(--text-white);
+    }
+
+    .chip-remove-icon {
+        font-size: 1rem;
+    }
+
+    .assign-members {
+        flex: 1;
+        background-color: transparent;
+        padding: 0.25rem;
+        color: var(--text-white);
+        border: none;
+        outline: none;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    .assign-members::placeholder {
+        color: var(--text-gray-medium);
+    }
+</style>
 <div class="create-project-container" id="projectModal">
-        <form action="/add_project" method="POST">
+    <form action="/add_project" method="POST">
         <!-- Background Overlay -->
         <div class="modal-overlay"></div>
 
@@ -653,7 +731,7 @@
                         <label class="form-label" for="due-date">Due Date</label>
                         <div class="date-input-wrapper">
                             <input class="date-input" id="due-date" name="due-date" placeholder="Select a date"
-                                type="text" />
+                                type="date" />
                             <div class="date-icon-container">
                                 <span class="material-symbols-outlined date-icon">calendar_today</span>
                             </div>
@@ -665,29 +743,21 @@
                         <select class="form-select" id="status" name="status">
                             <option value="Not Started">Not Started</option>
                             <option value="In Progress">In Progress</option>
+                            <option value="Active">Active</option>
+                            <option value="Planning">Planning</option>
                             <option value="Completed">Completed</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Assign Members -->
+
                 <div class="form-group">
                     <label class="form-label" for="assign-members">Assign Members</label>
                     <div class="members-input-container">
-                        <span class="member-tag">
-                            Alex Johnson
-                            <button class="remove-member-btn" type="button">
-                                <span class="material-symbols-outlined remove-icon">close</span>
-                            </button>
-                        </span>
-                        <span class="member-tag">
-                            Maria Garcia
-                            <button class="remove-member-btn" type="button">
-                                <span class="material-symbols-outlined remove-icon">close</span>
-                            </button>
-                        </span>
-                        <input class="members-input" id="assign-members" placeholder="Search and add members..."
-                            type="text" />
+                        <div class="email-chip">
+                        </div>
+                        <input class="assign-members" id="assign-members" placeholder="Search and add members..."
+                            type="email" />
                     </div>
                 </div>
             </div>
@@ -702,4 +772,137 @@
             </div>
         </div>
     </form>
-    </div>
+</div>
+<script>
+    // Email chip functionality
+    const emailInput = document.getElementById('assign-members');
+    const chipRemoveButtons = document.querySelectorAll('.remove-member-btn');
+
+    // Add email chip
+    function addEmailChip(email) {
+        if (!email || !isValidEmail(email)) return;
+
+        const chipContainer = document.querySelector('.members-input-container');
+        const chip = document.createElement('div');
+        chip.className = 'email-chip';
+        chip.innerHTML = `
+                <span class="member-tag">${email}
+                    <button class="remove-member-btn">
+                        <span class="material-symbols-outlined chip-remove-icon">close</span>
+                    </button>
+                </span>
+            `;
+
+        // Insert before the input field
+        chipContainer.insertBefore(chip, emailInput);
+
+        // Add remove functionality
+        chip.querySelector('.remove-member-btn').addEventListener('click', function () {
+            chip.remove();
+            updateInviteCount();
+        });
+
+        // Clear input
+        emailInput.value = '';
+
+        // Update invite count
+        updateInviteCount();
+    }
+
+    // Remove email chip
+    chipRemoveButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            this.closest('.email-chip').remove();
+            updateInviteCount();
+        });
+    });
+
+    // Email input handling
+    emailInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addEmailChip(this.value.trim());
+        }
+    });
+
+    emailInput.addEventListener('blur', function () {
+        if (this.value.trim()) {
+            addEmailChip(this.value.trim());
+        }
+    });
+
+    // Email validation
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    // Update invite count
+    function updateInviteCount() {
+        const chipCount = document.querySelectorAll('.email-chip').length;
+        const countElement = document.querySelector('.invite-count');
+        countElement.textContent = `You're sending ${chipCount} invite${chipCount !== 1 ? 's' : ''}`;
+    }
+
+    // Close modal functionality
+    // document.querySelector('.close-button').addEventListener('click', function () {
+    //     if (confirm('Are you sure you want to close? Any unsaved changes will be lost.')) {
+    //         document.querySelector('.modal-container').style.transform = 'scale(0.95)';
+    //         document.querySelector('.modal-container').style.opacity = '0';
+    //         setTimeout(() => {
+    //             alert('Modal closed. In a real app, this would close the modal.');
+    //         }, 200);
+    //     }
+    // });
+
+    // Send invites functionality
+    document.querySelector('.send-button').addEventListener('click', function () {
+        const chips = document.querySelectorAll('.email-chip');
+        const role = document.querySelector('.role-select').value;
+        const checkedProjects = Array.from(document.querySelectorAll('.project-checkbox:checked'))
+            .map(cb => cb.closest('label').querySelector('.project-name').textContent);
+        const message = document.querySelector('.message-textarea').value;
+
+        if (chips.length === 0) {
+            alert('Please add at least one email address.');
+            emailInput.focus();
+            return;
+        }
+
+        const emails = Array.from(chips).map(chip =>
+            chip.querySelector('.member-tag').textContent
+        );
+
+        // Show success message
+        const messageText = message ? ` with message: "${message}"` : '';
+        alert(`Invites sent to: ${emails.join(', ')}\nRole: ${role}\nProjects: ${checkedProjects.join(', ') || 'None'}${messageText}`);
+
+        // Reset form
+        chips.forEach(chip => chip.remove());
+        document.querySelector('.role-select').value = 'editor';
+        document.querySelectorAll('.project-checkbox').forEach(cb => cb.checked = false);
+        document.querySelector('.project-checkbox').checked = true; // Keep first checked
+        document.querySelector('.message-textarea').value = '';
+        updateInviteCount();
+    });
+
+    // Copy link functionality
+    document.querySelector('.link-button').addEventListener('click', function () {
+        const inviteLink = 'https://quantumleap.app/invite/abc123-def456';
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(inviteLink).then(() => {
+            const originalText = this.querySelector('span:last-child').textContent;
+            this.querySelector('span:last-child').textContent = 'Link copied!';
+
+            setTimeout(() => {
+                this.querySelector('span:last-child').textContent = originalText;
+            }, 2000);
+        }).catch(err => {
+            alert('Failed to copy link: ' + err);
+        });
+    });
+
+    // Initialize invite count
+    updateInviteCount();
+</script>

@@ -797,7 +797,6 @@
 
 {% block content %}
 <div class="dashboard-container">
-    <main class="main-content">
         <div class="content-container">
 
             <div class="project-header">
@@ -809,6 +808,8 @@
                                 <span class="material-symbols-outlined status-icon">
                                     {% if project.Status == 'Completed' %}check_circle
                                     {% elif project.Status == 'Active' %}progress_activity
+                                    {% elif project.Status == 'Planning' %}progress_activity
+                                    {% elif project.Status == 'In Progress' %}progress_activity
                                     {% else %}pending{% endif %}
                                 </span>
                                 <p class="status-text">{{ project.Status }}</p>
@@ -829,10 +830,6 @@
                                 <div class="avatar-count">+3</div>
                             </div>
                         </div>
-                        <button class="invite-btn" onclick="toggleModal('taskModal', true)">
-                            <span class="material-symbols-outlined btn-icon">add</span>
-                            <span class="btn-text">Add Task</span>
-                        </button>
                     </div>
                 </div>
 
@@ -899,7 +896,7 @@
                         </div>
                     </div>
 
-                    <div class="right-column">
+                    <!-- <div class="right-column">
                         <h2 class="section-title">Recent Activity</h2>
                         <div class="activity-timeline">
                             <ul class="timeline-ul">
@@ -917,11 +914,10 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
         </div>
-    </main>
 </div>
 {% endblock %}

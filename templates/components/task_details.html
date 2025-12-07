@@ -3,7 +3,7 @@
 <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     rel="stylesheet" />
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
 <style>
     /* Reset and Base Styles */
     * {
@@ -45,18 +45,6 @@
         --purple: #8b5cf6;
         --purple-light: rgba(139, 92, 246, 0.1);
         --purple-border: rgba(139, 92, 246, 0.2);
-    }
-
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--background-light);
-        color: var(--text-primary-light);
-        min-height: 100vh;
-    }
-
-    body.dark {
-        background-color: var(--background-dark);
-        color: var(--text-primary-dark);
     }
 
     /* Task Details Container */
@@ -174,17 +162,14 @@
 
     /* Main Content Area */
     .main-content {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        overflow-y: auto;
+        flex-direction: row;
     }
 
-    @media (min-width: 1024px) {
+    /* @media (min-width: 1024px) {
         .main-content {
             flex-direction: row;
         }
-    }
+    } */
 
     /* Left Column */
     .left-column {

@@ -382,19 +382,15 @@
     .search-icon-container {
         color: var(--text-tertiary-light);
         display: flex;
-        border: 1px solid var(--border-light);
         border-right: none;
         background-color: var(--white);
         align-items: center;
         justify-content: center;
         padding-left: 0.875rem;
-        border-top-left-radius: var(--radius-lg);
-        border-bottom-left-radius: var(--radius-lg);
     }
 
     body.dark .search-icon-container {
         color: var(--text-tertiary-dark);
-        border-color: var(--border-dark);
         background-color: #0f172a;
     }
 
@@ -820,9 +816,8 @@
                 style="flex: 1; position: relative;">
                 <label class="search-label" style="width: 100%;">
                     <div class="search-wrapper" style="position: relative;">
-                        <div class="search-icon-container"
-                            style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: gray;">
-                            <span class="material-symbols-outlined search-icon">search</span>
+                        <div class="search-icon-container" style="position: absolute; left:0px; top: 50%; color: gray;">
+                            <span class="material-symbols-outlined search-icon">Search</span>
                         </div>
                         <input class="search-input" name="q" value="{{ request.args.get('q', '') }}"
                             placeholder="Search by name or email..."

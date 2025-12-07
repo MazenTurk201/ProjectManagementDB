@@ -783,13 +783,9 @@
         font-weight: 500;
     }
 
-    .material-symbols-outlined {
+    /* .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-
-    .material-symbols-outlined.fill {
-        font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
+    } */
 
     .tab {
         cursor: pointer;
@@ -812,7 +808,6 @@
                     <a class="tab active" onclick="openTab(event, 'overview')">Overview</a>
                     <a class="tab" onclick="openTab(event, 'tasks')">Tasks</a>
                     <a class="tab" onclick="openTab(event, 'milestones')">Milestones</a>
-                    <a class="tab" onclick="openTab(event, 'budget')">Budget</a>
                 </nav>
             </div>
 
@@ -875,13 +870,6 @@
                 </div>
 
             </div>
-
-            <div id="budget" class="tab-content" style="display: none;">
-                <h2 class="section-title">Budget</h2>
-                <div class="metric-card">
-                    <p class="metric-value">{{ total_project_budget }}$</p>
-                </div>
-            </div>
             <br>
             <h3>📌 Current Tasks:</h3>
             <br>
@@ -940,6 +928,7 @@
         // 3. نظهر المودال بالفانكشن بتاعتك القديمة
         toggleModal('taskDetailsDialog', true);
     }
+
 </script>
 {% include 'components/task_details.html' %}
 {% endblock %}

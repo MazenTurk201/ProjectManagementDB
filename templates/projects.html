@@ -195,14 +195,10 @@
 
     /* Project Header */
     .project-header {
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--border-light);
         background-color: var(--card-bg-light);
-        padding: 1.5rem;
     }
 
     body.dark .project-header {
-        border-color: var(--border-dark);
         background-color: var(--card-bg-dark);
     }
 
@@ -758,218 +754,116 @@
 {% block title %}لوحة التحكم - ProjectFlow{% endblock %}
 
 {% block content %}
-<div class="dashboard-container">
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="content-container">
-            <!-- Project Header -->
+<div class="projects-section">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <p class="stat-label">Total Projects</p>
+            <p class="stat-value">{{ total_projects }} Projects</p>
+        </div>
+
+        <div class="stat-card">
+            <p class="stat-label">Total Budget</p>
+            <p class="stat-value">{{ total_project_budget }}$</p>
+        </div>
+
+        <div class="stat-card">
+            <p class="stat-label">Completed Projects</p>
+            <p class="stat-value">{{ completed_projects }} Projects</p>
+        </div>
+    </div>
+    <h2 class="section-title">My Projects</h2>
+    <div class="projects-grid">
+        {% for project in projects %}
+        <div class="project-card">
+            <!-- <div class="project-card"> -->
             <div class="project-header">
-                <!-- Top section: Title, status, date -->
-                <div class="header-top">
-                    <div class="header-left">
-                        <div class="title-section">
-                            <p class="project-title">Last Project: {{ last_project.Name }}</p>
-                            <div class="status-badge">
-                                <span class="material-symbols-outlined status-icon">progress_activity</span>
-                                <p class="status-text">{{ last_project.Status }}</p>
-                            </div>
-                        </div>
-                        <p class="due-date">Due Date: {{ last_project.End_Date }}</p>
-                    </div>
-                    <div class="header-right">
-                        <!-- AvatarGroup -->
-                        <div class="avatar-group">
-                            <div class="avatar-wrapper">
-                                <div class="avatar-item"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAFr8cgogkndxjxt7Ls4fzPBe-KouEXTD4veOlzvyssd8Nps78x4_lbOWQG927NlsNgVgsLEIUaXIgIwlvjWGrDMvh3O8Y0v7UxLhc-FZHH4o1hWBeUmf0lNQypkLBMglFV_sXAS4-4vXv3fSEuGMwsfG0MNpNDiYwDm6tzoCMTgyfzmHEuELWF2q0Cv2iIuqf7jZkF9r8a_mHZgzw_Gb75t3l8wjt89_8GSmYFzcbcmp89XiaMdae9XfHsxZD5mKW-RrJNykTaN1o");'>
-                                </div>
-                            </div>
-                            <div class="avatar-wrapper">
-                                <div class="avatar-item"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYLNaDInj26WJzw5JsvUnItu2FzoTyLC4vS-bEcgLAhHbZI26TWgROZtgf6wBnZiwWzDd13LkBktqlQzO1DDJzoPA3Ekmi_dGcEA8UwsW1Jq90CDAAkNg00LblvKgDLL-XSGBkJmUqcB3mUU91C2Pw0Rtrk7TsutV0A3CczGOwM8EtAPtqVwZeCIddeiA5WDpMOqPtn6wU1iXOZNcB66mUomVs-PSAv81nuiv-0D8zatiippgO7s1GO6NSwg_I61YHrOgK5wGE7tM");'>
-                                </div>
-                            </div>
-                            <div class="avatar-wrapper">
-                                <div class="avatar-item"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAU-mH1sIPdkhBabip-oQIue8_87dG9zSRbmZH9KqpTNOyTLxk-ag-_IhPe0OfU17V3JK-y7mX-AV0kgJ5YQfwFdHqGPSVMfbPl_eD2P8GDXapfYVUdna6LYCt9kPZVOISUUfAiWmNHAHAwEcEb0PDACbj7xlNlHz17lghnlNbP3wKM7Ulx8ebjQQnRzuDhgb-giaYxFLg1QpafLUWKtXqXDXU8ldSxkBaAuKivzkbc-vQwOCBma87GiKIBudvuE5jDX1-uTUXqrmA");'>
-                                </div>
-                            </div>
-                            <div class="avatar-wrapper">
-                                <div class="avatar-count">+2</div>
-                            </div>
-                        </div>
-                        <button class="invite-btn">
-                            <span class="material-symbols-outlined btn-icon">add</span>
-                            <span class="btn-text">Invite</span>
-                        </button>
-                    </div>
-                </div>
-                <!-- ProgressBar -->
-                <div class="progress-section">
-                    <div class="progress-header">
-                        <p class="progress-label">Project Progress</p>
-                        <p class="progress-value">: {{ project_progress }}%</p>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: {{ project_progress }}%;"></div>
+                <h3 class="project-title">{{ project.Name }}</h3>
+                <div class="dropdown" style="position: relative;">
+                    <span class="material-symbols-outlined project-more"
+                        onclick="toggleProjectMenu('menu-{{ project.Project_ID }}', event)" style="cursor: pointer;">
+                        more_horiz
+                    </span>
+
+                    <div id="menu-{{ project.Project_ID }}" class="dropdown-content">
+                        <a href="#" class="dropdown-item"
+                            onclick="window.location.href='/project/{{ project.Project_ID }}/view'">
+                            <!-- <span class="material-symbols-outlined icon">open_in_new</span> View -->
+                            <span class="material-symbols-outlined icon">arrows_more_up</span> View
+                        </a>
+
+                        <a href="#" class="dropdown-item"
+                            onclick="window.location.href='/project/{{ project.Project_ID }}/milestone'">
+                            <span class="material-symbols-outlined icon">flag</span> Milestones
+                        </a>
+                        {% if current_user.Role in ['Product Manager', 'Database Administrator', 'Admin'] %}
+                        <a href="#" class="dropdown-item"
+                            onclick="openEditModal('{{ project.Project_ID }}', '{{ project.Name }}', '{{ project.Description }}')">
+                            <span class="material-symbols-outlined icon">edit</span> Edit
+                        </a>
+
+                        <a href="{{ url_for('delete_project', id=project.Project_ID) }}" class="dropdown-item delete"
+                            onclick="return confirm('متأكد إنك عايز تحذف المشروع ده؟ كل التاسكات اللي جواه هتطير! ⚠️');">
+                            <span class="material-symbols-outlined icon">delete</span> Delete
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-
-            <!-- Tab Navigation -->
-            <div class="tab-navigation">
-                <nav class="tabs" aria-label="Tabs">
-                    <a class="tab active" href="#">Overview</a>
-                    <a class="tab" href="#">Tasks</a>
-                    <a class="tab" href="#">Milestones</a>
-                    <a class="tab" href="#">Files</a>
-                    <a class="tab" href="#">Activity</a>
-                    <a class="tab" href="#">Settings</a>
-                </nav>
+            <h3 class="project-discription">{{ project.Status }}</h3>
+            <div class="project-progress">
+                <div class="progress-header">
+                    <span class="progress-label">Progress</span>
+                    <span class="progress-percent">{{ project.progress }}%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ project.progress }}%;"></div>
+                </div>
             </div>
-
-            <!-- Overview Tab Content -->
-            <div class="overview-content">
-                <div class="overview-grid">
-                    <!-- Left Column: Key Metrics & Upcoming Milestones -->
-                    <div class="left-column">
-                        <!-- Key Metrics Cards -->
-                        <div class="metrics-grid">
-                            <div class="metric-card">
-                                <p class="metric-label">Tasks Due This Week</p>
-                                <p class="metric-value">12</p>
-                            </div>
-                            <div class="metric-card">
-                                <p class="metric-label">Open Issues</p>
-                                <p class="metric-value">5</p>
-                            </div>
-                            <div class="metric-card">
-                                <p class="metric-label">Files Uploaded</p>
-                                <p class="metric-value">34</p>
-                            </div>
-                        </div>
-
-                        <!-- Upcoming Milestones -->
-                        <div class="milestones-section">
-                            <h2 class="section-title">Upcoming Milestones</h2>
-                            <div class="milestones-list">
-                                <ul class="milestones-ul" role="list">
-                                    {% for mail in mailstone %}
-                                    <li class="milestone-item">
-                                        <div class="milestone-content">
-                                            <div class="milestone-icon">
-                                                <span class="material-symbols-outlined">flag</span>
-                                            </div>
-                                            <div class="milestone-details">
-                                                <p class="milestone-title">{{ mail.Name }}</p>
-                                                <p class="milestone-desc">{{ mail.Description }}</p>
-                                            </div>
-                                        </div>
-                                        <p class="milestone-date">{{ mail.Due_Date }}</p>
-                                    </li>
-                                    {% else %}
-                                    <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
-                                    {% endfor %}
-                                    <!-- <li class="milestone-item">
-                                        <div class="milestone-content">
-                                            <div class="milestone-icon">
-                                                <span class="material-symbols-outlined">flag</span>
-                                            </div>
-                                            <div class="milestone-details">
-                                                <p class="milestone-title">Phase 2: Frontend Development</p>
-                                                <p class="milestone-desc">React component library setup</p>
-                                            </div>
-                                        </div>
-                                        <p class="milestone-date">Nov 20, 2024</p>
-                                    </li>
-                                    <li class="milestone-item">
-                                        <div class="milestone-content">
-                                            <div class="milestone-icon">
-                                                <span class="material-symbols-outlined">flag</span>
-                                            </div>
-                                            <div class="milestone-details">
-                                                <p class="milestone-title">Phase 3: Backend Integration</p>
-                                                <p class="milestone-desc">API endpoints and database schema</p>
-                                            </div>
-                                        </div>
-                                        <p class="milestone-date">Dec 05, 2024</p>
-                                    </li> -->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column: Recent Activity -->
-                    <div class="right-column">
-                        <h2 class="section-title">Recent Activity</h2>
-                        <div class="activity-timeline">
-                            <ul class="timeline-ul" role="list">
-                                <li class="timeline-item">
-                                    <div class="timeline-connector"></div>
-                                    <div class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <span class="material-symbols-outlined icon">check_circle</span>
-                                        </div>
-                                        <div class="timeline-text">
-                                            <p class="activity-text">
-                                                <span class="user-name">Chris Evans</span>
-                                                completed task <span class="highlight">"Setup Tailwind CSS"</span>.
-                                                <span class="time">2h ago</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-connector"></div>
-                                    <div class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <span class="material-symbols-outlined icon">chat_bubble</span>
-                                        </div>
-                                        <div class="timeline-text">
-                                            <p class="activity-text">
-                                                <span class="user-name">Sarah Lee</span>
-                                                commented on <span class="highlight">"Design checkout flow"</span>.
-                                                <span class="time">5h ago</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-connector"></div>
-                                    <div class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <span class="material-symbols-outlined icon">attach_file</span>
-                                        </div>
-                                        <div class="timeline-text">
-                                            <p class="activity-text">
-                                                <span class="user-name">Mike Ross</span>
-                                                uploaded a file <span class="highlight">"Final-logo.svg"</span>.
-                                                <span class="time">Yesterday</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item">
-                                    <div class="timeline-content">
-                                        <div class="timeline-icon">
-                                            <span class="material-symbols-outlined icon">person_add</span>
-                                        </div>
-                                        <div class="timeline-text">
-                                            <p class="activity-text">
-                                                <span class="user-name">Alicia Keys</span>
-                                                added <span class="highlight">David Chen</span> to the project.
-                                                <span class="time">2d ago</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            <div class="project-footer">
+                <div class="team-avatars">
+                    <span class="material-symbols-outlined" style="color: gray;">group</span>
+                </div>
+                <div class="due-date">
+                    <p class="due-label">Due Date</p>
+                    <p class="due-value">{{ project.End_Date }}</p>
                 </div>
             </div>
         </div>
-    </main>
+        {% else %}
+        <p style="text-align: center; color: #777;">مفيش تاسكات.. رايق أنت يا باشا! 😎</p>
+        {% endfor %}
+    </div>
 </div>
 
+<script>
+    function toggleProjectMenu(menuId, event) {
+        event.stopPropagation(); // عشان ميعملش Click على الصفحة كلها ويقفل في نفس اللحظة
+
+        // 1. اقفل أي قائمة تانية مفتوحة الأول
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            if (dropdowns[i].id !== menuId) {
+                dropdowns[i].classList.remove('show');
+            }
+        }
+
+        // 2. افتح أو اقفل القائمة المطلوبة
+        document.getElementById(menuId).classList.toggle("show");
+    }
+
+    // 3. لو داس في أي حتة فاضية في الصفحة، اقفل القوائم
+    window.onclick = function (event) {
+        if (!event.target.matches('.project-more')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+{% include 'components/edit_project.html' %}
 {% endblock %}

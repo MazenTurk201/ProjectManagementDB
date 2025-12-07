@@ -1,7 +1,8 @@
+from random import random
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from datetime import datetime
+from datetime import datetime, date
 
 from sqlalchemy import func
 
@@ -301,20 +302,11 @@ def signup():
 @login_required
 def projects():
     # هات كل التاسكات
-    project = Project.query.all()
-    mailstone = Milestone.query.all()
-    last_project = Project.query.order_by(Project.Project_ID.desc()).first()
-    # 1. هات عدد التاسكات الكلي
-    total_tasks = Task.query.count()
-    
-    # 2. هات عدد التاسكات اللي خلصت (Completed)
-    completed_tasks = Task.query.filter_by(Status='Completed').count()
-    
-    # 3. احسب النسبة (مع حماية عشان لو مفيش تاسكات القسمة على صفر متضربش)
-    project_progress = 0
-    if total_tasks > 0:
-        project_progress = int((completed_tasks / total_tasks) * 100)
-    return render_template('projects.html', project=project, name=current_user.Full_Name, mailstone=mailstone, last_project=last_project, project_progress=project_progress, total_tasks=total_tasks)
+    projects = Project.query.all()
+    total_projects = Project.query.count()
+    total_project_budget = Task.query.with_entities(func.sum(Project.Budget)).scalar() or 0
+    completed_projects = Project.query.filter_by(Status='Completed').count()
+    return render_template('projects.html', projects=projects, name=current_user.Full_Name, total_project_budget=total_project_budget, total_projects=total_projects, completed_projects=completed_projects)
 
 # app.py
 
@@ -338,13 +330,12 @@ def task():
     tasks = Task.query.all()
     projects = Project.query.all()
     total_tasks = Task.query.count()
-    total_project_budget = Task.query.with_entities(func.sum(Project.Budget)).scalar() or 0
     milestone = Milestone.query.all()
     completed_tasks = Task.query.filter_by(Status='Completed').count()
     project_progress = 0
     if total_tasks > 0:
         project_progress = int((completed_tasks / total_tasks) * 100)
-    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_project_budget=total_project_budget, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects, completed_tasks=completed_tasks)
+    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects, completed_tasks=completed_tasks)
 
 # فلتر سحري بيجيب اسم المشروع بمعلومية الـ ID بتاعه
 @app.template_filter('get_project_name')
@@ -386,32 +377,65 @@ def reports():
     tasks = Task.query.all()
     return render_template('report.html', tasks=tasks, name=current_user.Full_Name)
 
-@app.route('/milestones')
-@login_required
-def milestones():
-    tasks = Task.query.all()
-    milestones = Milestone.query.all()
-    return render_template('milestone.html', name=current_user.Full_Name, milestones=milestones, tasks=tasks)
-
-@app.route('/project/<int:id>/tasks') # أو اسم اللينك اللي أنت عامله
+@app.route('/project/<int:id>/view') # أو اسم اللينك اللي أنت عامله
 @login_required
 def project_tasks(id):
     project = Project.query.get_or_404(id)
     milestones = Milestone.query.filter_by(Project_ID=id).all()
+    tasks = Task.query.filter_by(Project_ID=id).all()
     
     # حسبة الـ Progress Bar
     total_tasks = Task.query.filter_by(Project_ID=id).count()
     completed_tasks = Task.query.filter_by(Project_ID=id, Status='Completed').count()
+    dayesLeft = (project.End_Date - datetime.now().date()).days
     
     progress = 0
     if total_tasks > 0:
         progress = int((completed_tasks / total_tasks) * 100)
+
+    
         
-    return render_template('task_detail.html', 
-                         project=project, 
-                         milestones=milestones, 
-                         progress=progress,
-                         total_tasks=total_tasks)
+    return render_template('project_detail.html', 
+                        project=project, 
+                        milestones=milestones,
+                        tasks=tasks, 
+                        total_tasks=total_tasks,
+                        progress=progress,
+                        completed_tasks=completed_tasks,
+                        dayesLeft=dayesLeft,
+                        
+                        )
+
+@app.route('/project/<int:id>/milestone') # أو اسم اللينك اللي أنت عامله
+@login_required
+def projectMilestones(id):
+    milestones = Milestone.query.filter_by(Project_ID=id).all()
+    project = Project.query.get_or_404(id)
+    completed_tasks = Task.query.filter_by(Project_ID=id, Status='Completed').count()
+    total_tasks = Task.query.filter_by(Project_ID=id).count()
+    return render_template('milestone.html', 
+                        milestones=milestones,
+                        project=project,
+                        total_tasks=total_tasks,
+                        completed_tasks=completed_tasks,
+                        )
+
+@app.template_filter('date_to_percent')
+def date_to_percent_filter(date_obj):
+    if not date_obj:
+        return 0
+    
+    # دالة tm_yday بترجع رقم اليوم في السنة (من 1 لـ 366)
+    day_of_year = date_obj.timetuple().tm_yday
+    
+    # نحسب النسبة المئوية (نقصنا 1 عشان نبدأ من الصفر)
+    percent = ((day_of_year - 1) / 365.0) * 100
+    
+    return round(percent, 2)
+
+@app.context_processor
+def inject_today():
+    return {'today': date.today()}
 
 if __name__ == '__main__':
     app.run(debug=True)

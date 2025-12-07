@@ -426,7 +426,7 @@
 
     .timeline-container-inner {
         position: relative;
-        min-width: 1200px;
+        min-width: 100%;
     }
 
     /* Time Axis Header */
@@ -480,7 +480,8 @@
         height: 100%;
         width: 1px;
         background-color: var(--accent);
-        left: 45%;
+        top: 20px;
+        left: {{ today | date_to_percent }}%;
     }
 
     .today-label {
@@ -837,10 +838,6 @@
     }
 
     .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-
-    .material-symbols-outlined.fill-1 {
         font-variation-settings: 'FILL' 1;
     }
 </style>
@@ -858,18 +855,18 @@
             <!-- Breadcrumbs & SegmentedButtons -->
             <div class="header-left">
                 <div class="breadcrumbs">
-                    <a class="breadcrumb-link" href="#">All Projects</a>
+                    <a class="breadcrumb-link" href="/projects">All Projects</a>
                     <span class="breadcrumb-separator">/</span>
-                    <a class="breadcrumb-link" href="#">Project Alpha</a>
+                    <a class="breadcrumb-link" href="/project/{{ project.Project_ID }}/view">{{ project.Name }}</a>
                     <span class="breadcrumb-separator">/</span>
                     <span class="breadcrumb-current">Milestones</span>
                 </div>
                 <div class="view-switcher">
-                    <label class="view-option">
+                    <label class="view-option tab active" onclick="openTab(event, 'timeline')">
                         <span class="option-text">Timeline</span>
                         <input checked="" class="option-input" name="view-switcher" type="radio" value="Timeline" />
                     </label>
-                    <label class="view-option">
+                    <label class="view-option tab" onclick="openTab(event, 'list')">
                         <span class="option-text">List</span>
                         <input class="option-input" name="view-switcher" type="radio" value="List" />
                     </label>
@@ -877,7 +874,7 @@
             </div>
             <!-- ToolBar & New Milestone Button -->
             <div class="header-right">
-                <div class="toolbar-buttons">
+                <!-- <div class="toolbar-buttons">
                     <button class="toolbar-btn">
                         <span class="material-symbols-outlined">zoom_in</span>
                     </button>
@@ -887,7 +884,7 @@
                     <button class="toolbar-btn">
                         <span class="material-symbols-outlined">filter_list</span>
                     </button>
-                </div>
+                </div> -->
                 <button class="new-milestone-btn" onclick="openTaskModal('hi', 'idd')">
                     <span class="material-symbols-outlined btn-icon">add</span>
                     <span class="btn-text">New Milestone</span>
@@ -895,23 +892,23 @@
             </div>
         </header>
 
-        <!-- Timeline Canvas -->
-        <div class="timeline-canvas">
+        <div id="timeline" class="tab-content" style="display: block;">
+            <br>
             <div class="timeline-container-inner">
                 <!-- Time Axis Header -->
                 <div class="time-axis">
-                    <div class="month-label">Jan '24</div>
-                    <div class="month-label">Feb '24</div>
-                    <div class="month-label">Mar '24</div>
-                    <div class="month-label">Apr '24</div>
-                    <div class="month-label">May '24</div>
-                    <div class="month-label">Jun '24</div>
-                    <div class="month-label">Jul '24</div>
-                    <div class="month-label">Aug '24</div>
-                    <div class="month-label">Sep '24</div>
-                    <div class="month-label">Oct '24</div>
-                    <div class="month-label">Nov '24</div>
-                    <div class="month-label">Dec '24</div>
+                    <div class="month-label">Jan</div>
+                    <div class="month-label">Feb</div>
+                    <div class="month-label">Mar</div>
+                    <div class="month-label">Apr</div>
+                    <div class="month-label">May</div>
+                    <div class="month-label">Jun</div>
+                    <div class="month-label">Jul</div>
+                    <div class="month-label">Aug</div>
+                    <div class="month-label">Sep</div>
+                    <div class="month-label">Oct</div>
+                    <div class="month-label">Nov</div>
+                    <div class="month-label">Dec</div>
                 </div>
 
                 <!-- Timeline Grid & "Today" Marker -->
@@ -937,8 +934,55 @@
 
                 <!-- Milestone Rows -->
                 <div class="milestones-container">
+                    {% for milestone in milestones %}
+
+
+                    <div class="milestone {{ 'active' if milestone.Due_Date >= today or false else '' }}" style="left: calc({{ milestone.Due_Date | date_to_percent }}% - 5%); top: {{ range(100, 600) | random }}%;">
+                        <div class="milestone-content">
+                            <div class="milestone-dot {{ 'green' if milestone.Due_Date >= today else 'blue' }}"></div>
+                            <div class="milestone-line"></div>
+                            <div class="milestone-card">
+                                <p class="milestone-title">{{ milestone.Name }}</p>
+                                <p class="milestone-date">{{ milestone.Due_Date.strftime('%b %d') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="milestone"
+                        style="position: absolute; left: %; top: 50%; transform: translate(-50%, -50%); z-index: 1;">
+
+                        <div class="milestone-content" style="position: relative;">
+
+                            <div class="milestone-dot {{ 'green' if milestone.Is_Completed else 'orange' }}"
+                                style="width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 2px {{ '#16a34a' if milestone.Is_Completed else '#f97316' }}; background: white;">
+                                <div class="milestone-dot-inner"
+                                    style="width: 8px; height: 8px; background: {{ '#16a34a' if milestone.Is_Completed else '#f97316' }}; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                </div>
+                            </div>
+
+                            <div class="milestone-card"
+                                style="position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: white; padding: 8px 12px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e5e7eb; white-space: nowrap; text-align: center;">
+
+                                <p class="milestone-title"
+                                    style="font-weight: bold; font-size: 0.85rem; margin-bottom: 2px;">
+                                    {{ milestone.Name }}
+                                </p>
+                                <p class="milestone-date" style="font-size: 0.75rem; color: gray;">
+                                    {{ milestone.Due_Date.strftime('%b %d') }}
+                                </p>
+
+                                <div
+                                    style="position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%) rotate(45deg); width: 10px; height: 10px; background: white; border-right: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb;">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    {% endfor %}
+
+
+
+
                     <!-- Milestone: Phase 1 Kickoff -->
-                    <div class="milestone" style="left: 20%;">
+                    <!-- <div class="milestone" style="left: 20%;">
                         <div class="milestone-content">
                             <div class="milestone-dot blue"></div>
                             <div class="milestone-line"></div>
@@ -947,10 +991,10 @@
                                 <p class="milestone-date">Mar 15</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Milestone: Design Finalized -->
-                    <div class="milestone" style="left: 30%; top: 8rem;">
+                    <!-- <div class="milestone" style="left: 30%; top: 8rem;">
                         <div class="milestone-content">
                             <div class="milestone-dot blue"></div>
                             <div class="milestone-line"></div>
@@ -959,10 +1003,10 @@
                                 <p class="milestone-date">Apr 22</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Milestone: Beta Launch (Active/Selected) -->
-                    <div class="milestone active" style="left: 40%;">
+                    <!-- <div class="milestone active" style="left: 40%;">
                         <div class="milestone-content">
                             <div class="milestone-dot orange">
                                 <div class="milestone-dot-inner"></div>
@@ -973,16 +1017,16 @@
                                 <p class="milestone-date">May 30</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Milestone Detail Popover -->
                     <div class="milestone-popover" style="left: calc(40% + 5rem); top: -2rem;" id="milestone-popover"
                         onclick="toggleModal('milestone-popover', false)">
                         <div class="popover-header">
                             <div>
-                                <h3 class="popover-title">Beta Launch</h3>
+                                <h3 class="popover-title">{{ project.Name }}</h3>
                                 <span class="status-badge">
-                                    On Track
+                                    {{ project.Status }}
                                 </span>
                             </div>
                             <button class="popover-close">
@@ -990,24 +1034,29 @@
                             </button>
                         </div>
                         <p class="popover-description">
-                            Initial release of the product to a limited audience for testing and feedback.
+                            {{ project.Description }}
                         </p>
                         <div class="popover-details">
                             <div class="detail-item">
-                                <span class="detail-label">Due Date</span>
-                                <span class="detail-value">May 30, 2024</span>
+                                <span class="detail-label">End Date</span>
+                                <span class="detail-value">{{ project.End_Date }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Budget</span>
+                                <span class="detail-value">{{ project.Budget }}$</span>
                             </div>
                             <div class="progress-section">
                                 <div class="progress-header">
                                     <span class="progress-label">Progress</span>
-                                    <span class="progress-value">5/8 tasks</span>
+                                    <span class="progress-value">{{ completed_tasks }}/{{ total_tasks }}
+                                        tasks</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 62.5%;"></div>
+                                    <div class="progress-fill" style="width: {{ project.progress }}%;"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="popover-team">
+                        <!-- <div class="popover-team">
                             <h4 class="team-title">Team</h4>
                             <div class="team-members">
                                 <img class="team-member" data-alt="Avatar of Sarah Day"
@@ -1017,11 +1066,11 @@
                                 <img class="team-member" data-alt="Avatar of Maria Garcia"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFq_dE58Z-Qze6rJjvZUkt7Vt6Eo1co27XAu4eWDUCk-AwgmK72pakWAqv6iCQi615RvfzigP9TWbbpAZnXWNblEt5J0fMmeSeIqC6fAtpRwbek-VgDMlEsbos4UcfZQbDqMJNeSVQV2vkaCutbEMrjijZO42szIglC5izgsCzEfeOIW5SZGv_eGAuw6epUnyxhAi3KwJ5bQCbTzbKqUQhYIPRyiiuj_jv6z2E9bbqtLAWzZpqVzhXgKZqXuM6RZsbFe1P-mFTmsU" />
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Milestone: Project Completion -->
-                    <div class="milestone" style="left: 50%; top: 4rem;">
+                    <!-- <div class="milestone" style="left: 50%; top: 4rem;">
                         <div class="milestone-content">
                             <div class="milestone-dot green">
                                 <span class="material-symbols-outlined milestone-icon">check</span>
@@ -1032,10 +1081,38 @@
                                 <p class="milestone-date">Jun 15</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
+
+        <div id="list" class="tab-content" style="display: none;">
+            <div class="milestones-list"
+                style="display: flex; padding: 1.5rem; justify-content: left; align-items: center;">
+                <ul class="milestones-ul"
+                    style="list-style-type: none; padding: 0; display: flex; flex-direction: column; padding: 1.5rem; justify-content: left; align-items: start; width: 100%;">
+                    {% for milestone in milestones %}
+                    <li class="milestone-item">
+                        <div class="milestone-content">
+                            <div class="milestone-icon">
+                                <span class="material-symbols-outlined"
+                                    style="color: {{ 'green' if milestone.Is_Completed else 'gray' }}">flag</span>
+                            </div>
+                            <div class="milestone-details">
+                                <p class="milestone-title">Name: {{ milestone.Name }}</p>
+                                <p class="milestone-desc">Description: {{ milestone.Description }}</p>
+                                <p class="milestone-date">Due Date: {{ milestone.Due_Date }}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% else %}
+                    <p style="color: gray; padding: 10px;">No milestones yet.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+
     </main>
     <script>
         function openTaskModal(title, id) {
@@ -1043,6 +1120,25 @@
             document.querySelector('.task-code').innerText = title;
             document.querySelector('.task-code').innerText += " " + id;
             toggleModal('milestoneModal', true);
+        }
+
+        function openTab(evt, tabName) {
+            // 1. اخفي كل المحتوى الأول
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // 2. شيل كلاس active من كل الزراير
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // 3. اظهر القسم المطلوب ونور الزرار بتاعه
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
     </script>
 </div>

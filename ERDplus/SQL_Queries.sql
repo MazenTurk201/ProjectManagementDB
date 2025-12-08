@@ -1,112 +1,136 @@
+CREATE DATABASE IF NOT EXISTS projectmanagementdb_schema;
+USE projectmanagementdb_schema;
 
-CREATE DATABASE IF NOT EXISTS ProjectManagementDB_Schema;
-USE ProjectManagementDB_Schema;
-
--- 1. Table: Project
-CREATE TABLE Project (
-    Project_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Name VARCHAR(255) NOT NULL,
-    Description TEXT,
-    Start_Date DATE NOT NULL,
-    End_Date DATE,
-    Status VARCHAR(50) DEFAULT 'Active', --('Planning', 'Active', 'On Hold', 'Completed', 'Cancelled')
-    Budget DECIMAL(12,2),
-    Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Updated_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-
+-- =========================
+-- 1. Table: project
+-- =========================
+CREATE TABLE project (
+    project_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    status VARCHAR(50) DEFAULT 'Active', -- ('Planning', 'Active', 'On Hold', 'Completed', 'Cancelled')
+    budget DECIMAL(12,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- 2. Table: Team_Member 
-CREATE TABLE Team_Member (
-    Member_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Full_Name VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) UNIQUE NOT NULL,
-    Role VARCHAR(100) NOT NULL,
-    Hourly_Rate DECIMAL(8,2),
-    Is_Active BOOLEAN DEFAULT TRUE,
-    Manager_ID INT,
-    Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    CONSTRAINT fk_manager FOREIGN KEY (Manager_ID) REFERENCES Team_Member(Member_ID) ON DELETE SET NULL,
-    
+-- =========================
+-- 2. Table: team_member
+-- =========================
+CREATE TABLE team_member (
+    member_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    Password varchar(255) DEFAULT '123456',
+    role VARCHAR(100) NOT NULL,
+    hourly_rate DECIMAL(8,2),
+    is_active TINYINT(1) DEFAULT 1,
+    manager_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
+        FOREIGN KEY (manager_id)
+        REFERENCES team_member(member_id)
+        ON DELETE SET NULL
 );
 
--- 3. Table: Milestone
-CREATE TABLE Milestone (
-    Milestone_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Project_ID INT NOT NULL,
-    Name VARCHAR(255) NOT NULL,
-    Due_Date DATE NOT NULL,
-    Description TEXT,
-    Is_Completed BOOLEAN DEFAULT FALSE,
-    Completed_Date DATE,
-    Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (Project_ID) REFERENCES Project(Project_ID) ON DELETE CASCADE,
-    
+-- =========================
+-- 3. Table: milestone
+-- =========================
+CREATE TABLE milestone (
+    milestone_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    due_date DATE NOT NULL,
+    description TEXT,
+    is_completed TINYINT(1) DEFAULT 0,
+    completed_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
+        FOREIGN KEY (project_id)
+        REFERENCES project(project_id)
+        ON DELETE CASCADE
 );
 
--- 4. Table: Task
-CREATE TABLE Task (
-    Task_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Project_ID INT NOT NULL,
-    Milestone_ID INT,
-    Title VARCHAR(255) NOT NULL,
-    Description TEXT,
-    Start_Date DATE NOT NULL,
-    End_Date DATE,
-    Priority VARCHAR(50) DEFAULT 'Medium', --('Low', 'Medium', 'High', 'Urgent', 'Critical')
-    Status VARCHAR(50) DEFAULT 'Pending', --('Pending', 'In Progress', 'Completed', 'Blocked', 'Deferred', 'Review')
-    Task_Type VARCHAR(50) DEFAULT 'Development', --('Development', 'Design', 'Testing', 'Documentation', 'Meeting', 'Other')
-    Estimated_Hours DECIMAL(6,2),
-    Actual_Hours DECIMAL(6,2),
-    Created_By INT,
-    Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    Updated_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (Project_ID) REFERENCES Project(Project_ID) ON DELETE CASCADE,
-    FOREIGN KEY (Milestone_ID) REFERENCES Milestone(Milestone_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Created_By) REFERENCES Team_Member(Member_ID) ON DELETE SET NULL,
-    
-    
+-- =========================
+-- 4. Table: task
+-- =========================
+CREATE TABLE task (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    project_id INT NOT NULL,
+    milestone_id INT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    priority VARCHAR(50) DEFAULT 'Medium', -- ('Low', 'Medium', 'High', 'Urgent', 'Critical')
+    status VARCHAR(50) DEFAULT 'Pending', -- ('Pending', 'In Progress', 'Completed', 'Blocked', 'Deferred', 'Review')
+    task_type VARCHAR(50) DEFAULT 'Development', -- ('Development', 'Design', 'Testing', 'Documentation', 'Meeting', 'Other')
+    estimated_hours DECIMAL(6,2),
+    actual_hours DECIMAL(6,2),
+    created_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (project_id)
+        REFERENCES project(project_id)
+        ON DELETE CASCADE,
+
+        FOREIGN KEY (milestone_id)
+        REFERENCES milestone(milestone_id)
+        ON DELETE SET NULL,
+
+        FOREIGN KEY (created_by)
+        REFERENCES team_member(member_id)
+        ON DELETE SET NULL
 );
 
--- 5. Table: Member_Task
-CREATE TABLE Member_Task (
-    Member_Task_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Member_ID INT NOT NULL,
-    Task_ID INT NOT NULL,
-    Role_In_Task VARCHAR(100) DEFAULT 'Assignee', --('Assignee', 'Reviewer', 'Observer', 'Manager')
-    Hours_Worked DECIMAL(6,2) DEFAULT 0,
-    Is_Primary_Assignee BOOLEAN DEFAULT FALSE,
-    Assigned_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (Member_ID) REFERENCES Team_Member(Member_ID) ON DELETE CASCADE,
-    FOREIGN KEY (Task_ID) REFERENCES Task(Task_ID) ON DELETE CASCADE,
-    
-    UNIQUE  (Member_ID, Task_ID, Role_In_Task),
-    
+-- =========================
+-- 5. Table: member_task
+-- =========================
+CREATE TABLE member_task (
+    member_task_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    task_id INT NOT NULL,
+    role_in_task VARCHAR(100) DEFAULT 'Assignee', -- ('Assignee', 'Reviewer', 'Observer', 'Manager')
+    hours_worked DECIMAL(6,2) DEFAULT 0,
+    is_primary_assignee TINYINT(1) DEFAULT 0,
+    assigned_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (member_id)
+        REFERENCES team_member(member_id)
+        ON DELETE CASCADE,
+
+        FOREIGN KEY (task_id)
+        REFERENCES task(task_id)
+        ON DELETE CASCADE,
+
+        UNIQUE (member_id, task_id, role_in_task)
 );
 
--- 6. Table: Comment
-CREATE TABLE Comment (
-    Comment_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Task_ID INT NOT NULL,
-    Member_ID INT NOT NULL,
-    Content TEXT NOT NULL,
-    Comment_Type VARCHAR(50) DEFAULT 'General', --('General', 'Feedback', 'Question', 'Issue', 'Solution',"instruction")
-    Is_Edited BOOLEAN DEFAULT FALSE,
-    Edited_At TIMESTAMP NULL,
-    Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    
-    FOREIGN KEY (Task_ID) REFERENCES Task(Task_ID) ON DELETE CASCADE,
-    FOREIGN KEY (Member_ID) REFERENCES Team_Member(Member_ID) ON DELETE CASCADE,
-    
-    
+-- =========================
+-- 6. Table: comment
+-- =========================
+CREATE TABLE comment (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    task_id INT NOT NULL,
+    member_id INT NOT NULL,
+    content TEXT NOT NULL,
+    comment_type VARCHAR(50) DEFAULT 'General', -- ('General', 'Feedback', 'Question', 'Issue', 'Solution',"instruction")
+    is_edited TINYINT(1) DEFAULT 0,
+    edited_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (task_id)
+        REFERENCES task(task_id)
+        ON DELETE CASCADE,
+
+        FOREIGN KEY (member_id)
+        REFERENCES team_member(member_id)
+        ON DELETE CASCADE
 );
+
 
 -- ============================================
 -- INSERT SAMPLE DATA

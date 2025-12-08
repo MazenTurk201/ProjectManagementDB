@@ -9,7 +9,7 @@ CREATE TABLE Project (
     Description TEXT,
     Start_Date DATE NOT NULL,
     End_Date DATE,
-    Status VARCHAR(50) DEFAULT 'Active',
+    Status VARCHAR(50) DEFAULT 'Active', --('Planning', 'Active', 'On Hold', 'Completed', 'Cancelled')
     Budget DECIMAL(12,2),
     Created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     Updated_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -58,9 +58,9 @@ CREATE TABLE Task (
     Description TEXT,
     Start_Date DATE NOT NULL,
     End_Date DATE,
-    Priority VARCHAR(50) DEFAULT 'Medium',
-    Status VARCHAR(50) DEFAULT 'Pending',
-    Task_Type VARCHAR(50) DEFAULT 'Development',
+    Priority VARCHAR(50) DEFAULT 'Medium', --('Low', 'Medium', 'High', 'Urgent', 'Critical')
+    Status VARCHAR(50) DEFAULT 'Pending', --('Pending', 'In Progress', 'Completed', 'Blocked', 'Deferred', 'Review')
+    Task_Type VARCHAR(50) DEFAULT 'Development', --('Development', 'Design', 'Testing', 'Documentation', 'Meeting', 'Other')
     Estimated_Hours DECIMAL(6,2),
     Actual_Hours DECIMAL(6,2),
     Created_By INT,
@@ -79,7 +79,7 @@ CREATE TABLE Member_Task (
     Member_Task_ID INT PRIMARY KEY AUTO_INCREMENT,
     Member_ID INT NOT NULL,
     Task_ID INT NOT NULL,
-    Role_In_Task VARCHAR(100) DEFAULT 'Assignee',
+    Role_In_Task VARCHAR(100) DEFAULT 'Assignee', --('Assignee', 'Reviewer', 'Observer', 'Manager')
     Hours_Worked DECIMAL(6,2) DEFAULT 0,
     Is_Primary_Assignee BOOLEAN DEFAULT FALSE,
     Assigned_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -87,7 +87,7 @@ CREATE TABLE Member_Task (
     FOREIGN KEY (Member_ID) REFERENCES Team_Member(Member_ID) ON DELETE CASCADE,
     FOREIGN KEY (Task_ID) REFERENCES Task(Task_ID) ON DELETE CASCADE,
     
-    UNIQUE INDEX uq_member_task (Member_ID, Task_ID, Role_In_Task),
+    UNIQUE  (Member_ID, Task_ID, Role_In_Task),
     
 );
 
@@ -97,7 +97,7 @@ CREATE TABLE Comment (
     Task_ID INT NOT NULL,
     Member_ID INT NOT NULL,
     Content TEXT NOT NULL,
-    Comment_Type VARCHAR(50) DEFAULT 'General',
+    Comment_Type VARCHAR(50) DEFAULT 'General', ('General', 'Feedback', 'Question', 'Issue', 'Solution',"instruction")
     Is_Edited BOOLEAN DEFAULT FALSE,
     Edited_At TIMESTAMP NULL,
     Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

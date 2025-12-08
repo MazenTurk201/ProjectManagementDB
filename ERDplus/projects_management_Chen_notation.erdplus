@@ -6,8 +6,8 @@
         "id": "project_entity",
         "type": "Entity",
         "position": {
-          "x": 200,
-          "y": 100
+          "x": 369.9024349331877,
+          "y": -135.7552062229607
         },
         "data": {
           "label": "Project",
@@ -26,12 +26,12 @@
         "id": "milestone_entity",
         "type": "Entity",
         "position": {
-          "x": 500,
-          "y": 100
+          "x": 948.7022589368039,
+          "y": 88.58589144887307
         },
         "data": {
           "label": "Milestone",
-          "type": "Regular",
+          "type": "Weak",
           "isConnectable": false,
           "isSelected": false
         },
@@ -46,12 +46,12 @@
         "id": "task_entity",
         "type": "Entity",
         "position": {
-          "x": 350,
-          "y": 300
+          "x": 559.4152586035833,
+          "y": 461.4247039568532
         },
         "data": {
           "label": "Task",
-          "type": "Regular",
+          "type": "Weak",
           "isConnectable": false,
           "isSelected": false
         },
@@ -66,8 +66,8 @@
         "id": "team_member_entity",
         "type": "Entity",
         "position": {
-          "x": 100,
-          "y": 300
+          "x": -188.99999999999994,
+          "y": 371.99999999999994
         },
         "data": {
           "label": "Team_Member",
@@ -86,12 +86,12 @@
         "id": "comment_entity",
         "type": "Entity",
         "position": {
-          "x": 600,
-          "y": 300
+          "x": 987.2862193948546,
+          "y": 327.460950649911
         },
         "data": {
           "label": "Comment",
-          "type": "Regular",
+          "type": "Weak",
           "isConnectable": false,
           "isSelected": false
         },
@@ -106,8 +106,8 @@
         "id": "project_milestone_rel",
         "type": "Relationship",
         "position": {
-          "x": 350,
-          "y": 100
+          "x": 419.25068104785987,
+          "y": 78.88787342763372
         },
         "data": {
           "label": "Has",
@@ -122,20 +122,22 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": true,
+          "isIdentifying": true
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "project_task_rel",
         "type": "Relationship",
         "position": {
-          "x": 275,
-          "y": 200
+          "x": 306.1841833733184,
+          "y": 77.98312819367409
         },
         "data": {
           "label": "Contains",
@@ -150,20 +152,22 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": true,
+          "isIdentifying": true
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "milestone_task_rel",
         "type": "Relationship",
         "position": {
-          "x": 425,
-          "y": 200
+          "x": 489.02735059523184,
+          "y": 223.57925366254898
         },
         "data": {
           "label": "Includes",
@@ -178,31 +182,33 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": true,
+          "isIdentifying": true
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "member_task_rel",
         "type": "Relationship",
         "position": {
-          "x": 225,
-          "y": 300
+          "x": 202.76801420023804,
+          "y": 409.15268014794316
         },
         "data": {
           "label": "Assigned_To",
           "sourceEntityDetails": {
             "id": "team_member_entity",
             "minCardinality": "Optional",
-            "maxCardinality": "One"
+            "maxCardinality": "Many"
           },
           "targetEntityDetails": {
             "id": "task_entity",
-            "minCardinality": "Optional",
+            "minCardinality": "Mandatory",
             "maxCardinality": "Many"
           },
           "isSelected": false,
@@ -212,14 +218,15 @@
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "task_comment_rel",
         "type": "Relationship",
         "position": {
-          "x": 475,
-          "y": 300
+          "x": 591.5145870185017,
+          "y": 225.0660807290366
         },
         "data": {
           "label": "Has",
@@ -234,20 +241,22 @@
             "maxCardinality": "Many"
           },
           "isSelected": false,
-          "isConnectable": true
+          "isConnectable": true,
+          "isIdentifying": true
         },
         "measured": {
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "member_comment_rel",
         "type": "Relationship",
         "position": {
-          "x": 350,
-          "y": 400
+          "x": 204.30754058949756,
+          "y": 295.5172730587124
         },
         "data": {
           "label": "Writes",
@@ -268,15 +277,16 @@
           "width": 100,
           "height": 50
         },
-        "selected": false
+        "selected": false,
+        "dragging": false
       },
       {
         "id": "project_id_attr",
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 50,
-          "y": 50
+          "x": -149.0740101543645,
+          "y": -35.59476713729825
         },
         "data": {
           "label": "Project_ID",
@@ -298,12 +308,12 @@
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 200,
-          "y": 50
+          "x": -87.68473440749273,
+          "y": -90.7244902048231
         },
         "data": {
           "label": "Name",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -319,12 +329,12 @@
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 200,
-          "y": 150
+          "x": -149.20892638605235,
+          "y": 79.58832713323781
         },
         "data": {
           "label": "Description",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -340,12 +350,12 @@
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 50,
-          "y": 150
+          "x": -157.43262405847204,
+          "y": 23.253699445699468
         },
         "data": {
           "label": "Start_Date",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -361,13 +371,13 @@
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 350,
-          "y": 50
+          "x": 173.86029108866387,
+          "y": 23.925233588779562
         },
         "data": {
           "label": "End_Date",
           "types": {
-            "Optional": true
+            "Optional": false
           },
           "isSelected": false,
           "isConnectable": false
@@ -384,12 +394,12 @@
         "parentId": "project_entity",
         "type": "Attribute",
         "position": {
-          "x": 350,
-          "y": 150
+          "x": 150.9874381240869,
+          "y": 85.61144384171452
         },
         "data": {
           "label": "Status",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -405,13 +415,14 @@
         "parentId": "milestone_entity",
         "type": "Attribute",
         "position": {
-          "x": 450,
-          "y": 50
+          "x": -0.2897551588375791,
+          "y": -76.35681904967379
         },
         "data": {
           "label": "Milestone_ID",
           "types": {
-            "Unique": true
+            "Unique": false,
+            "Partially Unique": true
           },
           "isSelected": false,
           "isConnectable": false
@@ -428,12 +439,12 @@
         "parentId": "milestone_entity",
         "type": "Attribute",
         "position": {
-          "x": 600,
-          "y": 50
+          "x": 98.4537366161477,
+          "y": -62.38285194973312
         },
         "data": {
           "label": "Name",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -449,12 +460,12 @@
         "parentId": "milestone_entity",
         "type": "Attribute",
         "position": {
-          "x": 450,
-          "y": 150
+          "x": 56.56154648616541,
+          "y": 135.97028883016014
         },
         "data": {
           "label": "Due_Date",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -470,12 +481,12 @@
         "parentId": "milestone_entity",
         "type": "Attribute",
         "position": {
-          "x": 600,
-          "y": 150
+          "x": 160.04853003613573,
+          "y": -17.275042079715348
         },
         "data": {
           "label": "Description",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -491,13 +502,14 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 300,
-          "y": 250
+          "x": -173.99999999999977,
+          "y": 12.50000000000017
         },
         "data": {
           "label": "Task_ID",
           "types": {
-            "Unique": true
+            "Unique": false,
+            "Partially Unique": true
           },
           "isSelected": false,
           "isConnectable": false
@@ -514,12 +526,12 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 450,
-          "y": 250
+          "x": 171.21968356908417,
+          "y": -55.65202130035692
         },
         "data": {
           "label": "Title",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -535,12 +547,12 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 450,
-          "y": 350
+          "x": -162.99999999999966,
+          "y": 124.50000000000017
         },
         "data": {
           "label": "Description",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -556,12 +568,12 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 300,
-          "y": 350
+          "x": 262.2349738357201,
+          "y": 45.00773265502943
         },
         "data": {
           "label": "Start_Date",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -577,13 +589,13 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 150,
-          "y": 250
+          "x": 232.66818985854957,
+          "y": -6.9300529434485725
         },
         "data": {
           "label": "End_Date",
           "types": {
-            "Optional": true
+            "Optional": false
           },
           "isSelected": false,
           "isConnectable": false
@@ -600,12 +612,12 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 150,
-          "y": 350
+          "x": -124.49999999999983,
+          "y": 182.50000000000017
         },
         "data": {
           "label": "Priority",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -621,12 +633,12 @@
         "parentId": "task_entity",
         "type": "Attribute",
         "position": {
-          "x": 600,
-          "y": 250
+          "x": -69.6895868399763,
+          "y": 232.87174588749275
         },
         "data": {
           "label": "Status",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -642,8 +654,8 @@
         "parentId": "team_member_entity",
         "type": "Attribute",
         "position": {
-          "x": 0,
-          "y": 250
+          "x": -126.56718680969158,
+          "y": -85.89559829202199
         },
         "data": {
           "label": "Member_ID",
@@ -665,12 +677,12 @@
         "parentId": "team_member_entity",
         "type": "Attribute",
         "position": {
-          "x": 150,
-          "y": 250
+          "x": -119.64688873253652,
+          "y": 83.30827013109825
         },
         "data": {
           "label": "Full_Name",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -686,12 +698,14 @@
         "parentId": "team_member_entity",
         "type": "Attribute",
         "position": {
-          "x": 0,
-          "y": 350
+          "x": -136.99958188441673,
+          "y": -30.219401674490882
         },
         "data": {
           "label": "Email",
-          "types": {},
+          "types": {
+            "Unique": true
+          },
           "isSelected": false,
           "isConnectable": false
         },
@@ -707,12 +721,12 @@
         "parentId": "team_member_entity",
         "type": "Attribute",
         "position": {
-          "x": 150,
-          "y": 350
+          "x": -132.88589365322696,
+          "y": 26.799244307281185
         },
         "data": {
           "label": "Role",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -728,13 +742,14 @@
         "parentId": "comment_entity",
         "type": "Attribute",
         "position": {
-          "x": 550,
-          "y": 250
+          "x": 263.2920218111209,
+          "y": -75.22106589180754
         },
         "data": {
           "label": "Comment_ID",
           "types": {
-            "Unique": true
+            "Unique": false,
+            "Partially Unique": true
           },
           "isSelected": false,
           "isConnectable": false
@@ -751,12 +766,12 @@
         "parentId": "comment_entity",
         "type": "Attribute",
         "position": {
-          "x": 700,
-          "y": 250
+          "x": 304.57647332398426,
+          "y": -20.06868926702998
         },
         "data": {
           "label": "Content",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
         },
@@ -772,14 +787,430 @@
         "parentId": "comment_entity",
         "type": "Attribute",
         "position": {
-          "x": 550,
-          "y": 350
+          "x": 22.74745505636122,
+          "y": 107.62464709562573
         },
         "data": {
           "label": "Timestamp",
-          "types": {},
+          "types": [],
           "isSelected": false,
           "isConnectable": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "5c26902b-43d9-4277-bed6-447cb159f114",
+        "type": "Relationship",
+        "position": {
+          "x": -185.71201455015301,
+          "y": 271.99999999999994
+        },
+        "data": {
+          "label": "supervises",
+          "sourceEntityDetails": {
+            "id": "team_member_entity",
+            "exactConstraints": {
+              "role": "supervisee"
+            },
+            "minCardinality": "Optional",
+            "maxCardinality": "Many"
+          },
+          "targetEntityDetails": {
+            "id": "team_member_entity",
+            "exactConstraints": {
+              "role": "supervisor"
+            },
+            "minCardinality": "Optional",
+            "maxCardinality": "One"
+          },
+          "isSelfReferencing": true,
+          "isIdentifying": false,
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "4d25705a-ae46-41e2-b96d-6341686fd64c",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 19.59135041945325,
+          "y": -95.93533982297893
+        },
+        "data": {
+          "label": "Budget",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "be2e1669-1104-4eb1-9e55-6c1e259ab908",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 122.60812163814853,
+          "y": -81.72169304975472
+        },
+        "data": {
+          "label": "Created_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "628c5a78-5402-43ba-96f1-304dba3ee685",
+        "parentId": "project_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 177.54267434772066,
+          "y": -34.228120009239774
+        },
+        "data": {
+          "label": "Updated_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "8c723f6b-de5d-44cf-9b66-027c87e2cb9e",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": -85.870727564211,
+          "y": 138.632701629316
+        },
+        "data": {
+          "label": "Hourly_Rate",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "c5b2ab29-fbc4-486b-957d-8bc1d0e7ef31",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 24.725654855833938,
+          "y": 135.50667449800898
+        },
+        "data": {
+          "label": "Is_Active",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "fdfd1872-9698-46d2-ac15-e0a3b02d550a",
+        "parentId": "team_member_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 95.78383869683478,
+          "y": 86.87585223846628
+        },
+        "data": {
+          "label": "Created_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "ff0de654-e975-4573-be14-628707508f5b",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 164.5000000000001,
+          "y": 41.5
+        },
+        "data": {
+          "label": "Is_Complated",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "b5c35b71-c17e-4c05-a52d-f36be2418745",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 132.75378797541237,
+          "y": 95.74621202458749
+        },
+        "data": {
+          "label": "Completed_Date",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "7975392f-ad71-44ba-8ec4-ef167823ff71",
+        "parentId": "milestone_entity",
+        "type": "Attribute",
+        "position": {
+          "x": -50,
+          "y": 137.50000000000003
+        },
+        "data": {
+          "label": "Created_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "65df6f0e-b8e8-4e2d-a5ac-3815681d56b9",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": -168.74621202458752,
+          "y": 67.75378797541254
+        },
+        "data": {
+          "label": "Title",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "5d3cb504-22bc-4ce0-9b8d-35ec687623e6",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 25.65251357359034,
+          "y": 263.9515246981152
+        },
+        "data": {
+          "label": "Task_Type",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "d8c1f66a-b7b9-4891-9da4-610cb4524551",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 131.2377443458971,
+          "y": 272.53167635060817
+        },
+        "data": {
+          "label": "Estimated_Hours",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "d7118f67-71cd-4704-907a-b70fcd3c7e46",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 232.78031643091572,
+          "y": 261.262566333033
+        },
+        "data": {
+          "label": "Actual_Hours",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "6f0f7849-2e4f-4425-a6b8-a97627829042",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 294.1969713263495,
+          "y": 214.36674272458976
+        },
+        "data": {
+          "label": "Created_by",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "a293e3ad-4594-4f56-8edf-32c3efc03528",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 290.2917403700369,
+          "y": 154.929349695315
+        },
+        "data": {
+          "label": "Created_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "f0590ad9-0caf-4295-bdff-1cdfd0c17d0c",
+        "parentId": "task_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 280.4487238152459,
+          "y": 101.54881635350722
+        },
+        "data": {
+          "label": "Updated_At",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "a102dcf2-602f-4bbd-ba7d-e0728f8c2f8a",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 296.0287531496614,
+          "y": 39.279672717106735
+        },
+        "data": {
+          "label": "Comment_Type",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "0d02bd1a-eada-4047-9ac7-46426406f53b",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 233.78070199018373,
+          "y": 87.89777878755189
+        },
+        "data": {
+          "label": "Is_edited",
+          "types": [],
+          "isSelected": false
+        },
+        "measured": {
+          "width": 100,
+          "height": 50
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "6e207a9c-1f5f-49b3-807e-a009947b1aad",
+        "parentId": "comment_entity",
+        "type": "Attribute",
+        "position": {
+          "x": 133.1609049432135,
+          "y": 102.23694509723731
+        },
+        "data": {
+          "label": "Edited_At",
+          "types": [],
+          "isSelected": false
         },
         "measured": {
           "width": 100,
@@ -863,8 +1294,8 @@
         "target": "team_member_entity",
         "data": {
           "id": "member_task_rel->team_member_entity",
-          "minCardinality": "Optional",
-          "maxCardinality": "One"
+          "minCardinality": "Mandatory",
+          "maxCardinality": "Many"
         }
       },
       {
@@ -1065,21 +1496,163 @@
         "type": "Attribute",
         "source": "comment_entity",
         "target": "timestamp_attr"
+      },
+      {
+        "id": "5c26902b-43d9-4277-bed6-447cb159f114->team_member_entity(2);team_member_entity->team_member_entity",
+        "type": "SelfRelationship",
+        "source": "team_member_entity",
+        "target": "5c26902b-43d9-4277-bed6-447cb159f114",
+        "data": {
+          "id": "5c26902b-43d9-4277-bed6-447cb159f114->team_member_entity(2)",
+          "exactConstraints": {
+            "role": "supervisee"
+          },
+          "minCardinality": "Optional",
+          "maxCardinality": "Many"
+        }
+      },
+      {
+        "id": "5c26902b-43d9-4277-bed6-447cb159f114->team_member_entity(1);team_member_entity->team_member_entity",
+        "type": "SelfRelationship",
+        "source": "5c26902b-43d9-4277-bed6-447cb159f114",
+        "target": "team_member_entity",
+        "data": {
+          "id": "5c26902b-43d9-4277-bed6-447cb159f114->team_member_entity(1)",
+          "exactConstraints": {
+            "role": "supervisor"
+          },
+          "minCardinality": "Optional",
+          "maxCardinality": "One"
+        }
+      },
+      {
+        "id": "546bccc1-6197-4dba-abed-53fb71c6bc1e",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "4d25705a-ae46-41e2-b96d-6341686fd64c"
+      },
+      {
+        "id": "ca1d502e-1308-4b8c-86f8-0fc449039425",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "be2e1669-1104-4eb1-9e55-6c1e259ab908"
+      },
+      {
+        "id": "62271ee1-7ce5-4baf-82c5-5fa28a17bc1c",
+        "type": "Attribute",
+        "source": "project_entity",
+        "target": "628c5a78-5402-43ba-96f1-304dba3ee685"
+      },
+      {
+        "id": "53ebca8e-f1d9-4a69-bf18-248cdd376393",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "8c723f6b-de5d-44cf-9b66-027c87e2cb9e"
+      },
+      {
+        "id": "6d93bce7-8ead-4320-8a6b-6f90afa29273",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "c5b2ab29-fbc4-486b-957d-8bc1d0e7ef31"
+      },
+      {
+        "id": "b307e3ea-b22c-4713-9444-ed8f5e17db34",
+        "type": "Attribute",
+        "source": "team_member_entity",
+        "target": "fdfd1872-9698-46d2-ac15-e0a3b02d550a"
+      },
+      {
+        "id": "5a6489b4-42ee-47c1-a523-0d3ce61ed2c9",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "ff0de654-e975-4573-be14-628707508f5b"
+      },
+      {
+        "id": "8f4e14f6-f36f-4d2c-aad2-71bfdf4d2ab2",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "b5c35b71-c17e-4c05-a52d-f36be2418745"
+      },
+      {
+        "id": "7641faef-7d01-41b4-bd14-ae7a47c4ea29",
+        "type": "Attribute",
+        "source": "milestone_entity",
+        "target": "7975392f-ad71-44ba-8ec4-ef167823ff71"
+      },
+      {
+        "id": "234f4bcd-86d5-4911-a404-ab5204605216",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "65df6f0e-b8e8-4e2d-a5ac-3815681d56b9"
+      },
+      {
+        "id": "10da30b0-67cd-4163-a33d-45a2cacf081a",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "5d3cb504-22bc-4ce0-9b8d-35ec687623e6"
+      },
+      {
+        "id": "c6e277d3-8d1a-4faf-aaf2-6bd39e6009bb",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "d8c1f66a-b7b9-4891-9da4-610cb4524551"
+      },
+      {
+        "id": "dfc799f3-51dd-4786-99da-3bfd24b79534",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "d7118f67-71cd-4704-907a-b70fcd3c7e46"
+      },
+      {
+        "id": "602d6633-1ddb-43cb-80a8-bdb3460440dd",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "6f0f7849-2e4f-4425-a6b8-a97627829042"
+      },
+      {
+        "id": "c422a4a3-6203-46d1-a991-183e78b97b87",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "a293e3ad-4594-4f56-8edf-32c3efc03528"
+      },
+      {
+        "id": "17da64bf-7b7b-4462-9962-f8b068da16c5",
+        "type": "Attribute",
+        "source": "task_entity",
+        "target": "f0590ad9-0caf-4295-bdff-1cdfd0c17d0c"
+      },
+      {
+        "id": "47093dec-49d5-4817-b400-bf4387852f97",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "a102dcf2-602f-4bbd-ba7d-e0728f8c2f8a"
+      },
+      {
+        "id": "82cd8aa6-e797-4b77-8dd6-9e3f529dc063",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "0d02bd1a-eada-4047-9ac7-46426406f53b"
+      },
+      {
+        "id": "7275d1db-7d03-4df2-8922-cf108896fcb4",
+        "type": "Attribute",
+        "source": "comment_entity",
+        "target": "6e207a9c-1f5f-49b3-807e-a009947b1aad"
       }
     ],
     "viewport": {
-      "x": 0,
-      "y": 0,
-      "zoom": 1
+      "x": 668.7788877392347,
+      "y": 202.99240340333415,
+      "zoom": 0.7134520528871762
     }
   },
-  "name": "Project Management ERD (Chen)",
+  "name": "projects_management_Chen_notation",
   "folder": {
     "name": "Diagrams",
     "folderType": 1,
     "depth": 0,
-    "id": 1
+    "id": 141030
   },
-  "id": 1001,
-  "updatedAtTimestamp": 1763652217
+  "id": 185737,
+  "updatedAtTimestamp": 1765190093
 }

@@ -1,0 +1,883 @@
+{
+  "diagramType": 2,
+  "data": {
+    "nodes": [
+      {
+        "id": "project_table",
+        "type": "Table",
+        "position": {
+          "x": 18.021348344005446,
+          "y": -77.61980855530318
+        },
+        "data": {
+          "label": "Project",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "project_id",
+              "name": "Project_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "project_name",
+              "name": "Name",
+              "type": "VARCHAR(255)",
+              "position": 1,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "project_description",
+              "name": "Description",
+              "type": "TEXT",
+              "position": 2,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "start_date",
+              "name": "Start_Date",
+              "type": "DATE",
+              "position": 3,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "end_date",
+              "name": "End_Date",
+              "type": "DATE",
+              "position": 4,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "status",
+              "name": "Status",
+              "type": "VARCHAR(50)",
+              "position": 5,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "e6a31733-0b27-422e-93d7-84ca27b0b80c",
+              "name": "budget",
+              "type": "FLOAT",
+              "position": 5
+            },
+            {
+              "id": "9bb2dbaa-b655-46b8-8582-d00fe9537ba7",
+              "name": "Created_At",
+              "type": "DATE",
+              "position": 5
+            },
+            {
+              "id": "223343d7-0f4d-42b9-a5a2-ef181a6b3bd1",
+              "name": "Updated_At",
+              "type": "DATE",
+              "position": 5
+            }
+          ],
+          "isSelected": false,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 251
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "milestone_table",
+        "type": "Table",
+        "position": {
+          "x": 322.19247611651224,
+          "y": -289.0985786611129
+        },
+        "data": {
+          "label": "Milestone",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "milestone_id",
+              "name": "Milestone_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "milestone_name",
+              "name": "Name",
+              "type": "VARCHAR(255)",
+              "position": 1,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "due_date",
+              "name": "Due_Date",
+              "type": "DATE",
+              "position": 2,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "milestone_description",
+              "name": "Description",
+              "type": "TEXT",
+              "position": 3,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "fk_project_milestone",
+              "name": "fk_Project",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "project_milestone_fk",
+                "sourceTableId": "project_table",
+                "columns": [
+                  {
+                    "id": "fk_project_id",
+                    "name": "Project_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 4,
+              "isOptional": false
+            },
+            {
+              "id": "d8d20b46-ee19-446c-8935-ae74d7a2c7a3",
+              "name": "Is_Completed",
+              "type": "Custom",
+              "position": 4
+            },
+            {
+              "id": "14cd5e05-e28d-47ae-94c1-409b62fcdaef",
+              "name": "Completed_Date",
+              "type": "DATE",
+              "position": 4
+            },
+            {
+              "id": "c42c974e-7fdc-414d-b29d-71bbe656edf0",
+              "name": "Created_At",
+              "type": "DATE",
+              "position": 4
+            }
+          ],
+          "isSelected": false,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 227
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "task_table",
+        "type": "Table",
+        "position": {
+          "x": 746.6771438122983,
+          "y": -321.6079807010698
+        },
+        "data": {
+          "label": "Task",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "task_id",
+              "name": "Task_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "title",
+              "name": "Title",
+              "type": "VARCHAR(255)",
+              "position": 1,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "task_description",
+              "name": "Description",
+              "type": "TEXT",
+              "position": 2,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "task_start_date",
+              "name": "Start_Date",
+              "type": "DATE",
+              "position": 3,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "task_end_date",
+              "name": "End_Date",
+              "type": "DATE",
+              "position": 4,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "priority",
+              "name": "Priority",
+              "type": "VARCHAR(50)",
+              "position": 5,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "task_status",
+              "name": "Status",
+              "type": "VARCHAR(50)",
+              "position": 6,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "fk_project_task",
+              "name": "fk_Project",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "project_task_fk",
+                "sourceTableId": "project_table",
+                "columns": [
+                  {
+                    "id": "fk_project_id_2",
+                    "name": "Project_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 7,
+              "isOptional": false
+            },
+            {
+              "id": "fk_milestone_task",
+              "name": "fk_Milestone",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "milestone_task_fk",
+                "sourceTableId": "milestone_table",
+                "columns": [
+                  {
+                    "id": "fk_milestone_id",
+                    "name": "Milestone_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 8,
+              "isOptional": false
+            },
+            {
+              "id": "2b0d5fda-5e02-41a3-9a60-782e920b70c8",
+              "name": "Title",
+              "type": "VARCHAR(n)",
+              "position": 8
+            },
+            {
+              "id": "6b5bbd81-f22e-43ee-9fb5-7b70d3689d31",
+              "name": "Task_Type",
+              "type": "INT",
+              "position": 8
+            },
+            {
+              "id": "14cdf123-5528-40b2-b52e-306084beff54",
+              "name": "Estimated_Hours",
+              "type": "FLOAT",
+              "position": 8
+            },
+            {
+              "id": "00113422-4b2d-4829-b975-0622ab139f4b",
+              "name": "Actual_Hours",
+              "type": "FLOAT",
+              "position": 8
+            },
+            {
+              "id": "fk_6ae5b21a-812c-4553-bc40-9b28bc529181",
+              "name": "fk_Team_Member",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "81f3cf1f-7c9a-472d-97a7-c78fb0d0a1bb",
+                "sourceTableId": "team_member_table",
+                "columns": [
+                  {
+                    "id": "fk_member_id",
+                    "name": "Created_By",
+                    "type": "INT"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "9eb3fc4b-1d6d-4b87-991b-ba38e2cd3a94",
+              "name": "Created_At",
+              "type": "DATE",
+              "position": 0
+            },
+            {
+              "id": "60d18c75-0afa-4ebe-ba8a-dad741144553",
+              "name": "Updated_At",
+              "type": "DATE",
+              "position": 0
+            }
+          ],
+          "isSelected": false,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 427
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "team_member_table",
+        "type": "Table",
+        "position": {
+          "x": 15.821753064342047,
+          "y": 207.38355595636733
+        },
+        "data": {
+          "label": "Team_Member",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "member_id",
+              "name": "Member_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "full_name",
+              "name": "Full_Name",
+              "type": "VARCHAR(255)",
+              "position": 1,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "email",
+              "name": "Email",
+              "type": "VARCHAR(255)",
+              "position": 2,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "role",
+              "name": "Role",
+              "type": "VARCHAR(100)",
+              "position": 3,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "f9e55a7a-3cca-4aa2-bc4c-2ce4d331e55c",
+              "name": "Hourly_Rate",
+              "type": "FLOAT",
+              "position": 3
+            },
+            {
+              "id": "0d15da0c-80cc-4a13-9ee1-31f1767c0617",
+              "name": "Is_Active",
+              "type": "Custom",
+              "position": 3
+            },
+            {
+              "id": "dd120325-59ca-4499-b9b6-6308ad6241d2",
+              "name": "Created_At",
+              "type": "DATE",
+              "position": 3
+            },
+            {
+              "id": "fk_ce55c81f-1801-434e-8dd8-3587da86b268",
+              "name": "fk_Team_Member",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "fc8dfcd8-675c-4a93-a7e3-8c6571a837cb",
+                "sourceTableId": "team_member_table",
+                "columns": [
+                  {
+                    "id": "fk_member_id",
+                    "name": "Manager_ID",
+                    "type": "INT"
+                  }
+                ]
+              }
+            }
+          ],
+          "isSelected": true,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 227
+        },
+        "selected": true,
+        "dragging": false
+      },
+      {
+        "id": "comment_table",
+        "type": "Table",
+        "position": {
+          "x": 1219.57930636926,
+          "y": 167.6226189013429
+        },
+        "data": {
+          "label": "Comment",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "comment_id",
+              "name": "Comment_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "content",
+              "name": "Content",
+              "type": "TEXT",
+              "position": 1,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "timestamp",
+              "name": "Timestamp",
+              "type": "TIMESTAMP",
+              "position": 2,
+              "isUnique": false,
+              "isOptional": false,
+              "isPrimaryKey": false
+            },
+            {
+              "id": "fk_task_comment",
+              "name": "fk_Task",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "task_comment_fk",
+                "sourceTableId": "task_table",
+                "columns": [
+                  {
+                    "id": "fk_task_id",
+                    "name": "Task_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 3
+            },
+            {
+              "id": "fk_member_comment",
+              "name": "fk_Team_Member",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "member_comment_fk",
+                "sourceTableId": "team_member_table",
+                "columns": [
+                  {
+                    "id": "fk_member_id",
+                    "name": "Member_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 4
+            },
+            {
+              "id": "edd97e2e-e667-43c2-a62b-30b52213eecd",
+              "name": "Edited_At",
+              "type": "DATE",
+              "position": 4
+            },
+            {
+              "id": "8803ba28-7a5e-463c-b7c0-306a50131ff0",
+              "name": "Comment_Type",
+              "type": "VARCHAR(n)",
+              "position": 4
+            },
+            {
+              "id": "beae3dd3-0ea9-410c-b98d-7e3d665f8a87",
+              "name": "Is_Edited",
+              "type": "Custom",
+              "position": 4
+            }
+          ],
+          "isSelected": false,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 227
+        },
+        "selected": false,
+        "dragging": false
+      },
+      {
+        "id": "member_task_table",
+        "type": "Table",
+        "position": {
+          "x": 1219.1959821001751,
+          "y": -59.35922018819575
+        },
+        "data": {
+          "label": "Member_Task",
+          "isConnectable": false,
+          "columns": [
+            {
+              "id": "member_task_id",
+              "name": "Member_Task_ID",
+              "type": "INT",
+              "position": 0,
+              "isUnique": true,
+              "isOptional": false,
+              "isPrimaryKey": true
+            },
+            {
+              "id": "fk_member_task_member",
+              "name": "fk_Team_Member",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "member_task_member_fk",
+                "sourceTableId": "team_member_table",
+                "columns": [
+                  {
+                    "id": "fk_member_id_2",
+                    "name": "Member_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 1
+            },
+            {
+              "id": "fk_member_task_task",
+              "name": "fk_Task",
+              "type": "None",
+              "isForeignKey": true,
+              "foreignKeyProps": {
+                "foreignKeyGroupId": "member_task_task_fk",
+                "sourceTableId": "task_table",
+                "columns": [
+                  {
+                    "id": "fk_task_id_2",
+                    "name": "Task_ID",
+                    "type": "INT"
+                  }
+                ]
+              },
+              "position": 2
+            },
+            {
+              "id": "08b30460-e38b-482a-b5a3-0e98537f30a1",
+              "name": "Role_In_Task",
+              "type": "VARCHAR(n)",
+              "position": 2
+            },
+            {
+              "id": "6dd0d71d-f4cf-4fd4-aa0b-180f30d28fa3",
+              "name": "Hours_Worked",
+              "type": "FLOAT",
+              "position": 2
+            },
+            {
+              "id": "12290431-1b49-4c4e-92fa-10f98c9c4392",
+              "name": "Is_Primary_Assignee",
+              "type": "INT",
+              "position": 2
+            },
+            {
+              "id": "8a35926e-3d33-4235-bba0-81014a357fc3",
+              "name": "Assigned_Date",
+              "type": "DATE",
+              "position": 2
+            }
+          ],
+          "isSelected": false,
+          "isFactTable": false
+        },
+        "measured": {
+          "width": 240,
+          "height": 202
+        },
+        "selected": false,
+        "dragging": false
+      }
+    ],
+    "edges": [
+      {
+        "id": "project_table->milestone_table_project_milestone_fk",
+        "type": "Relational",
+        "source": "project_table",
+        "targetHandle": "foreign-key-handle-project_milestone_fk",
+        "target": "milestone_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "project_milestone_fk",
+            "sourceTableId": "project_table",
+            "columns": [
+              {
+                "id": "fk_project_id",
+                "name": "Project_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "project_table->task_table_project_task_fk",
+        "type": "Relational",
+        "source": "project_table",
+        "targetHandle": "foreign-key-handle-project_task_fk",
+        "target": "task_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "project_task_fk",
+            "sourceTableId": "project_table",
+            "columns": [
+              {
+                "id": "fk_project_id_2",
+                "name": "Project_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        },
+        "selected": false
+      },
+      {
+        "id": "milestone_table->task_table_milestone_task_fk",
+        "type": "Relational",
+        "source": "milestone_table",
+        "targetHandle": "foreign-key-handle-milestone_task_fk",
+        "target": "task_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "milestone_task_fk",
+            "sourceTableId": "milestone_table",
+            "columns": [
+              {
+                "id": "fk_milestone_id",
+                "name": "Milestone_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "team_member_table->member_task_table_member_task_member_fk",
+        "type": "Relational",
+        "source": "team_member_table",
+        "targetHandle": "foreign-key-handle-member_task_member_fk",
+        "target": "member_task_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "member_task_member_fk",
+            "sourceTableId": "team_member_table",
+            "columns": [
+              {
+                "id": "fk_member_id_2",
+                "name": "Member_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "task_table->member_task_table_member_task_task_fk",
+        "type": "Relational",
+        "source": "task_table",
+        "targetHandle": "foreign-key-handle-member_task_task_fk",
+        "target": "member_task_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "member_task_task_fk",
+            "sourceTableId": "task_table",
+            "columns": [
+              {
+                "id": "fk_task_id_2",
+                "name": "Task_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "task_table->comment_table_task_comment_fk",
+        "type": "Relational",
+        "source": "task_table",
+        "targetHandle": "foreign-key-handle-task_comment_fk",
+        "target": "comment_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "task_comment_fk",
+            "sourceTableId": "task_table",
+            "columns": [
+              {
+                "id": "fk_task_id",
+                "name": "Task_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "team_member_table->comment_table_member_comment_fk",
+        "type": "Relational",
+        "source": "team_member_table",
+        "targetHandle": "foreign-key-handle-member_comment_fk",
+        "target": "comment_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "member_comment_fk",
+            "sourceTableId": "team_member_table",
+            "columns": [
+              {
+                "id": "fk_member_id",
+                "name": "Member_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "team_member_table->task_table_81f3cf1f-7c9a-472d-97a7-c78fb0d0a1bb",
+        "type": "Relational",
+        "source": "team_member_table",
+        "targetHandle": "foreign-key-handle-81f3cf1f-7c9a-472d-97a7-c78fb0d0a1bb",
+        "target": "task_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "81f3cf1f-7c9a-472d-97a7-c78fb0d0a1bb",
+            "sourceTableId": "team_member_table",
+            "columns": [
+              {
+                "id": "fk_member_id",
+                "name": "Member_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "team_member_table->team_member_table_fc8dfcd8-675c-4a93-a7e3-8c6571a837cb",
+        "type": "Relational",
+        "source": "team_member_table",
+        "targetHandle": "foreign-key-handle-fc8dfcd8-675c-4a93-a7e3-8c6571a837cb",
+        "target": "team_member_table",
+        "markerStart": {
+          "type": "arrow"
+        },
+        "data": {
+          "foreignKeyProps": {
+            "foreignKeyGroupId": "fc8dfcd8-675c-4a93-a7e3-8c6571a837cb",
+            "sourceTableId": "team_member_table",
+            "columns": [
+              {
+                "id": "fk_member_id",
+                "name": "Member_ID",
+                "type": "INT"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "viewport": {
+      "x": 494.70870336150773,
+      "y": 409.8897475831386,
+      "zoom": 0.659753955386447
+    }
+  },
+  "name": "Projects_management_schema",
+  "folder": {
+    "name": "Diagrams",
+    "folderType": 1,
+    "depth": 0,
+    "id": 141030
+  },
+  "id": 185781,
+  "updatedAtTimestamp": 1765192444
+}

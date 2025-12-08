@@ -97,7 +97,7 @@ CREATE TABLE Comment (
     Task_ID INT NOT NULL,
     Member_ID INT NOT NULL,
     Content TEXT NOT NULL,
-    Comment_Type VARCHAR(50) DEFAULT 'General', ('General', 'Feedback', 'Question', 'Issue', 'Solution',"instruction")
+    Comment_Type VARCHAR(50) DEFAULT 'General', --('General', 'Feedback', 'Question', 'Issue', 'Solution',"instruction")
     Is_Edited BOOLEAN DEFAULT FALSE,
     Edited_At TIMESTAMP NULL,
     Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

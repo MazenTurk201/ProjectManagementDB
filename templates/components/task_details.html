@@ -925,9 +925,9 @@
                 <!-- Placeholder for app icon or context -->
             </div>
             <div class="toolbar-right">
-                <button class="toolbar-btn">
+                <!-- <button class="toolbar-btn">
                     <span class="material-symbols-outlined btn-icon">more_horiz</span>
-                </button>
+                </button> -->
                 <button class="toolbar-btn" onclick="toggleModal('taskDetailsDialog', false)">
                     <span class="material-symbols-outlined btn-icon">close</span>
                 </button>
@@ -940,14 +940,14 @@
             <div class="left-column">
                 <!-- Page Heading -->
                 <div class="task-heading">
-                    <p class="task-id">{{ tasks.Task_ID }}</p>
-                    <p class="task-title">{{ tasks.Title }}</p>
+                    <p class="task-id"></p>
+                    <p class="task-title"></p>
                 </div>
 
                 <!-- Chips -->
                 <div class="task-chips">
                     <button class="status-chip">
-                        <p class="chip-text">In Progress</p>
+                        <p class="text-status"></p>
                         <span class="material-symbols-outlined chip-icon">expand_more</span>
                     </button>
                 </div>
@@ -969,7 +969,7 @@
                 </div>
 
                 <!-- Checklist -->
-                <div class="checklist-section">
+                <!-- <div class="checklist-section">
                     <div class="checklist-header">
                         <h3 class="section-title">Checklist</h3>
                         <div class="checklist-progress">
@@ -993,10 +993,10 @@
                             <span class="checklist-text">Conduct user testing sessions with 5 participants</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Attachments -->
-                <div class="attachments-section">
+                <!-- <div class="attachments-section">
                     <h3 class="section-title">Attachments</h3>
                     <div class="attachments-grid">
                         <div class="attachment-item">
@@ -1018,42 +1018,57 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Activity Tabs -->
                 <div class="activity-section">
                     <div class="activity-tabs">
                         <nav class="tabs-nav">
                             <a class="tab active">Comments</a>
-                            <a class="tab">History</a>
+                            <!-- <a class="tab">History</a> -->
                         </nav>
                     </div>
                     <div class="activity-content">
-                        <!-- Comment -->
-                        <div class="comment-item">
-                            <img class="comment-avatar" data-alt="Avatar of Sarah Chen"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgCIhaAbwYvRMgx7tIW_f4xXuv3KbTHw12mPPo3CglXgGSCthL0h1qJ4Mc3GpTzGHR31_EUooU1pZntHWsWPt8C7gnA6irqaM_dTK5hZaXL6BukkAXM1NmEv48sUtptqsL9FurUFDnloPy8HjkVjeIpmeHitHLFbqzyoRaPdlxKO6hS0bwGa1Jq3kgBljbTFNoCcZ1nV13jpDCDsDxVoIQPWyVsjRigao3jr30uxDmhlX36p69f6u-sSCbztJED6anu3vMyGkuBkk" />
-                            <div class="comment-content">
-                                <div class="comment-bubble">
-                                    <div class="comment-header">
-                                        <p class="comment-author">Sarah Chen</p>
-                                        <p class="comment-time">2 hours ago</p>
+                        <main class="modal-content">
+
+
+
+                            <!-- Comment -->
+                            {% for comment in comments %}
+                            <!-- <div class="comment-item"> -->
+                            <div class="comment-item" data-task="{{ comment.Task_ID }}">
+                                <img class="comment-avatar" data-alt="Avatar of Sarah Chen"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgCIhaAbwYvRMgx7tIW_f4xXuv3KbTHw12mPPo3CglXgGSCthL0h1qJ4Mc3GpTzGHR31_EUooU1pZntHWsWPt8C7gnA6irqaM_dTK5hZaXL6BukkAXM1NmEv48sUtptqsL9FurUFDnloPy8HjkVjeIpmeHitHLFbqzyoRaPdlxKO6hS0bwGa1Jq3kgBljbTFNoCcZ1nV13jpDCDsDxVoIQPWyVsjRigao3jr30uxDmhlX36p69f6u-sSCbztJED6anu3vMyGkuBkk" />
+                                <div class="comment-content">
+                                    <div class="comment-bubble">
+                                        <div class="comment-header">
+                                            <p class="comment-author">{{ comment.Member_ID | get_user_name }}</p>
+                                            <p class="comment-time">{{ comment.Timestamp }}</p>
+                                        </div>
+                                        <p class="comment-text">{{ comment.Content }}</p>
                                     </div>
-                                    <p class="comment-text">Looks great! Just one question: should we include a
-                                        'skip' option for the entire tutorial?</p>
                                 </div>
                             </div>
-                        </div>
+                            {% else %}
+                            <p style="color: gray; text-align: center;">No comments yet.</p>
+                            {% endfor %}
 
-                        <!-- Comment Input -->
-                        <div class="comment-input-area">
-                            <img class="user-avatar" data-alt="Avatar of current user"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQpOnNMxFu-oE-9gwP2TtERFQPhHL-lTdEMnLHaZ7mqFeWiaAtST1qern5OaIczX0pBBpzJZgA68AOrX7uQ_V8jHMU1W4lcEXbbBhxV2uFvJ5fUJsFRgcSK0usUhT-4pW724nkEpVS3jIRjsvoMSqTi0McnZSvAFt6m2FIp70Uvwtg_LU-J2PlQ24VHao1TzX3yvPrYR-9Oo3-oif96PhAikLCKKxffDnz6606Mo0NJ_A97zY6ckiqasqOxX8bh7aMPWY7LQ2ChRI" />
-                            <div class="comment-input-wrapper">
-                                <textarea class="comment-input" placeholder="Add a comment..." rows="2"></textarea>
-                                <button class="comment-submit-btn">Comment</button>
-                            </div>
-                        </div>
+                            <!-- Comment Input -->
+                            <form id="commentFormID" method="POST" style="margin-top: 15px; display: flex; gap: 10px;">
+
+                                <div class="comment-input-area">
+                                    <img class="user-avatar" data-alt="Avatar of current user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQpOnNMxFu-oE-9gwP2TtERFQPhHL-lTdEMnLHaZ7mqFeWiaAtST1qern5OaIczX0pBBpzJZgA68AOrX7uQ_V8jHMU1W4lcEXbbBhxV2uFvJ5fUJsFRgcSK0usUhT-4pW724nkEpVS3jIRjsvoMSqTi0McnZSvAFt6m2FIp70Uvwtg_LU-J2PlQ24VHao1TzX3yvPrYR-9Oo3-oif96PhAikLCKKxffDnz6606Mo0NJ_A97zY6ckiqasqOxX8bh7aMPWY7LQ2ChRI" />
+
+                                    <div class="comment-input-wrapper">
+                                        <input class="comment-input" type="text" name="content"
+                                            placeholder="Add a comment..." required autocomplete="off">
+                                        <button type="submit" class="comment-submit-btn">Comment</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+
                     </div>
                 </div>
             </div>

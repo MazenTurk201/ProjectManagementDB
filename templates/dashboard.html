@@ -48,7 +48,7 @@
 
 
 
-    <div style="width: 100%; margin-top: 10px;">
+    <div style="width: 100%; margin-top: 10px; max-width: 55dvw;">
       <canvas id="myChart"></canvas>
     </div>
 
@@ -71,21 +71,6 @@
     </div>
   </div>
 </div>
-<script>
-  // دالة فتح مودال التعديل
-  function openEditModal(id, name, desc) {
-    // 1. املأ الخانات بالبيانات القديمة
-    document.getElementById('edit_name').value = name;
-    document.getElementById('edit_desc').value = desc;
-
-    // 2. غير رابط الفورم عشان يروح للـ ID الصح
-    // (هيحول الرابط لـ /update_project/5 مثلاً)
-    document.getElementById('editProjectForm').action = "/update_project/" + id;
-
-    // 3. افتح المودال
-    toggleModal('editProjectModal', true);
-  }
-</script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 <script>
   !function (t, e) { "object" == typeof exports && "undefined" != typeof module ? module.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).Chart = e() }(this, (function () {

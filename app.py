@@ -285,7 +285,7 @@ def signup():
             Full_Name=full_name, 
             Email=email, 
             Password=password, 
-            Role='Member',  
+            Role='Member',
             Is_Active=True
         )
         
@@ -331,11 +331,14 @@ def task():
     projects = Project.query.all()
     total_tasks = Task.query.count()
     milestone = Milestone.query.all()
+    # comments = Comment.query.filter_by(Task_ID=id).all()
+    comments = Comment.query.all()
+    # comments = db.relationship('Comment', backref='tasks', lazy=True)
     completed_tasks = Task.query.filter_by(Status='Completed').count()
     project_progress = 0
     if total_tasks > 0:
         project_progress = int((completed_tasks / total_tasks) * 100)
-    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects, completed_tasks=completed_tasks)
+    return render_template('project_tasks.html', tasks=tasks, name=current_user.Full_Name, total_tasks=total_tasks, milestones=milestone, project_progress=project_progress, projects=projects, completed_tasks=completed_tasks, comments=comments)
 
 # فلتر سحري بيجيب اسم المشروع بمعلومية الـ ID بتاعه
 @app.template_filter('get_project_name')
@@ -343,11 +346,16 @@ def get_project_name_filter(project_id):
     if not project_id:
         return "غير محدد"
     
-    # دور على المشروع في الداتا بيز
     project = Project.query.get(project_id)
+    return project.Name if project else "Unknown Project"
+
+@app.template_filter('get_user_name')
+def get_user_name_filter(Member_id):
+    if not Member_id:
+        return "غير محدد"
     
-    # لو لقاه رجع اسمه، لو ملقاهوش رجع "غير معروف"
-    return project.Name if project else "مشروع محذوف"
+    Member = Team_Member.query.get(Member_id)
+    return Member.Full_Name if Member else "Unknown User"
 
 @app.route('/team_members')
 @login_required
@@ -436,6 +444,29 @@ def date_to_percent_filter(date_obj):
 @app.context_processor
 def inject_today():
     return {'today': date.today()}
+
+@app.route('/add_comment/<int:task_id>', methods=['POST'])
+def add_comment(task_id):
+    content = request.form['content']
+    if content:
+        new_comment = Comment(
+            Content=content,
+            Task_ID=task_id, # استخدمنا المتغير اللي جاي من الدالة
+            Member_ID=current_user.Member_ID
+        )
+        
+        try:
+            db.session.add(new_comment)
+            db.session.commit()
+            flash('تم إضافة التعليق بنجاح! 💬')
+        except Exception as e:
+            db.session.rollback()
+            flash('حصل خطأ أثناء الحفظ')
+            print(e)
+            
+    # رجعه لنفس الصفحة
+    return redirect(request.referrer or url_for('dashboard'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

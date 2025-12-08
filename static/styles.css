@@ -436,7 +436,7 @@ body.dark .stat-value {
 }
 
 /* Content Grid */
-.content-grid {
+/* .content-grid {
     margin-top: 2rem;
     display: grid;
     grid-template-columns: 1fr;
@@ -447,6 +447,13 @@ body.dark .stat-value {
     .content-grid {
         grid-template-columns: 2fr 1fr;
     }
+} */
+.content-grid {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: start;
+    gap: 2rem;
 }
 
 /* Projects Section */

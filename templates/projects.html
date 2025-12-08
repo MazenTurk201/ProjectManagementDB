@@ -863,6 +863,20 @@
             }
         }
     }
+
+    // دالة فتح مودال التعديل
+    function openEditModal(id, name, desc) {
+        // 1. املأ الخانات بالبيانات القديمة
+        document.getElementById('edit_name').value = name;
+        document.getElementById('edit_desc').value = desc;
+
+        // 2. غير رابط الفورم عشان يروح للـ ID الصح
+        // (هيحول الرابط لـ /update_project/5 مثلاً)
+        document.getElementById('editProjectForm').action = "/update_project/" + id;
+
+        // 3. افتح المودال
+        toggleModal('editProjectModal', true);
+    }
 </script>
 
 {% include 'components/edit_project.html' %}
